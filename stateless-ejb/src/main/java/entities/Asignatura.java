@@ -44,6 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Asignatura.findByHorasLaboratorio", query = "SELECT a FROM Asignatura a WHERE a.horasLaboratorio = :horasLaboratorio"),
     @NamedQuery(name = "Asignatura.findByResumenAsignatura", query = "SELECT a FROM Asignatura a WHERE a.resumenAsignatura = :resumenAsignatura")})
 public class Asignatura implements Serializable {
+    @Column(name = "ES_ANUAL")
+    private Short esAnual;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,6 +71,7 @@ public class Asignatura implements Serializable {
     @Size(max = 1024)
     @Column(name = "RESUMEN_ASIGNATURA")
     private String resumenAsignatura;
+    
     @JoinTable(name = "asignatura_intermedia", joinColumns = {
         @JoinColumn(name = "ID_ASIGNATURA", referencedColumnName = "ID_ASIGNATURA")}, inverseJoinColumns = {
         @JoinColumn(name = "ASI_ID_ASIGNATURA", referencedColumnName = "ID_ASIGNATURA")})
@@ -241,6 +244,14 @@ public class Asignatura implements Serializable {
     @Override
     public String toString() {
         return "entities.Asignatura[ idAsignatura=" + idAsignatura + " ]";
+    }
+
+    public Short getEsAnual() {
+        return esAnual;
+    }
+
+    public void setEsAnual(Short esAnual) {
+        this.esAnual = esAnual;
     }
     
 }
