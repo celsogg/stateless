@@ -1,11 +1,14 @@
 package managedbeans;
 
+import entities.Asignatura;
 import entities.Plan;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.PlanFacadeLocal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import sessionbeans.AsignaturaFacadeLocal;
 
 @Named("planController")
 @SessionScoped
@@ -160,6 +164,32 @@ public class PlanController implements Serializable {
             }
         }
 
+    }
+    
+    public String toJSON(Integer planId){
+        Plan plan = getPlan(planId);
+        
+        ArrayList<Asignatura> as;
+        as = new ArrayList<Asignatura>(plan.getAsignaturaCollection());
+        for (Asignatura a : as) {
+            ArrayList <Asignatura> pre, post;
+            
+            
+            pre = new ArrayList<Asignatura> (a.getAsignaturaCollection());
+            
+            //requisitos
+            System.out.println(a.getNombreAsignatura()+" "+a.getCodigoAsignatura()+" "+ (a.getEsAnual() == 1? "anual" : "semestral"));
+            for (Asignatura p : pre) {
+                System.out.println("--"+p.getNombreAsignatura()+" "+p.getCodigoAsignatura());
+            }
+            //apertura
+            post = new ArrayList<Asignatura> (a.getAsignaturaCollection1());
+            //System.out.println(a.getNombreAsignatura()+" "+a.getCodigoAsignatura());
+            for (Asignatura p : post) {
+                System.out.println("++"+p.getNombreAsignatura()+" "+p.getCodigoAsignatura());
+            }
+        }
+        return null;
     }
 
 }
