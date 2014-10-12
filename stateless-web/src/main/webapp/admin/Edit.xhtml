@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AdminEditDlg" widgetVar="AdminEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditAdminTitle}">
+            <h:form id="AdminEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{adminController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditAdminLabel_idAdmin}" for="idAdmin" />
+                        <p:inputText id="idAdmin" value="#{adminController.selected.idAdmin}" title="#{bundle.EditAdminTitle_idAdmin}" required="true" requiredMessage="#{bundle.EditAdminRequiredMessage_idAdmin}"/>
+                        <p:outputLabel value="#{bundle.EditAdminLabel_userAdmin}" for="userAdmin" />
+                        <p:inputText id="userAdmin" value="#{adminController.selected.userAdmin}" title="#{bundle.EditAdminTitle_userAdmin}" />
+                        <p:outputLabel value="#{bundle.EditAdminLabel_passwordAdmin}" for="passwordAdmin" />
+                        <p:inputText id="passwordAdmin" value="#{adminController.selected.passwordAdmin}" title="#{bundle.EditAdminTitle_passwordAdmin}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{adminController.update}" value="#{bundle.Save}" update="display,:AdminListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AdminEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AdminEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
