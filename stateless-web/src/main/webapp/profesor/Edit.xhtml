@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProfesorEditDlg" widgetVar="ProfesorEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditProfesorTitle}">
+            <h:form id="ProfesorEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{profesorController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditProfesorLabel_idProfesor}" for="idProfesor" />
+                        <p:inputText id="idProfesor" value="#{profesorController.selected.idProfesor}" title="#{bundle.EditProfesorTitle_idProfesor}" required="true" requiredMessage="#{bundle.EditProfesorRequiredMessage_idProfesor}"/>
+                        <p:outputLabel value="#{bundle.EditProfesorLabel_usuarioProfesor}" for="usuarioProfesor" />
+                        <p:inputText id="usuarioProfesor" value="#{profesorController.selected.usuarioProfesor}" title="#{bundle.EditProfesorTitle_usuarioProfesor}" />
+                        <p:outputLabel value="#{bundle.EditProfesorLabel_nombreProfesor}" for="nombreProfesor" />
+                        <p:inputText id="nombreProfesor" value="#{profesorController.selected.nombreProfesor}" title="#{bundle.EditProfesorTitle_nombreProfesor}" />
+                        <p:outputLabel value="#{bundle.EditProfesorLabel_apellidoProfesor}" for="apellidoProfesor" />
+                        <p:inputText id="apellidoProfesor" value="#{profesorController.selected.apellidoProfesor}" title="#{bundle.EditProfesorTitle_apellidoProfesor}" />
+                        <p:outputLabel value="#{bundle.EditProfesorLabel_contrasenaProfesor}" for="contrasenaProfesor" />
+                        <p:inputText id="contrasenaProfesor" value="#{profesorController.selected.contrasenaProfesor}" title="#{bundle.EditProfesorTitle_contrasenaProfesor}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{profesorController.update}" value="#{bundle.Save}" update="display,:ProfesorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProfesorEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ProfesorEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

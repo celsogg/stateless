@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProfesorViewDlg" widgetVar="ProfesorViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewProfesorTitle}">
+            <h:form id="ProfesorViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{profesorController.selected != null}">
+                        <h:outputText value="#{bundle.ViewProfesorLabel_idProfesor}"/>
+                        <h:outputText value="#{profesorController.selected.idProfesor}" title="#{bundle.ViewProfesorTitle_idProfesor}"/>
+                        <h:outputText value="#{bundle.ViewProfesorLabel_usuarioProfesor}"/>
+                        <h:outputText value="#{profesorController.selected.usuarioProfesor}" title="#{bundle.ViewProfesorTitle_usuarioProfesor}"/>
+                        <h:outputText value="#{bundle.ViewProfesorLabel_nombreProfesor}"/>
+                        <h:outputText value="#{profesorController.selected.nombreProfesor}" title="#{bundle.ViewProfesorTitle_nombreProfesor}"/>
+                        <h:outputText value="#{bundle.ViewProfesorLabel_apellidoProfesor}"/>
+                        <h:outputText value="#{profesorController.selected.apellidoProfesor}" title="#{bundle.ViewProfesorTitle_apellidoProfesor}"/>
+                        <h:outputText value="#{bundle.ViewProfesorLabel_contrasenaProfesor}"/>
+                        <h:outputText value="#{profesorController.selected.contrasenaProfesor}" title="#{bundle.ViewProfesorTitle_contrasenaProfesor}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ProfesorViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

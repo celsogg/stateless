@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AsignaturaViewDlg" widgetVar="AsignaturaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewAsignaturaTitle}">
+            <h:form id="AsignaturaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{asignaturaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_idAsignatura}"/>
+                        <h:outputText value="#{asignaturaController.selected.idAsignatura}" title="#{bundle.ViewAsignaturaTitle_idAsignatura}"/>
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_nombreAsignatura}"/>
+                        <h:outputText value="#{asignaturaController.selected.nombreAsignatura}" title="#{bundle.ViewAsignaturaTitle_nombreAsignatura}"/>
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_sctAsignatura}"/>
+                        <h:outputText value="#{asignaturaController.selected.sctAsignatura}" title="#{bundle.ViewAsignaturaTitle_sctAsignatura}"/>
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_nivelAsignatura}"/>
+                        <h:outputText value="#{asignaturaController.selected.nivelAsignatura}" title="#{bundle.ViewAsignaturaTitle_nivelAsignatura}"/>
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_codigoAsignatura}"/>
+                        <h:outputText value="#{asignaturaController.selected.codigoAsignatura}" title="#{bundle.ViewAsignaturaTitle_codigoAsignatura}"/>
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_horasTeoria}"/>
+                        <h:outputText value="#{asignaturaController.selected.horasTeoria}" title="#{bundle.ViewAsignaturaTitle_horasTeoria}"/>
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_horasEjercicio}"/>
+                        <h:outputText value="#{asignaturaController.selected.horasEjercicio}" title="#{bundle.ViewAsignaturaTitle_horasEjercicio}"/>
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_horasLaboratorio}"/>
+                        <h:outputText value="#{asignaturaController.selected.horasLaboratorio}" title="#{bundle.ViewAsignaturaTitle_horasLaboratorio}"/>
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_resumenAsignatura}"/>
+                        <h:outputText value="#{asignaturaController.selected.resumenAsignatura}" title="#{bundle.ViewAsignaturaTitle_resumenAsignatura}"/>
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_idPlan}"/>
+                        <h:outputText value="#{asignaturaController.selected.idPlan}" title="#{bundle.ViewAsignaturaTitle_idPlan}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="AsignaturaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
