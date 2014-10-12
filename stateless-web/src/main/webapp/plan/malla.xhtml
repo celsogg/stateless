@@ -16,5 +16,6 @@ and open the template in the editor.
         <h:form>
             <p:commandButton value="probar! (mira salida por consola del servidor)" action="#{planController.toJSON(1)}"></p:commandButton>
         </h:form>
+        <script type="text/javascript">#{planController.toJSON(1)}</script> 
     </body>
 </html>
