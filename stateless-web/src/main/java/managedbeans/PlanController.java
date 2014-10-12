@@ -1,5 +1,6 @@
 package managedbeans;
 
+import com.google.gson.Gson;
 import entities.Asignatura;
 import entities.Plan;
 import managedbeans.util.JsfUtil;
@@ -167,29 +168,42 @@ public class PlanController implements Serializable {
     }
     
     public String toJSON(Integer planId){
+        StringBuilder jsonB = new StringBuilder();
+        jsonB.append("var context = [");
         Plan plan = getPlan(planId);
         
         ArrayList<Asignatura> as;
         as = new ArrayList<Asignatura>(plan.getAsignaturaCollection());
         for (Asignatura a : as) {
             ArrayList <Asignatura> pre, post;
-            
-            
-            pre = new ArrayList<Asignatura> (a.getAsignaturaCollection());
-            
-            //requisitos
-            System.out.println(a.getNombreAsignatura()+" "+a.getCodigoAsignatura()+" "+ (a.getEsAnual() == 1? "anual" : "semestral"));
-            for (Asignatura p : pre) {
-                System.out.println("--"+p.getNombreAsignatura()+" "+p.getCodigoAsignatura());
-            }
-            //apertura
-            post = new ArrayList<Asignatura> (a.getAsignaturaCollection1());
-            //System.out.println(a.getNombreAsignatura()+" "+a.getCodigoAsignatura());
-            for (Asignatura p : post) {
-                System.out.println("++"+p.getNombreAsignatura()+" "+p.getCodigoAsignatura());
-            }
+            jsonB.append("{ nombre: '");
+            jsonB.append(a.getNombreAsignatura());
+            jsonB.append("', id: ");
+            jsonB.append(a.getCodigoAsignatura());
+            jsonB.append(", nivel: ");
+            jsonB.append(a.getNivelAsignatura());
+            jsonB.append(", anual: ");
+            jsonB.append( a.getEsAnual() == 1 ? "true" : "false" );
+            jsonB.append("}");
+//         
+//            
+//            pre = new ArrayList<Asignatura> (a.getAsignaturaCollection());
+//            
+//            //requisitos
+//            System.out.println(a.getNombreAsignatura()+" "+a.getCodigoAsignatura()+" "+ (a.getEsAnual() == 1? "anual" : "semestral"));
+//            for (Asignatura p : pre) {
+//                System.out.println("--"+p.getNombreAsignatura()+" "+p.getCodigoAsignatura());
+//            }
+//            //apertura
+//            post = new ArrayList<Asignatura> (a.getAsignaturaCollection1());
+//            //System.out.println(a.getNombreAsignatura()+" "+a.getCodigoAsignatura());
+//            for (Asignatura p : post) {
+//                System.out.println("++"+p.getNombreAsignatura()+" "+p.getCodigoAsignatura());
+//            }
+            if (as.lastIndexOf(a) != as.size()-1) jsonB.append(",");
         }
-        return null;
+        jsonB.append("];");
+        return jsonB.toString();
     }
 
 }
