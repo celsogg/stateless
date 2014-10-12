@@ -173,7 +173,7 @@ public class PlanController implements Serializable {
         Plan plan = getPlan(planId);
         
         ArrayList<Asignatura> as;
-        as = new ArrayList<Asignatura>(plan.getAsignaturaCollection());
+        as = new ArrayList<>(plan.getAsignaturaCollection());
         for (Asignatura a : as) {
             ArrayList <Asignatura> pre, post;
             jsonB.append("{ nombre: '");
@@ -184,22 +184,21 @@ public class PlanController implements Serializable {
             jsonB.append(a.getNivelAsignatura());
             jsonB.append(", anual: ");
             jsonB.append( a.getEsAnual() == 1 ? "true" : "false" );
-            jsonB.append("}");
-//         
-//            
-//            pre = new ArrayList<Asignatura> (a.getAsignaturaCollection());
-//            
-//            //requisitos
-//            System.out.println(a.getNombreAsignatura()+" "+a.getCodigoAsignatura()+" "+ (a.getEsAnual() == 1? "anual" : "semestral"));
-//            for (Asignatura p : pre) {
-//                System.out.println("--"+p.getNombreAsignatura()+" "+p.getCodigoAsignatura());
-//            }
-//            //apertura
-//            post = new ArrayList<Asignatura> (a.getAsignaturaCollection1());
-//            //System.out.println(a.getNombreAsignatura()+" "+a.getCodigoAsignatura());
-//            for (Asignatura p : post) {
-//                System.out.println("++"+p.getNombreAsignatura()+" "+p.getCodigoAsignatura());
-//            }
+            //requisitos
+            pre = new ArrayList<> (a.getAsignaturaCollection());
+            jsonB.append(", prerequisitos: [");
+            for (Asignatura p : pre) {
+                jsonB.append(p.getCodigoAsignatura());
+                if ( pre.lastIndexOf(p) != pre.size()-1 ) jsonB.append(",");
+            }
+            jsonB.append("], aperturas: [");
+            //apertura
+            post = new ArrayList<> (a.getAsignaturaCollection1());
+            for (Asignatura p : post) {
+                jsonB.append(p.getCodigoAsignatura());
+                if ( post.lastIndexOf(p) != post.size()-1 ) jsonB.append(",");
+            }
+            jsonB.append("] }");
             if (as.lastIndexOf(a) != as.size()-1) jsonB.append(",");
         }
         jsonB.append("];");
