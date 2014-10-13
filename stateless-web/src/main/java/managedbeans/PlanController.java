@@ -1,6 +1,5 @@
 package managedbeans;
 
-import com.google.gson.Gson;
 import entities.Asignatura;
 import entities.Plan;
 import managedbeans.util.JsfUtil;

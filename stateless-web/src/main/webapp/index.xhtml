@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
@@ -27,7 +29,13 @@
         <br />
         <h:link outcome="/programaAsignatura/List" value="Show All ProgramaAsignatura Items"/>
         <br />
-        <h:link outcome="/plan/malla" value="Malla"/>
+        <h:form >
+            <c:forEach var="mallas" items="#{planController.items}">
+                <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}">
+                    <f:param name="planId" value="#{mallas.idPlan}"></f:param>
+                </h:link><br></br>
+            </c:forEach>
+        </h:form>
     </h:body>
 
 
