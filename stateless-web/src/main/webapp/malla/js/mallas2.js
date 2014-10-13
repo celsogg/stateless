@@ -1,15 +1,14 @@
 var accion = 'aperturas';
 
-jQuery(document).ready(function ($) {
-    jQuery.fn.verticalAlign = function ()
-    {
+jQuery(document).ready(function($) {
+    jQuery.fn.verticalAlign = function() {
         var height = $(this).parent().height();
         console.log(height + 'px');
         if (height > 0)
             return this.css("margin-top", height + 'px')
         return this;
     };
-    Handlebars.registerHelper('ancho', function (anual) {
+    Handlebars.registerHelper('ancho', function(anual) {
         if (anual)
             return '2';
         return '1';
@@ -21,7 +20,7 @@ jQuery(document).ready(function ($) {
             nivel_mas_alto = context[i].nivel;
     }
 
-    Handlebars.registerHelper('imprimir', function (asignaturas) {
+    Handlebars.registerHelper('imprimir', function(asignaturas) {
         var html = '<div>';
         var nivel_actual = 1;
         var asignaturas_impresas = 0;
@@ -93,134 +92,68 @@ jQuery(document).ready(function ($) {
             if (context[i].id == id) {
                 return context[i];
             }
-        }
-        ;
+        };
     }
 
     $('#outercanvas').html(html);
 
     var mas_alto = 0;
-    $('.contenedor_asignatura').each(function(){
-       var alto = $(this).height();
-       if(alto > mas_alto){
-           mas_alto = alto;
-       }
+    $('.contenedor_asignatura').each(function() {
+        var alto = $(this).height();
+        if (alto > mas_alto) {
+            mas_alto = alto;
+        }
     });
-    
+
     // Le asignamos a todas las asignaturas el alto del elemento mas alto
     $('.alto_asignatura').height(mas_alto);
     console.log(mas_alto);
-    
-    $('#contenedor_outercanvas').height( $('#outercanvas').height() + 50);
+
+    $('#contenedor_outercanvas').height($('#outercanvas').height() + 50);
     console.log($('#outercanvas').height() + 100);
-    
+
     //$('.centrar_vertical').css('padding-top', '10px');
-    $('.centrar_vertical span').each(function () {
+    $('.centrar_vertical span').each(function() {
         var elemento = $(this);
         var height = elemento.height();
         var parent = elemento.parent();
         var parent_height = parent.parent().height();
         var nuevo_alto = (parent_height - height) / 3;
-        parent.css('padding-top', nuevo_alto+'px');
+        parent.css('padding-top', nuevo_alto + 'px');
     });
     //$('.centrar_vertical span').flexVerticalCenter();
 
-    function ManejarAperturas(var_this, propiedades_elementos, propiedades_actual) {
-        var id = $(var_this).attr('id').replace('asignatura_', '');
+    function ColorearElementos(esto, color_elemento, color_nodos_activados) {
+        var id = $(esto).attr('id').replace('asignatura_', '');
+
+        $('#asignatura_' + id).css('background', color_elemento);
 
         var asignatura = getById(context, id);
-        var mis_aperturas = asignatura.aperturas ? asignatura.aperturas : [];
 
-        $.each(mis_aperturas, function (key, apertura) {
-            var apertura_id = '#asignatura_' + apertura;
-            $.each(propiedades_elementos, function (key, propiedad) {
-                $(apertura_id).css(propiedad.propiedad, propiedad.valor);
-            });
-        });
+        // Obtengo los elementos
+        if (accion == 'aperturas') {
+            var conjunto = asignatura.aperturas ? asignatura.aperturas : [];
+        }else if(accion == 'prerequisitos'){
+            var conjunto = asignatura.prerequisitos ? asignatura.prerequisitos : [];
+        }
 
-        $.each(propiedades_actual, function (key, propiedad) {
-            $('#asignatura_' + id).css(propiedad.propiedad, propiedad.valor);
+        // Coloreo el conjunto de elementos
+        $.each(conjunto, function(key, apertura) {
+            $('#asignatura_' + apertura).css('background', color_nodos_activados);
         });
     }
 
-    function ManejarPrerequisitos(var_this, propiedades_elementos, propiedades_actual) {
-        var id = $(var_this).attr('id').replace('asignatura_', '');
-
-        var asignatura = getById(context, id);
-        var mis_aperturas = asignatura.prerequisitos ? asignatura.prerequisitos : [];
-
-        $.each(mis_aperturas, function (key, apertura) {
-            var apertura_id = '#asignatura_' + apertura;
-            $.each(propiedades_elementos, function (key, propiedad) {
-                $(apertura_id).css(propiedad.propiedad, propiedad.valor);
-            });
-        });
-
-        $.each(propiedades_actual, function (key, propiedad) {
-            $('#asignatura_' + id).css(propiedad.propiedad, propiedad.valor);
-        });
-    }
-
-    $('.asignatura').on('mouseenter', function () {
-        if (accion == 'aperturas') {
-            var propiedades_elementos = [
-                {propiedad: 'color', valor: 'white'},
-                {propiedad: 'background', valor: '#FF7319'},
-            ];
-            var propiedades_actual = [
-                {propiedad: 'color', valor: 'white'},
-                {propiedad: 'background', valor: '#0052CC'},
-            ]
-            ManejarAperturas(this, propiedades_elementos, propiedades_actual);
-        }
+    $('.asignatura').on('mouseenter', function() {
+            ColorearElementos(this, '#0052CC', '#FF7319');
     });
-    $('.asignatura').on('mouseleave', function () {
-        if (accion == 'aperturas') {
-            var propiedades_elementos = [
-                {propiedad: 'color', valor: 'black'},
-                {propiedad: 'background', valor: 'white'},
-            ];
-            var propiedades_actual = [
-                {propiedad: 'color', valor: 'black'},
-                {propiedad: 'background', valor: 'white'},
-            ]
-            ManejarAperturas(this, propiedades_elementos, propiedades_actual);
-        }
+    $('.asignatura').on('mouseleave', function() {
+            ColorearElementos(this, 'white', 'white');
     });
 
-    $('.asignatura').on('mouseenter', function () {
-        if (accion == 'prerequisitos') {
-            var propiedades_elementos = [
-                {propiedad: 'color', valor: 'white'},
-                {propiedad: 'background', valor: '#FF7319'},
-            ];
-            var propiedades_actual = [
-                {propiedad: 'color', valor: 'white'},
-                {propiedad: 'background', valor: '#0052CC'},
-            ]
-            ManejarPrerequisitos(this, propiedades_elementos, propiedades_actual);
-        }
-    });
-    $('.asignatura').on('mouseleave', function () {
-        if (accion == 'prerequisitos') {
-            var propiedades_elementos = [
-                {propiedad: 'color', valor: 'black'},
-                {propiedad: 'background', valor: 'white'},
-            ];
-            var propiedades_actual = [
-                {propiedad: 'color', valor: 'black'},
-                {propiedad: 'background', valor: 'white'},
-            ]
-            ManejarPrerequisitos(this, propiedades_elementos, propiedades_actual);
-        }
-    });
-
-    // ----- APERTURAS -----
-
-    $('#fw').on('click', function () {
+    $('#fw').on('click', function() {
         accion = 'aperturas';
     });
-    $('#bw').on('click', function () {
+    $('#bw').on('click', function() {
         accion = 'prerequisitos';
     });
 });
