@@ -1,6 +1,6 @@
 #contenedor_outercanvas{
 	padding-top: 50px;
-	height: 500px;
+	height: 540px;
 	padding-left: 25px;
 	padding-right: 25px;
 }
@@ -11,7 +11,7 @@
 	font-size: 10px;
 }
 .alto_asignatura{
-	height: 50px;
+        /*height: 50px;*/
 	margin-bottom: 5px;
 	/*display: table-cell;*/
 	/*vertical-align: middle;*/
@@ -32,6 +32,7 @@
 	font-weight: bold;
 	font-size: 10px;
 	text-align: center;
+        height: 15px;
 }
 #control{
 	font-size: 10px;
