@@ -193,7 +193,6 @@ jQuery(document).ready(function($) {
 
     function ColorearAsignatura(id, color) {
         $('#asignatura_' + id).css('background', color);
-        console.log("C");
         if (color == COLOR_BLANCO) {
             $('#asignatura_' + id).css('color', 'black');
         } else {
@@ -205,15 +204,61 @@ jQuery(document).ready(function($) {
     var COLOR_AZUL = '#0052CC';
     var COLOR_BLANCO = 'white';
 
+    function arr_diff(a1, a2) {
+        var a = [],
+            diff = [];
+        for (var i = 0; i < a1.length; i++)
+            a[a1[i]] = true;
+        for (var i = 0; i < a2.length; i++)
+            if (a[a2[i]]) delete a[a2[i]];
+            else a[a2[i]] = true;
+        for (var k in a)
+            diff.push(k);
+        return diff;
+    }
+
+    var asignaturas_sin_padres = [];
+    var todos_los_hijos = [];
+    for (var i = 0; i < context.length; i++) {
+        for (var j = 0; j < context[i].aperturas.length; j++) {
+            todos_los_hijos.push(context[i].aperturas[j]);
+            todos_los_hijos = RemoverDuplicados(todos_los_hijos);
+        };
+    };
+    var context_ids = [];
+    for (var i = 0; i < context.length; i++) {
+        context_ids.push(parseInt(context[i].id));
+    }
+
+    asignaturas_sin_padres = arr_diff(todos_los_hijos, context_ids);
+    console.log(todos_los_hijos);
+    console.log(context_ids);
+    console.log('asignaturas_sin_padres');
+    // asignaturas_proyectadas = asignaturas_sin_padres;
+    var asignaturas_sin_padres_aux = [];
+    for (var i = 0; i < asignaturas_sin_padres.length; i++) {
+        if ($.isNumeric(asignaturas_sin_padres[i])) {
+            asignaturas_sin_padres_aux.push(parseInt(asignaturas_sin_padres[i]));
+        }
+    };
+    asignaturas_sin_padres = asignaturas_sin_padres_aux;
+    console.log(asignaturas_sin_padres);
+    console.log(asignaturas_sin_padres);
+
     function ColorearAsignaturasProyectadas() {
         for (var i = 0; i < context.length; i++) {
             ColorearAsignatura(context[i].id, COLOR_BLANCO);
         };
         for (var i = 0; i < context.length; i++) {
+            // console.log($.inArray(context[i].id, asignaturas_sin_padres) != -1);
             if (context[i].nivel == 1) {
                 // var asignatura = context[i];
                 ColorearAsignatura(context[i].id, COLOR_NARANJO);
                 // asignaturas_proyectadas.push(asignatura);
+            }
+            if ($.inArray(context[i].id, asignaturas_sin_padres) != -1) {
+                console.log("Coloreando: " + context[i].id)
+                ColorearAsignatura(context[i].id, COLOR_NARANJO);
             }
         };
         for (var i = 0; i < asignaturas_proyectadas.length; i++) {
@@ -238,9 +283,7 @@ jQuery(document).ready(function($) {
         asignaturas_proyectadas = RemoverDuplicados(asignaturas_proyectadas);
         console.log(asignaturas_proyectadas);
         ColorearAsignaturasProyectadas();
-        console.log("===============");
         if (nivel == 0) {
-            console.log("===============");
             for (var i = 0; i < context.length; i++) {
                 ColorearAsignatura(context[i].id, COLOR_BLANCO);
             };
@@ -249,6 +292,9 @@ jQuery(document).ready(function($) {
                     // var asignatura = context[i];
                     ColorearAsignatura(context[i].id, COLOR_NARANJO);
                     // asignaturas_proyectadas.push(asignatura);
+                }
+                if ($.inArray(context[i].id, asignaturas_sin_padres) != -1) {
+                    ColorearAsignatura(context[i].id, COLOR_NARANJO);
                 }
             };
         }
