@@ -40,5 +40,7 @@
 
 #spinme{
 	margin-right: 5px!important;
-	display: hidden;
+}
+#outline{
+	display: none;
 }

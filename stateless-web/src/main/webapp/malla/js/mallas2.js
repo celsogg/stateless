@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
         var height = $(this).parent().height();
         console.log(height + 'px');
         if (height > 0)
-            return this.css("margin-top", height + 'px');
+            return this.css("margin-top", height + 'px')
         return this;
     };
     Handlebars.registerHelper('ancho', function(anual) {
@@ -430,14 +430,17 @@ jQuery(document).ready(function($) {
     $('#fw').on('click', function() {
         accion = 'aperturas';
         LimpiarAsignaturas();
+        $('#outline').hide();
     });
     $('#bw').on('click', function() {
         accion = 'prerequisitos';
         LimpiarAsignaturas();
+        $('#outline').hide();
     });
     $('#fwbw').on('click', function() {
         accion = 'proyeccion';
         $('#spinme').change();
+        $('#outline').slideToggle();
     });
     // accion = 'proyeccion';
     $('#spinme').spin({
