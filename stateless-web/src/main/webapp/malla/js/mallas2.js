@@ -290,13 +290,13 @@ jQuery(document).ready(function($) {
                     ColorearAsignatura(context[i].id, COLOR_BLANCO);
                 };
                 for (var i = 0; i < context.length; i++) {
-                    if (context[i].nivel == 1) {
+                    if ($.inArray(context[i].id, asignaturas_sin_padres) != -1) {
+                        //ColorearAsignatura(context[i].id, COLOR_NARANJO);
+                        $('#asignatura_'+context[i].id).css('border', '1px solid ' + COLOR_NARANJO);
+                    }else if (context[i].nivel == 1) {
                         // var asignatura = context[i];
                         ColorearAsignatura(context[i].id, COLOR_NARANJO);
                         // asignaturas_proyectadas.push(asignatura);
-                    }
-                    if ($.inArray(context[i].id, asignaturas_sin_padres) != -1) {
-                        ColorearAsignatura(context[i].id, COLOR_NARANJO);
                     }
                 };
             }
