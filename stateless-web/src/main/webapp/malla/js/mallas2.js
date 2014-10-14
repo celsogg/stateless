@@ -130,10 +130,16 @@ jQuery(document).ready(function($) {
     });
     //$('.centrar_vertical span').flexVerticalCenter();
 
-    function ColorearElementos(esto, accion, color_elemento, color_nodos_activados) {
+    function ColorearElementos(esto, accion, color_elemento, color_nodos_activados, color_texto) {
         var id = $(esto).attr('id').replace('asignatura_', '');
 
         $('#asignatura_' + id).css('background', color_elemento);
+        console.log("A");
+        if (color_elemento == COLOR_BLANCO) {
+            $('#asignatura_' + id).css('color', 'black');
+        } else {
+            $('#asignatura_' + id).css('color', 'white');
+        }
 
         var asignatura = getById(context, id);
 
@@ -146,7 +152,21 @@ jQuery(document).ready(function($) {
 
         // Coloreo el conjunto de elementos
         $.each(conjunto, function(key, apertura) {
+            console.log("B");
             $('#asignatura_' + apertura).css('background', color_nodos_activados);
+            console.log(color_nodos_activados);
+            if (color_nodos_activados == 'COLOR_BLANCO') {
+                $('#asignatura_' + apertura).css('color', 'black');
+            } else if (color_nodos_activados == 'COLOR_NARANJO') {
+                $('#asignatura_' + apertura).css('color', 'black');
+            } else {
+                console.log("$(#asignatura_" + apertura + ").css('color', 'black');");
+                $('#asignatura_' + apertura).css('color', 'black');
+
+                if (color_texto) {
+                    $('#asignatura_' + apertura).css('color', color_texto);
+                }
+            }
         });
     }
 
@@ -173,11 +193,17 @@ jQuery(document).ready(function($) {
 
     function ColorearAsignatura(id, color) {
         $('#asignatura_' + id).css('background', color);
+        console.log("C");
+        if (color == COLOR_BLANCO) {
+            $('#asignatura_' + id).css('color', 'black');
+        } else {
+            $('#asignatura_' + id).css('color', 'white');
+        }
     }
 
     var COLOR_NARANJO = '#FF7319';
     var COLOR_AZUL = '#0052CC';
-    var COLOR_BLANCO = '#FFFFFF';
+    var COLOR_BLANCO = 'white';
 
     function ColorearAsignaturasProyectadas() {
         for (var i = 0; i < context.length; i++) {
@@ -242,12 +268,13 @@ jQuery(document).ready(function($) {
 
     $('.asignatura').on('mouseenter', function() {
         if (accion != 'proyeccion') {
-            ColorearElementos(this, accion, '#0052CC', '#FF7319');
+            // ColorearElementos(this, accion, '#0052CC', '#FF7319');
+            ColorearElementos(this, accion, '#0052CC', '#FF7319', 'white');
         }
     });
     $('.asignatura').on('mouseleave', function() {
         if (accion != 'proyeccion') {
-            ColorearElementos(this, accion, 'white', 'white');
+            ColorearElementos(this, accion, 'white', 'white', 'black');
         }
     });
 
@@ -265,7 +292,7 @@ jQuery(document).ready(function($) {
         var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
         var hexString;
         if (parts == null) {
-            hexString = '#ffffff';
+            hexString = 'white';
         } else {
             // parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
 
@@ -300,7 +327,7 @@ jQuery(document).ready(function($) {
     $('.asignatura').on('click', function() {
         var hexString = GetHexString($(this).css('backgroundColor'));
 
-        // if (hexString != '#ffffff') {
+        // if (hexString != 'white') {
         //     if (accion == 'proyeccion') {
         //         var id = $(this).attr('id').replace('asignatura_', '');
         //         ColorearElementos(this, accion, '#0052CC', '#FF7319');
@@ -374,6 +401,8 @@ jQuery(document).ready(function($) {
         if (accion == 'proyeccion') {
             var nivel_proyeccion = parseInt($(this).val());
             $('.asignatura').css('background', 'white');
+            console.log("D");
+            $('.asignatura').css('color', 'black');
             for (var i = 0; i < nivel_mas_alto + 1; i++) {
                 if (i < nivel_proyeccion + 1) {
                     ProyectarNivel(i);
