@@ -109,11 +109,15 @@ jQuery(document).ready(function($) {
     });
 
     // Le asignamos a todas las asignaturas el alto del elemento mas alto
-    $('.alto_asignatura').height(mas_alto);
+    $('.alto_asignatura').height(50);
+    if (mas_alto > 50) {
+        $('.asignatura').css('font-size', '9px');
+    }
+    // $('.alto_asignatura').height(mas_alto);
     console.log(mas_alto);
 
-    $('#contenedor_outercanvas').height($('#outercanvas').height() + 50);
-    console.log($('#outercanvas').height() + 100);
+    $('#contenedor_outercanvas').height($('#outercanvas').height() + 150);
+    console.log($('#outercanvas').height() + 300);
 
     //$('.centrar_vertical').css('padding-top', '10px');
     $('.centrar_vertical span').each(function() {
