@@ -130,10 +130,16 @@ jQuery(document).ready(function($) {
     });
     //$('.centrar_vertical span').flexVerticalCenter();
 
-    function ColorearElementos(esto, accion, color_elemento, color_nodos_activados) {
+    function ColorearElementos(esto, accion, color_elemento, color_nodos_activados, color_texto) {
         var id = $(esto).attr('id').replace('asignatura_', '');
 
         $('#asignatura_' + id).css('background', color_elemento);
+        console.log("A");
+        if (color_elemento == COLOR_BLANCO) {
+            $('#asignatura_' + id).css('color', 'black');
+        } else {
+            $('#asignatura_' + id).css('color', 'white');
+        }
 
         var asignatura = getById(context, id);
 
@@ -146,7 +152,21 @@ jQuery(document).ready(function($) {
 
         // Coloreo el conjunto de elementos
         $.each(conjunto, function(key, apertura) {
+            console.log("B");
             $('#asignatura_' + apertura).css('background', color_nodos_activados);
+            console.log(color_nodos_activados);
+            if (color_nodos_activados == 'COLOR_BLANCO') {
+                $('#asignatura_' + apertura).css('color', 'black');
+            } else if (color_nodos_activados == 'COLOR_NARANJO') {
+                $('#asignatura_' + apertura).css('color', 'black');
+            } else {
+                console.log("$(#asignatura_" + apertura + ").css('color', 'black');");
+                $('#asignatura_' + apertura).css('color', 'black');
+
+                if (color_texto) {
+                    $('#asignatura_' + apertura).css('color', color_texto);
+                }
+            }
         });
     }
 
@@ -173,21 +193,72 @@ jQuery(document).ready(function($) {
 
     function ColorearAsignatura(id, color) {
         $('#asignatura_' + id).css('background', color);
+        if (color == COLOR_BLANCO) {
+            $('#asignatura_' + id).css('color', 'black');
+        } else {
+            $('#asignatura_' + id).css('color', 'white');
+        }
     }
 
     var COLOR_NARANJO = '#FF7319';
     var COLOR_AZUL = '#0052CC';
-    var COLOR_BLANCO = '#FFFFFF';
+    var COLOR_BLANCO = 'white';
+
+    function arr_diff(a1, a2) {
+        var a = [],
+            diff = [];
+        for (var i = 0; i < a1.length; i++)
+            a[a1[i]] = true;
+        for (var i = 0; i < a2.length; i++)
+            if (a[a2[i]]) delete a[a2[i]];
+            else a[a2[i]] = true;
+        for (var k in a)
+            diff.push(k);
+        return diff;
+    }
+
+    var asignaturas_sin_padres = [];
+    var todos_los_hijos = [];
+    for (var i = 0; i < context.length; i++) {
+        for (var j = 0; j < context[i].aperturas.length; j++) {
+            todos_los_hijos.push(context[i].aperturas[j]);
+            todos_los_hijos = RemoverDuplicados(todos_los_hijos);
+        };
+    };
+    var context_ids = [];
+    for (var i = 0; i < context.length; i++) {
+        context_ids.push(parseInt(context[i].id));
+    }
+
+    asignaturas_sin_padres = arr_diff(todos_los_hijos, context_ids);
+    console.log(todos_los_hijos);
+    console.log(context_ids);
+    console.log('asignaturas_sin_padres');
+    // asignaturas_proyectadas = asignaturas_sin_padres;
+    var asignaturas_sin_padres_aux = [];
+    for (var i = 0; i < asignaturas_sin_padres.length; i++) {
+        if ($.isNumeric(asignaturas_sin_padres[i])) {
+            asignaturas_sin_padres_aux.push(parseInt(asignaturas_sin_padres[i]));
+        }
+    };
+    asignaturas_sin_padres = asignaturas_sin_padres_aux;
+    console.log(asignaturas_sin_padres);
+    console.log(asignaturas_sin_padres);
 
     function ColorearAsignaturasProyectadas() {
         for (var i = 0; i < context.length; i++) {
             ColorearAsignatura(context[i].id, COLOR_BLANCO);
         };
         for (var i = 0; i < context.length; i++) {
+            // console.log($.inArray(context[i].id, asignaturas_sin_padres) != -1);
             if (context[i].nivel == 1) {
                 // var asignatura = context[i];
                 ColorearAsignatura(context[i].id, COLOR_NARANJO);
                 // asignaturas_proyectadas.push(asignatura);
+            }
+            if ($.inArray(context[i].id, asignaturas_sin_padres) != -1) {
+                console.log("Coloreando: " + context[i].id)
+                ColorearAsignatura(context[i].id, COLOR_NARANJO);
             }
         };
         for (var i = 0; i < asignaturas_proyectadas.length; i++) {
@@ -203,18 +274,20 @@ jQuery(document).ready(function($) {
     }
 
     function ProyectarNivel(nivel) {
+        asignaturas_proyectadas = [];
         for (var i = 0; i < context.length; i++) {
             if (context[i].nivel <= nivel) {
                 var asignatura = context[i];
                 asignaturas_proyectadas.push(asignatura);
             }
         };
+        for (var i = 0; i < context.length; i++) {
+            ColorearAsignatura(context[i].id, COLOR_BLANCO);
+        };
         asignaturas_proyectadas = RemoverDuplicados(asignaturas_proyectadas);
         console.log(asignaturas_proyectadas);
         ColorearAsignaturasProyectadas();
-        console.log("===============");
         if (nivel == 0) {
-            console.log("===============");
             for (var i = 0; i < context.length; i++) {
                 ColorearAsignatura(context[i].id, COLOR_BLANCO);
             };
@@ -223,6 +296,9 @@ jQuery(document).ready(function($) {
                     // var asignatura = context[i];
                     ColorearAsignatura(context[i].id, COLOR_NARANJO);
                     // asignaturas_proyectadas.push(asignatura);
+                }
+                if ($.inArray(context[i].id, asignaturas_sin_padres) != -1) {
+                    ColorearAsignatura(context[i].id, COLOR_NARANJO);
                 }
             };
         }
@@ -242,12 +318,13 @@ jQuery(document).ready(function($) {
 
     $('.asignatura').on('mouseenter', function() {
         if (accion != 'proyeccion') {
-            ColorearElementos(this, accion, '#0052CC', '#FF7319');
+            // ColorearElementos(this, accion, '#0052CC', '#FF7319');
+            ColorearElementos(this, accion, '#0052CC', '#FF7319', 'white');
         }
     });
     $('.asignatura').on('mouseleave', function() {
         if (accion != 'proyeccion') {
-            ColorearElementos(this, accion, 'white', 'white');
+            ColorearElementos(this, accion, 'white', 'white', 'black');
         }
     });
 
@@ -265,7 +342,7 @@ jQuery(document).ready(function($) {
         var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
         var hexString;
         if (parts == null) {
-            hexString = '#ffffff';
+            hexString = 'white';
         } else {
             // parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
 
@@ -300,7 +377,7 @@ jQuery(document).ready(function($) {
     $('.asignatura').on('click', function() {
         var hexString = GetHexString($(this).css('backgroundColor'));
 
-        // if (hexString != '#ffffff') {
+        // if (hexString != 'white') {
         //     if (accion == 'proyeccion') {
         //         var id = $(this).attr('id').replace('asignatura_', '');
         //         ColorearElementos(this, accion, '#0052CC', '#FF7319');
@@ -374,6 +451,8 @@ jQuery(document).ready(function($) {
         if (accion == 'proyeccion') {
             var nivel_proyeccion = parseInt($(this).val());
             $('.asignatura').css('background', 'white');
+            console.log("D");
+            $('.asignatura').css('color', 'black');
             for (var i = 0; i < nivel_mas_alto + 1; i++) {
                 if (i < nivel_proyeccion + 1) {
                     ProyectarNivel(i);
