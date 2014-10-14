@@ -274,11 +274,15 @@ jQuery(document).ready(function($) {
     }
 
     function ProyectarNivel(nivel) {
+        asignaturas_proyectadas = [];
         for (var i = 0; i < context.length; i++) {
             if (context[i].nivel <= nivel) {
                 var asignatura = context[i];
                 asignaturas_proyectadas.push(asignatura);
             }
+        };
+        for (var i = 0; i < context.length; i++) {
+            ColorearAsignatura(context[i].id, COLOR_BLANCO);
         };
         asignaturas_proyectadas = RemoverDuplicados(asignaturas_proyectadas);
         console.log(asignaturas_proyectadas);
