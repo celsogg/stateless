@@ -6,5 +6,3 @@
 
 
 //set jquery to no conflict, so we do not have a problem with the version from in the page
-var $$ = jQuery.noConflict(true);
-var $ = jQuery = null; //we will be using the normal jquery vars soon enough
