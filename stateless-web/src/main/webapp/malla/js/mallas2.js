@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
         var height = $(this).parent().height();
         console.log(height + 'px');
         if (height > 0)
-            return this.css("margin-top", height + 'px')
+            return this.css("margin-top", height + 'px');
         return this;
     };
     Handlebars.registerHelper('ancho', function(anual) {
