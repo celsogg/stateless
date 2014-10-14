@@ -23,9 +23,10 @@ and open the template in the editor.
 
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        
+
         <script language="javascript" type="text/javascript" src="js/handlebars-v2.0.0.js"></script>
         <script language="javascript" type="text/javascript" src="js/flexVerticalCenter.js"></script>
+        <script language="javascript" type="text/javascript" src="js/jquery-spin.js" charset="utf-8"></script>
         <script language="javascript" type="text/javascript" src="js/mallas2.js" charset="utf-8"></script>
         <script language="javascript" type="text/javascript" src="js/prototype.js"></script>
         <script language="javascript" type="text/javascript" src="js/SpinnerControl.js"></script>
@@ -36,43 +37,32 @@ and open the template in the editor.
         <script>
             //jQuery.noConflict();
             //jQuery(document).ready(init);
-             
+
         </script>
     </head>
     <body>
         <script id="asignaturas" type="text/x-handlebars-template">
             <div class="row">
-                {{{imprimir this}}}
+            {{{imprimir this}}}
             </div>
         </script>
         <div id="main" style="min-width: 1280px; background: url(images/background.png) 100% 0% no-repeat white;">
             <div id="header">
-                <div id="college">FACULTAD DE INGENIERÍA</div>
-                <div id="program">INGENIERÍA CIVIL INFORMÁTICA (1863)</div>
+                <div id="college">FACULTAD DE INGENIERÃA</div>
+                <div id="program">INGENIERÃA CIVIL INFORMÃTICA (1863)</div>
             </div>
             <div id="contenedor_outercanvas">
                 <div id="outercanvas">
                 </div>
                 <div id="control">
                     <div id="radio">
-                        <input type="radio" name="rg" id="fw" checked="checked">APERTURA</input><br />
-                        <input type="radio" name="rg" id="bw">PRERREQUISITOS</input><br />
-                        <input type="radio" name="rg" id="fwbw">PROYECCION</input>
-                            <div id="outline" class="outline" style="visibility: hidden;">
-                            nivel
-                            <div id="tb">
-                                <table border="0" cellpadding="0" cellspacing="0">
-                                    <tbody>
-                                        <tr>
-                                            <td rowspan="2"><input class="spin-decimal" id="spinme" value="0" type="text" /></td>
-                                            <td><a href="javascript:;" id="up" class="up"></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="javascript:;" id="dn" class="dn"></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <input type="radio" name="rg" id="fw" checked="checked"/>APERTURA<br/>
+                        <input type="radio" name="rg" id="bw"/>PRERREQUISITOS<br/>
+                        <input type="radio" name="rg" id="fwbw"/>PROYECCION
+                        <div id="outline" class="outline">
+                            <!-- <div id="outline" class="outline" style="visibility: hidden;"> -->
+                            Nivel
+                            <input class="spin-decimal" id="spinme" value="0" type="text"/>
                         </div>
                     </div>
                 </div>
@@ -82,7 +72,7 @@ and open the template in the editor.
             www.usach.cl
         </div>
         <div id="cc" style="min-width: 1300px;">
-            Desarrollado por <a rel="nofollow" href="mailto:hector.opazor@usach.cl">Héctor Opazo R</a>
+            Desarrollado por <a rel="nofollow" href="mailto:hector.opazor@usach.cl">HÃ©ctor Opazo R</a>
         </div>
         <script language="javascript" type="text/javascript">#{planController.toJSON(param['planId'])}</script>
     </body>
