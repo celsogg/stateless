@@ -179,6 +179,13 @@ jQuery(document).ready(function($) {
         for (var i = 0; i < context.length; i++) {
             ColorearAsignatura(context[i].id, COLOR_BLANCO);
         };
+        for (var i = 0; i < context.length; i++) {
+            if (context[i].nivel == 1) {
+                // var asignatura = context[i];
+                ColorearAsignatura(context[i].id, COLOR_NARANJO);
+                // asignaturas_proyectadas.push(asignatura);
+            }
+        };
         for (var i = 0; i < asignaturas_proyectadas.length; i++) {
             for (var j = 0; j < asignaturas_proyectadas[i].aperturas.length; j++) {
                 // console.log("Coloreando: " + asignaturas_proyectadas[i].aperturas[j]);
