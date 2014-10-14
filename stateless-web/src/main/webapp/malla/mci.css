@@ -138,7 +138,7 @@ td {
 }
 input.spin-decimal {
   margin: 0;
-  padding: 0 6px;
+  /*padding: 0 6px;*/
   text-align: right;
   border: medium none;
   width: 14px;

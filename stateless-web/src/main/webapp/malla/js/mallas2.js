@@ -23,9 +23,7 @@ jQuery(document).ready(function($) {
     function GetHexString(rgbString) {
         var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
         var hexString;
-        console.log(parts);
         if (parts == null || parts[0] > 255 || parts[1] > 255 || parts[2] > 255 || parts[0] < 0 || parts[1] < 0 || parts[2] < 0) {
-        console.log("AAAAAAAAa");
             hexString = 'white';
         } else {
             // parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
@@ -47,7 +45,6 @@ jQuery(document).ready(function($) {
         }
         jQuery.fn.verticalAlign = function() {
             var height = $(this).parent().height();
-            console.log(height + 'px');
             if (height > 0)
                 return this.css("margin-top", height + 'px')
             return this;
@@ -73,11 +70,8 @@ jQuery(document).ready(function($) {
 
             while (asignaturas_impresas < total_asignaturas) {
                 var imprimio = false;
-                //console.log("======== Nivel: "+nivel_actual);
                 for (var i = 0; i < asignaturas.length; i++) {
                     if (!asignaturas[i].impresa && asignaturas[i].nivel == nivel_actual) {
-                        // console.log("Nivel: "+nivel_actual);
-                        // console.log("Asignatura: "+asignaturas[i].nombre);
                         imprimio = true;
                         asignaturas[i].impresa = true;
 
@@ -154,13 +148,9 @@ jQuery(document).ready(function($) {
         if (mas_alto > 50) {
             $('.asignatura').css('font-size', '9px');
         }
-        // $('.alto_asignatura').height(mas_alto);
-        console.log(mas_alto);
 
         $('#contenedor_outercanvas').height($('#outercanvas').height() + 150);
-        console.log($('#outercanvas').height() + 300);
 
-        //$('.centrar_vertical').css('padding-top', '10px');
         $('.centrar_vertical span').each(function() {
             var elemento = $(this);
             var height = elemento.height();
@@ -175,7 +165,6 @@ jQuery(document).ready(function($) {
             var id = $(esto).attr('id').replace('asignatura_', '');
 
             $('#asignatura_' + id).css('background', color_elemento);
-            console.log("A");
             if (color_elemento == COLOR_BLANCO) {
                 $('#asignatura_' + id).css('color', 'black');
             } else {
@@ -193,15 +182,12 @@ jQuery(document).ready(function($) {
 
             // Coloreo el conjunto de elementos
             $.each(conjunto, function(key, apertura) {
-                console.log("B");
                 $('#asignatura_' + apertura).css('background', color_nodos_activados);
-                console.log(color_nodos_activados);
                 if (color_nodos_activados == 'COLOR_BLANCO') {
                     $('#asignatura_' + apertura).css('color', 'black');
                 } else if (color_nodos_activados == 'COLOR_NARANJO') {
                     $('#asignatura_' + apertura).css('color', 'black');
                 } else {
-                    console.log("$(#asignatura_" + apertura + ").css('color', 'black');");
                     $('#asignatura_' + apertura).css('color', 'black');
 
                     if (color_texto) {
@@ -253,10 +239,6 @@ jQuery(document).ready(function($) {
         }
 
         asignaturas_sin_padres = arr_diff(todos_los_hijos, context_ids);
-        console.log(todos_los_hijos);
-        console.log(context_ids);
-        console.log('asignaturas_sin_padres');
-        // asignaturas_proyectadas = asignaturas_sin_padres;
         var asignaturas_sin_padres_aux = [];
         for (var i = 0; i < asignaturas_sin_padres.length; i++) {
             if ($.isNumeric(asignaturas_sin_padres[i])) {
@@ -264,28 +246,23 @@ jQuery(document).ready(function($) {
             }
         };
         asignaturas_sin_padres = asignaturas_sin_padres_aux;
-        console.log(asignaturas_sin_padres);
-        console.log(asignaturas_sin_padres);
 
         function ColorearAsignaturasProyectadas() {
             for (var i = 0; i < context.length; i++) {
                 ColorearAsignatura(context[i].id, COLOR_BLANCO);
             };
             for (var i = 0; i < context.length; i++) {
-                // console.log($.inArray(context[i].id, asignaturas_sin_padres) != -1);
                 if (context[i].nivel == 1) {
                     // var asignatura = context[i];
                     ColorearAsignatura(context[i].id, COLOR_NARANJO);
                     // asignaturas_proyectadas.push(asignatura);
                 }
                 if ($.inArray(context[i].id, asignaturas_sin_padres) != -1) {
-                    console.log("Coloreando: " + context[i].id)
                     ColorearAsignatura(context[i].id, COLOR_NARANJO);
                 }
             };
             for (var i = 0; i < asignaturas_proyectadas.length; i++) {
                 for (var j = 0; j < asignaturas_proyectadas[i].aperturas.length; j++) {
-                    // console.log("Coloreando: " + asignaturas_proyectadas[i].aperturas[j]);
                     ColorearAsignatura(asignaturas_proyectadas[i].aperturas[j], COLOR_NARANJO);
                 };
             };
@@ -307,7 +284,6 @@ jQuery(document).ready(function($) {
                 ColorearAsignatura(context[i].id, COLOR_BLANCO);
             };
             asignaturas_proyectadas = RemoverDuplicados(asignaturas_proyectadas);
-            console.log(asignaturas_proyectadas);
             ColorearAsignaturasProyectadas();
             if (nivel == 0) {
                 for (var i = 0; i < context.length; i++) {
@@ -329,11 +305,9 @@ jQuery(document).ready(function($) {
         function DesProyectarNivel(nivel) {
             for (var i = 0; i < context.length; i++) {
                 if (context[i].nivel == nivel) {
-                    console.log("if(" + GetHexString($('#asignatura_' + context[i].id).css('backgroundColor')) + ")");
                     if (GetHexString($('#asignatura_' + context[i].id).css('backgroundColor')) == '#FF7319') {
                         ColorearElementos($('#asignatura_' + context[i].id), 'aperturas', 'white', 'white');
                     }
-                    // console.log("Nivel: " + nivel);
                 }
             };
         }
@@ -365,11 +339,7 @@ jQuery(document).ready(function($) {
             asignaturas_proyectadas = Eliminar(asignatura, asignaturas_proyectadas);
             for (var i = 0; i < asignatura.aperturas.length; i++) {
                 var nodo = getById(context, asignatura.aperturas[i]);
-                // console.log(nodo);
                 var color = GetHexString($('#asignatura_' + nodo.id).css('backgroundColor'));
-                // console.log(color);
-                console.log(nodo.id);
-                console.log("Pinte " + '#asignatura_' + nodo.id + " de color: " + COLOR_BLANCO)
                 ColorearAsignatura(nodo.id, COLOR_BLANCO);
                 asignaturas_proyectadas = Eliminar(nodo, asignaturas_proyectadas);
                 if (color == COLOR_AZUL) {
@@ -391,7 +361,6 @@ jQuery(document).ready(function($) {
                 var id = GetId(this);
                 var nodo = getById(context, id);
 
-                console.log("============== ")
                 if (hexString == COLOR_AZUL) {
 
                     ApagarAsignatura(nodo);
@@ -405,16 +374,13 @@ jQuery(document).ready(function($) {
                     ColorearAsignaturasProyectadas();
                 }
                 if (hexString == COLOR_BLANCO) {
-                    console.log("Busco: " + id)
                     var tiene_algun_padre_en_array = false;
                     for (var i = 0; i < asignaturas_proyectadas.length; i++) {
                         var nodo = getById(asignaturas_proyectadas[i]);
                         for (var i = 0; i < nodo.aperturas.length; i++) {
                             if (nodo.aperturas[i] == id) {
-                                console.log(asignaturas_proyectadas);
                                 asignaturas_proyectadas.push(nodo);
                                 asignaturas_proyectadas = RemoverDuplicados(asignaturas_proyectadas);
-                                console.log(asignaturas_proyectadas);
                                 ColorearAsignaturasProyectadas();
                             }
                         };
@@ -444,6 +410,8 @@ jQuery(document).ready(function($) {
         $('#fwbw').on('click', function() {
             accion = 'proyeccion';
             $('#spinme').change();
+            $('#spinme').val(0);
+            $('#spinme').click();
             $('#outline').slideToggle();
         });
         // accion = 'proyeccion';
@@ -458,7 +426,6 @@ jQuery(document).ready(function($) {
             if (accion == 'proyeccion') {
                 var nivel_proyeccion = parseInt($(this).val());
                 $('.asignatura').css('background', 'white');
-                console.log("D");
                 $('.asignatura').css('color', 'black');
                 for (var i = 0; i < nivel_mas_alto + 1; i++) {
                     if (i < nivel_proyeccion + 1) {
@@ -504,7 +471,7 @@ jQuery(document).ready(function($) {
             assert.deepEqual(remover_A_3, remover_B_3, "Arreglo de largo 1 y arreglo de largo 2, ambos tienen solo el numero 1");
         });
 
-        QUnit.test("Remover elementos de un arreglo", function(assert) {
+        QUnit.test("Transformar de RGB a Hex ( Funcion GetHexString() )", function(assert) {
             // Eliminar
             // assert.ok(1 == "1", "Passed!");
 
@@ -532,7 +499,5 @@ jQuery(document).ready(function($) {
             var salida_A_1  = 'white';
             assert.equal(entrada_A_1, salida_A_1, "Texto erroneo");
         });
-
-        GetHexString
     }
 });
