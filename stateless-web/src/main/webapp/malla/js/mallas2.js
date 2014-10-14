@@ -1,5 +1,20 @@
 var accion = 'aperturas';
 
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "positionClass": "toast-bottom-full-width",
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
 jQuery(document).ready(function($) {
 
     function RemoverDuplicados(names) {
@@ -35,7 +50,10 @@ jQuery(document).ready(function($) {
             }
             hexString = '#' + parts.join('').toUpperCase(); // "#0070FF"
         }
-        return hexString
+        if(hexString == '#FFFFFF'){
+            return 'white';
+        }
+        return hexString;
     }
 
     if (!pruebas) {
@@ -241,7 +259,7 @@ jQuery(document).ready(function($) {
         asignaturas_sin_padres = arr_diff(todos_los_hijos, context_ids);
         var asignaturas_sin_padres_aux = [];
         for (var i = 0; i < asignaturas_sin_padres.length; i++) {
-            if ($.isNumeric(asignaturas_sin_padres[i])) {
+            if ($.isNumeric(asignaturas_sin_padres[i]) && getById(context, asignaturas_sin_padres[i]).nivel < 3) {
                 asignaturas_sin_padres_aux.push(parseInt(asignaturas_sin_padres[i]));
             }
         };
@@ -290,13 +308,12 @@ jQuery(document).ready(function($) {
                     ColorearAsignatura(context[i].id, COLOR_BLANCO);
                 };
                 for (var i = 0; i < context.length; i++) {
+                    console.log(asignaturas_sin_padres);
                     if ($.inArray(context[i].id, asignaturas_sin_padres) != -1) {
-                        //ColorearAsignatura(context[i].id, COLOR_NARANJO);
-                        $('#asignatura_'+context[i].id).css('border', '1px solid ' + COLOR_NARANJO);
-                    }else if (context[i].nivel == 1) {
-                        // var asignatura = context[i];
                         ColorearAsignatura(context[i].id, COLOR_NARANJO);
-                        // asignaturas_proyectadas.push(asignatura);
+                        // $('#asignatura_'+context[i].id).css('border', '1px solid ' + COLOR_NARANJO);
+                    } else if (context[i].nivel == 1) {
+                        ColorearAsignatura(context[i].id, COLOR_NARANJO);
                     }
                 };
             }
@@ -314,7 +331,6 @@ jQuery(document).ready(function($) {
 
         $('.asignatura').on('mouseenter', function() {
             if (accion != 'proyeccion') {
-                // ColorearElementos(this, accion, '#0052CC', '#FF7319');
                 ColorearElementos(this, accion, '#0052CC', '#FF7319', 'white');
             }
         });
@@ -351,18 +367,11 @@ jQuery(document).ready(function($) {
         $('.asignatura').on('click', function() {
             var hexString = GetHexString($(this).css('backgroundColor'));
 
-            // if (hexString != 'white') {
-            //     if (accion == 'proyeccion') {
-            //         var id = $(this).attr('id').replace('asignatura_', '');
-            //         ColorearElementos(this, accion, '#0052CC', '#FF7319');
-            //     }
-            // }
             if (accion == 'proyeccion') {
                 var id = GetId(this);
                 var nodo = getById(context, id);
 
                 if (hexString == COLOR_AZUL) {
-
                     ApagarAsignatura(nodo);
 
                     // asignaturas_proyectadas = Eliminar(nodo, asignaturas_proyectadas);
@@ -374,6 +383,7 @@ jQuery(document).ready(function($) {
                     ColorearAsignaturasProyectadas();
                 }
                 if (hexString == COLOR_BLANCO) {
+                    toastr.error('Error: Solo puedes seleccionar las asignaturas azules o naranjas')
                     var tiene_algun_padre_en_array = false;
                     for (var i = 0; i < asignaturas_proyectadas.length; i++) {
                         var nodo = getById(asignaturas_proyectadas[i]);
@@ -476,27 +486,27 @@ jQuery(document).ready(function($) {
             // assert.ok(1 == "1", "Passed!");
 
             var entrada_A_1 = GetHexString('rgb(0, 0, 0)');
-            var salida_A_1  = '#000000';
+            var salida_A_1 = '#000000';
             assert.equal(entrada_A_1, salida_A_1, "RGB(0, 0, 0)");
 
             var entrada_A_1 = GetHexString('rgb(12, 86, 12)');
-            var salida_A_1  = '#0C560C';
+            var salida_A_1 = '#0C560C';
             assert.equal(entrada_A_1, salida_A_1, "RGB(12, 86, 12)");
 
             var entrada_A_1 = GetHexString('rgb(666, 666, 666)');
-            var salida_A_1  = 'white';
+            var salida_A_1 = 'white';
             assert.equal(entrada_A_1, salida_A_1, "Colores fuera de limites positivos");
 
             var entrada_A_1 = GetHexString('rgb(-12, -6, -23)');
-            var salida_A_1  = 'white';
+            var salida_A_1 = 'white';
             assert.equal(entrada_A_1, salida_A_1, "Colores fuera de limites negativos");
 
             var entrada_A_1 = GetHexString('rgb(12, 256, -23)');
-            var salida_A_1  = 'white';
+            var salida_A_1 = 'white';
             assert.equal(entrada_A_1, salida_A_1, "Colores fuera de limites negativos y positivos");
 
             var entrada_A_1 = GetHexString('daffdfsgs');
-            var salida_A_1  = 'white';
+            var salida_A_1 = 'white';
             assert.equal(entrada_A_1, salida_A_1, "Texto erroneo");
         });
     }
