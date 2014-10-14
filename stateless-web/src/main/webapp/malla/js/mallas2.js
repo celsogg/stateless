@@ -110,7 +110,7 @@ jQuery(document).ready(function($) {
 
     // Le asignamos a todas las asignaturas el alto del elemento mas alto
     $('.alto_asignatura').height(50);
-    if(mas_alto > 50){
+    if (mas_alto > 50) {
         $('.asignatura').css('font-size', '9px');
     }
     // $('.alto_asignatura').height(mas_alto);
