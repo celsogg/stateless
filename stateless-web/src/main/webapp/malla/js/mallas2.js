@@ -20,6 +20,26 @@ jQuery(document).ready(function($) {
         return arreglo_nuevo;
     }
 
+    function GetHexString(rgbString) {
+        var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        var hexString;
+        console.log(parts);
+        if (parts == null || parts[0] > 255 || parts[1] > 255 || parts[2] > 255 || parts[0] < 0 || parts[1] < 0 || parts[2] < 0) {
+        console.log("AAAAAAAAa");
+            hexString = 'white';
+        } else {
+            // parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
+
+            delete(parts[0]);
+            for (var i = 1; i <= 3; ++i) {
+                parts[i] = parseInt(parts[i]).toString(16);
+                if (parts[i].length == 1) parts[i] = '0' + parts[i];
+            }
+            hexString = '#' + parts.join('').toUpperCase(); // "#0070FF"
+        }
+        return hexString
+    }
+
     if (!pruebas) {
 
         function GetId(esto) {
@@ -340,24 +360,6 @@ jQuery(document).ready(function($) {
             color = '#' + parts.join('');
         }
 
-        function GetHexString(rgbString) {
-            var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-            var hexString;
-            if (parts == null) {
-                hexString = 'white';
-            } else {
-                // parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
-
-                delete(parts[0]);
-                for (var i = 1; i <= 3; ++i) {
-                    parts[i] = parseInt(parts[i]).toString(16);
-                    if (parts[i].length == 1) parts[i] = '0' + parts[i];
-                }
-                hexString = '#' + parts.join('').toUpperCase(); // "#0070FF"
-            }
-            return hexString
-        }
-
         function ApagarAsignatura(asignatura) {
             ColorearAsignatura(asignatura.id, COLOR_BLANCO);
             asignaturas_proyectadas = Eliminar(asignatura, asignaturas_proyectadas);
@@ -466,7 +468,7 @@ jQuery(document).ready(function($) {
             }
         });
     } else {
-        function OrdenarNumeros(a, b){
+        function OrdenarNumeros(a, b) {
             return a > b;
         }
         QUnit.test("Remover elementos duplicados de un arreglo", function(assert) {
@@ -491,15 +493,46 @@ jQuery(document).ready(function($) {
 
             var remover_A_1 = RemoverDuplicados([2, 1, 5, 5, 10, 25, 6]).sort(OrdenarNumeros);
             var remover_B_1 = [6, 2, 5, 1, 10, 25].sort(OrdenarNumeros);
-            assert.deepEqual(remover_A_1, remover_B_1, "Remover de un Arreglo 1");
+            assert.deepEqual(remover_A_1, remover_B_1, "Arreglo largo (7 y 6 elementos) con numeros repetidos");
 
             var remover_A_2 = RemoverDuplicados([2, 1, 5, 5, 10, 6]).sort(OrdenarNumeros);
             var remover_B_2 = [6, 2, 5, 1, 10, 25].sort(OrdenarNumeros);
-            assert.notDeepEqual(remover_A_2, remover_B_2, "Remover de un Arreglo 2");
+            assert.notDeepEqual(remover_A_2, remover_B_2, "Arreglo con la misma cantidad de elementos (6) pero numeros distintos");
 
             var remover_A_3 = RemoverDuplicados([1, 1]).sort(OrdenarNumeros);
             var remover_B_3 = [1].sort(OrdenarNumeros);
-            assert.deepEqual(remover_A_3, remover_B_3, "Remover de un Arreglo 3");
+            assert.deepEqual(remover_A_3, remover_B_3, "Arreglo de largo 1 y arreglo de largo 2, ambos tienen solo el numero 1");
         });
+
+        QUnit.test("Remover elementos de un arreglo", function(assert) {
+            // Eliminar
+            // assert.ok(1 == "1", "Passed!");
+
+            var entrada_A_1 = GetHexString('rgb(0, 0, 0)');
+            var salida_A_1  = '#000000';
+            assert.equal(entrada_A_1, salida_A_1, "RGB(0, 0, 0)");
+
+            var entrada_A_1 = GetHexString('rgb(12, 86, 12)');
+            var salida_A_1  = '#0C560C';
+            assert.equal(entrada_A_1, salida_A_1, "RGB(12, 86, 12)");
+
+            var entrada_A_1 = GetHexString('rgb(666, 666, 666)');
+            var salida_A_1  = 'white';
+            assert.equal(entrada_A_1, salida_A_1, "Colores fuera de limites positivos");
+
+            var entrada_A_1 = GetHexString('rgb(-12, -6, -23)');
+            var salida_A_1  = 'white';
+            assert.equal(entrada_A_1, salida_A_1, "Colores fuera de limites negativos");
+
+            var entrada_A_1 = GetHexString('rgb(12, 256, -23)');
+            var salida_A_1  = 'white';
+            assert.equal(entrada_A_1, salida_A_1, "Colores fuera de limites negativos y positivos");
+
+            var entrada_A_1 = GetHexString('daffdfsgs');
+            var salida_A_1  = 'white';
+            assert.equal(entrada_A_1, salida_A_1, "Texto erroneo");
+        });
+
+        GetHexString
     }
 });
