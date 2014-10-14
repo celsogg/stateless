@@ -51,7 +51,7 @@ and open the template in the editor.
         <div id="main" style="min-width: 1280px; background: url(images/background.png) 100% 0% no-repeat white;">
             <div id="header">
                 <div id="college">FACULTAD DE INGENIERÍA</div>
-                <div id="program">INGENIERÍA CIVIL INFORMÁTICA(1863)</div>
+                <div id="program">#{planController.getPlan(param['planId']).getNombrePlan()} (#{planController.getPlan(param['planId']).getCodigoPlan()})</div>
             </div>
             <div id="contenedor_outercanvas">
                 <div id="outercanvas">
