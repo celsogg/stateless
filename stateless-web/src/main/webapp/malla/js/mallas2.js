@@ -195,28 +195,7 @@ jQuery(document).ready(function($) {
             if (accion == 'aperturas') {
                 var conjunto = asignatura.aperturas ? asignatura.aperturas : [];
             } else if (accion == 'prerequisitos') {
-                // var conjunto = asignatura.prerequisitos ? asignatura.prerequisitos : [];
-                var conjunto = [];
-                var conjunto_de_prerequisitos = asignatura.prerequisitos;
-
-                console.log(conjunto_de_prerequisitos);
-            
-                var largo_anterior = 0;
-                break;
-                while(conjunto_de_prerequisitos.length != largo_anterior){
-                    largo_anterior = conjunto_de_prerequisitos.length;
-                        console.log("Hola: ");
-                    for (var i = 0; i < conjunto_de_prerequisitos.length; i++) {
-                        var nodo = getById(context, conjunto_de_prerequisitos[i]);
-                        for (var i = 0; i < nodo.prerequisitos.length; i++) {
-                            conjunto_de_prerequisitos.push(nodo.prerequisitos[i]);
-                        };
-                    };
-                    console.log(conjunto_de_prerequisitos);
-                    conjunto_de_prerequisitos = RemoverDuplicados(conjunto_de_prerequisitos);
-                }
-                // console.log(conjunto_de_prerequisitos);
-                console.log(conjunto_de_prerequisitos);
+                var conjunto = asignatura.prerequisitos ? asignatura.prerequisitos : [];
             }
 
             // Coloreo el conjunto de elementos
@@ -445,7 +424,6 @@ jQuery(document).ready(function($) {
             $('#spinme').click();
             $('#outline').slideToggle();
         });
-
         // accion = 'proyeccion';
         $('#spinme').spin({
             max: nivel_mas_alto,
@@ -466,9 +444,6 @@ jQuery(document).ready(function($) {
                 };
             }
         });
-
-        $('#bw').click();
-
     } else {
         function OrdenarNumeros(a, b) {
             return a > b;
