@@ -1,313 +1,378 @@
-jQuery(document).ready(function($) {
-	// Code using $ as usual goes here.
-	var source = $("#asignatura").html();
-	var template = Handlebars.compile(source);
-	var context = [{
-		nivel: 1,
-		nivel_dos: 2,
-		tiene_anual: true,
-		tiene_semestral: true,
-		anual: {
-			nivel: 1,
-			asignaturas: [{
-				nombre: 'Calculo',
-				id: 1111,
-			}, {
-				nombre: 'Algebra',
-				id: 1112,
-			}, {
-				nombre: 'Fisica',
-				id: 1113,
-			}, ]
-		},
-		semestral: [{
-			nivel: 1,
-			asignaturas: [{
-				nombre: 'Introduccion a la Quimica',
-				id: 1114,
-			}, ]
-		}, {
-			nivel: 2,
-			asignaturas: [{
-				nombre: 'Introduccion a la Programacion',
-				id: 1115,
-			}, ]
-		}, ]
-	}, {
-		nivel: 3,
-		tiene_anual: false,
-		tiene_semestral: true,
-		semestral: [{
-			nivel: 3,
-			asignaturas: [{
-				nombre: 'Calculo Avanzado',
-				id: 1116,
-			}, {
-				nombre: 'Ecuaciones diferenciales',
-				id: 1117,
-			}, {
-				nombre: 'Electro Magnetismo y fisica moderna',
-				id: 1118,
-			}, {
-				nombre: 'Lenguajes y Paradigmas de Programacion',
-				id: 1119,
-			}, ]
-		}]
-	}, {
-		nivel: 4,
-		tiene_anual: false,
-		tiene_semestral: true,
-		semestral: [{
-			nivel: 4,
-			asignaturas: [{
-				nombre: 'Probabilidad y estadistica',
-				id: 1120,
-			}, {
-				nombre: 'Microeconomia',
-				id: 1121,
-			}, {
-				nombre: 'Topicos de Matematicas',
-				id: 1122,
-			}, {
-				nombre: 'Estructuras de Datos y Algoritmos',
-				id: 1123,
-			}, {
-				nombre: 'Estructuras Discretas',
-				id: 1124,
-			}, ]
-		}]
-	}, {
-		nivel: 5,
-		tiene_anual: false,
-		tiene_semestral: true,
-		semestral: [{
-			nivel: 5,
-			asignaturas: [{
-				nombre: 'MACROECONOMÍA',
-				id: 1125,
-			}, {
-				nombre: 'AUTÓMATAS Y LENGUAJES FORMALES',
-				id: 1126,
-			}, {
-				nombre: 'FUNDAMENTOS DE PROCESOS PRODUCTIVOS',
-				id: 1127,
-			}, {
-				nombre: 'ALGORITMOS AVANZADOS',
-				id: 1128,
-			}, {
-				nombre: 'ORGANIZACIÓN DE COMPUTADORES',
-				id: 1129,
-			}, ]
-		}]
-	}, {
-		nivel: 6,
-		tiene_anual: false,
-		tiene_semestral: true,
-		semestral: [{
-			nivel: 6,
-			asignaturas: [{
-				nombre: 'FINANZAS',
-				id: 1130,
-			}, {
-				nombre: 'LÓGICA Y TEORÍA DE LA COMPUTACIÓN',
-				id: 1131,
-			}, {
-				nombre: 'COMPILADORES',
-				id: 1132,
-			}, {
-				nombre: 'COMUNICACIÓN DE DATOS',
-				id: 1133,
-			}, {
-				nombre: 'SISTEMAS OPERATIVOS',
-				id: 1134,
-			}, ]
-		}]
-	}, {
-		nivel: 7,
-		tiene_anual: false,
-		tiene_semestral: true,
-		semestral: [{
-			nivel: 7,
-			asignaturas: [{
-				nombre: 'MÉTODOS DE OPTIMIZACIÓN',
-				id: 1135,
-			}, {
-				nombre: 'COMPUTACIÓN PARALELA',
-				id: 1136,
-			}, {
-				nombre: 'INGENIERÍA DE SISTEMAS',
-				id: 1137,
-			}, {
-				nombre: 'REDES DE COMUNICACIÓN',
-				id: 1138,
-			}, {
-				nombre: 'FUNDAMENTOS DE BASE DE DATOS',
-				id: 1139,
-			}, ]
-		}]
-	}, {
-		nivel: 8,
-		tiene_anual: false,
-		tiene_semestral: true,
-		semestral: [{
-			nivel: 8,
-			asignaturas: [{
-				nombre: 'ANTROPOLOGÍA E INGENIERÍA',
-				id: 1140,
-			}, {
-				nombre: 'FUNDAMENTOS DE INGENIERÍA DE SOFTWARE',
-				id: 1141,
-			}, {
-				nombre: 'CONTROL Y SIMULACIÓN',
-				id: 1142,
-			}, {
-				nombre: 'SISTEMAS DISTRIBUIDOS',
-				id: 1143,
-			}, {
-				nombre: 'PROYECTOS DE BASE DE DATOS',
-				id: 1144,
-			}, ]
-		}]
-	}, {
-		nivel: 9,
-		tiene_anual: false,
-		tiene_semestral: true,
-		semestral: [{
-			nivel: 9,
-			asignaturas: [{
-				nombre: 'EVALUACIÓN DE PROYECTOS',
-				id: 1145,
-			}, {
-				nombre: 'PROYECTOS DE INGENIERÍA DE SOFTWARE',
-				id: 1146,
-			}, {
-				nombre: 'COMPORTAMIENTO HUMANO EN EL TRABAJO',
-				id: 1147,
-			}, {
-				nombre: 'INTERACCIÓN HUMANO COMPUTADOR',
-				id: 1148,
-			}, {
-				nombre: 'ELECTIVO PROFESIONAL I',
-				id: 1149,
-			}, ]
-		}]
-	}, {
-		nivel: 10,
-		tiene_anual: false,
-		tiene_semestral: true,
-		semestral: [{
-			nivel: 10,
-			asignaturas: [{
-				nombre: 'ADMINISTRACIÓN DE EMPRESAS',
-				id: 1150,
-			}, {
-				nombre: 'PROYECTOS DE INGENIERÍA INFORMÁTICA',
-				id: 1151,
-			}, {
-				nombre: 'ELECTIVO PROFESIONAL II',
-				id: 1152,
-			}, {
-				nombre: 'ELECTIVO PROFESIONAL III',
-				id: 1153,
-			}, {
-				nombre: 'ELECTIVO DE PROFESIONAL IV',
-				id: 1154,
-			}, ]
-		}]
-	}, {
-		nivel: 11,
-		tiene_anual: false,
-		tiene_semestral: true,
-		semestral: [{
-			nivel: 11,
-			asignaturas: [{
-				nombre: 'DIRECCIÓN Y GESTIÓN DE EMPRESAS',
-				id: 1155,
-			}, {
-				nombre: 'ELECTIVO PROFESIONAL V',
-				id: 1156,
-			}, {
-				nombre: 'ELECTIVO PROFESIONAL VI',
-				id: 1157,
-			}, {
-				nombre: 'SEMINARIO DE TITULACIÓN',
-				id: 1158,
-			}, ]
-		}]
-	}, {
-		nivel: 12,
-		tiene_anual: false,
-		tiene_semestral: true,
-		semestral: [{
-			nivel: 12,
-			asignaturas: [{
-				nombre: 'TRABAJO DE TITULACIÓN',
-				id: 1159,
-			}, ]
-		}]
-	}, ]
-	console.log(context);
-	var html = template(context);
-	$('#canvas').html(html);
-	var prerequisitos = {
-		1159: [
-			1156,
-			1157,
-			1158,
-		]
-	}
-	var aperturas = {
-		1156: [
-			1157
-		],
-		1114: [
-			1127
-		]
-	}
-	var operacion;
-	operacion = 'apertura';
-	//operacion = 'prerequisito';
-	//operacion = 'proyeccion';
+var accion = 'aperturas';
 
-	$('.outer').on('mouseenter', function() {
-		if (operacion == 'prerequisito') {
-			var id = $(this).attr('id').replace('asignatura_', '');
-			var mis_aperturas = aperturas[id];
-			console.log(aperturas);
-			$.each(mis_aperturas, function(key, apertura) {
-				var apertura_id = '#asignatura_' + apertura;
-				$(apertura_id).css('background', 'red');
-			});
+jQuery(document).ready(function($) {
+
+	var ESTADO_INICIAL = 0;
+	var ESTADO_TOMADO = 1;
+	var ESTADO_PREREQUISITO = 2;
+
+	function GetAsignaturasSinPadres() {
+		var asignaturas_sin_padres = [];
+		var son_hijos = [];
+		var context_ids = _.pluck(context, 'id');
+
+		for (var i = 0; i < context.length; i++) {
+			son_hijos = _.union(son_hijos, context[i].aperturas);
+		};
+		asignaturas_sin_padres = _.difference(context_ids, son_hijos);
+
+		return asignaturas_sin_padres;
+	}
+
+	var asignaturas_sin_padres = GetAsignaturasSinPadres();
+
+	function GetHexString(rgbString) {
+		var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+		var hexString;
+		if (parts == null || parts[0] > 255 || parts[1] > 255 || parts[2] > 255 || parts[0] < 0 || parts[1] < 0 || parts[2] < 0) {
+			hexString = 'white';
+		} else {
+			// parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
+
+			delete(parts[0]);
+			for (var i = 1; i <= 3; ++i) {
+				parts[i] = parseInt(parts[i]).toString(16);
+				if (parts[i].length == 1) parts[i] = '0' + parts[i];
+			}
+			hexString = '#' + parts.join('').toUpperCase(); // "#0070FF"
 		}
-		if (operacion == 'apertura') {
-			var id = $(this).attr('id').replace('asignatura_', '');
-			var mis_prerequisitos = prerequisitos[id];
-			console.log(prerequisitos);
-			$.each(mis_prerequisitos, function(key, prerequisito) {
-				var prerequisito_id = '#asignatura_' + prerequisito;
-				$(prerequisito_id).css('background', '#ff7319');
-			});
+		if (hexString == '#FFFFFF') {
+			return 'white';
 		}
-	});
-	$('.outer').on('mouseleave', function() {
-		if (operacion == 'prerequisito') {
-			var id = $(this).attr('id').replace('asignatura_', '');
-			var mis_prerequisitos = prerequisitos[id];
-			console.log(prerequisitos);
-			$.each(mis_prerequisitos, function(key, prerequisito) {
-				var prerequisito_id = '#asignatura_' + prerequisito;
-				$(prerequisito_id).css('background', 'white');
-			});
+		return hexString;
+	}
+
+	if (!pruebas) {
+
+		var nivel_mas_alto = 1;
+		for (var i = context.length - 1; i >= 0; i--) {
+			if (context[i].nivel > nivel_mas_alto)
+				nivel_mas_alto = context[i].nivel;
 		}
-		if (operacion == 'apertura') {
-			var id = $(this).attr('id').replace('asignatura_', '');
-			var mis_prerequisitos = prerequisitos[id];
-			console.log(prerequisitos);
-			$.each(mis_prerequisitos, function(key, prerequisito) {
-				var prerequisito_id = '#asignatura_' + prerequisito;
-				$(prerequisito_id).css('background', 'white');
-			});
+
+		Handlebars.registerHelper('imprimir', function(asignaturas) {
+			var html = '<div>';
+			var nivel_actual = 1;
+			var asignaturas_impresas = 0;
+			var total_asignaturas = asignaturas.length;
+			var asignatura_impresas_por_este_ciclo = 0;
+
+			while (asignaturas_impresas < total_asignaturas) {
+				var imprimio = false;
+				for (var i = 0; i < asignaturas.length; i++) {
+					if (!asignaturas[i].impresa && asignaturas[i].nivel == nivel_actual) {
+						imprimio = true;
+						asignaturas[i].impresa = true;
+
+						html += '<div class="contenedor_asignatura ' + asignaturas[i].nivel + ' col-md-';
+						html += asignaturas[i].anual ? '2' : '1';
+						html += '"><div class="asignatura alto_asignatura centrar_vertical" id="asignatura_' + asignaturas[i].id + '"><span>' + asignaturas[i].nombre + '</span></div></div>';
+
+
+						if (asignaturas[i].anual) {
+							nivel_actual = (nivel_actual + 1) % nivel_mas_alto;
+						}
+						asignaturas_impresas++;
+						asignatura_impresas_por_este_ciclo++;
+						break;
+					}
+				}
+				if (!imprimio) {
+					html += '<div class="col-md-1 alto_asignatura"></div>';
+				}
+				if (nivel_actual == nivel_mas_alto) {
+					for (var i = nivel_actual + 1; i <= 12; i++) {
+						html += '<div class="col-md-1 alto_asignatura"></div>';
+					}
+				}
+
+				nivel_actual = (nivel_actual) % nivel_mas_alto + 1;
+			}
+			html += '</div>';
+			html = $(html);
+
+			//html.find('.centrar_vertical').verticalAlign();
+			return html.html();
+		});
+		// Code using $ as usual goes here.
+		var source = $("#asignaturas").html();
+		var template = Handlebars.compile(source);
+
+
+		var html = template(context);
+
+		var texto_niveles = '';
+		for (var nivel = 1; nivel <= nivel_mas_alto; nivel++) {
+			texto_niveles += '<div class="col-xs-1 texto_nivel">Nivel ' + nivel + '</div>';
 		}
-	});
-	// console.log(html);
+		for (var i = nivel_mas_alto; i < 12; i++) {
+			texto_niveles += '<div class="col-xs-1 texto_nivel"></div>';
+		}
+
+		html = texto_niveles + html;
+
+		$('#outercanvas').html(html);
+
+		var mas_alto = 0;
+		$('.contenedor_asignatura').each(function() {
+			var alto = $(this).height();
+			if (alto > mas_alto) {
+				mas_alto = alto;
+			}
+		});
+
+		// Le asignamos a todas las asignaturas el alto del elemento mas alto
+		$('.alto_asignatura').height(50);
+		if (mas_alto > 50) {
+			$('.asignatura').css('font-size', '9px');
+		}
+
+		// $('#contenedor_outercanvas').height($('#outercanvas').height() + 250);
+
+		$('.centrar_vertical span').each(function() {
+			var elemento = $(this);
+			var height = elemento.height();
+			var parent = elemento.parent();
+			var parent_height = parent.parent().height();
+			var nuevo_alto = (parent_height - height) / 3;
+			parent.css('padding-top', nuevo_alto + 'px');
+		});
+
+		var COLOR_NARANJO = '#FF7319';
+		var COLOR_AZUL = '#0052CC';
+		var COLOR_BLANCO = 'white';
+
+		function ProyectarNivel(nivel) {
+			for (var i = 0; i < context.length; i++) {
+				if (context[i].nivel <= nivel) {
+					CambiarEstadoById(context[i].id, ESTADO_TOMADO);
+					MostrarAperturasById(context[i].id);
+					// CambiarEstadoById(context[i].id, ESTADO_TOMADO);
+				}
+			};
+			if (nivel == 0) {
+				for (var i = 0; i < context.length; i++) {
+					if (context[i].nivel == 1) {
+						CambiarEstadoById(context[i].id, ESTADO_PREREQUISITO);
+					}
+				};
+			}
+		}
+
+		function GetIdByJqueryElement(esto) {
+			var id = $(esto).attr('id').replace('asignatura_', '');
+			return id;
+		}
+
+		function GetEstadoByJqueryElement(esto) {
+			var background = GetHexString($(esto).css('backgroundColor'));
+			if (background == COLOR_AZUL) {
+				return ESTADO_TOMADO;
+			}
+			if (background == COLOR_NARANJO) {
+				return ESTADO_PREREQUISITO;
+			}
+			if (background == COLOR_BLANCO) {
+				return ESTADO_INICIAL;
+			}
+			return ESTADO_SIN_ESTADO;
+
+		}
+
+		function GetEstadoById(id) {
+			return GetEstadoByJqueryElement($('#asignatura_' + id));
+		}
+
+		function GetColorByEstado(estado) {
+			if (estado == ESTADO_TOMADO) {
+				return COLOR_AZUL;
+			}
+			if (estado == ESTADO_PREREQUISITO) {
+				return COLOR_NARANJO;
+			}
+			if (estado == ESTADO_INICIAL) {
+				return COLOR_BLANCO;
+			}
+			return 'black';
+		}
+
+		function CambiarEstadoById(id, estado) {
+			var color = GetColorByEstado(estado);
+			$('#asignatura_' + id).css('background', color);
+		}
+
+		function GetNodeById(id) {
+			for (var i = 0; i < context.length; i++) {
+				if (context[i].id == id) {
+					return context[i];
+				}
+			};
+		}
+
+		function GetPrerequisitosById(id) {
+			return GetNodeById(id).prerequisitos;
+		}
+
+		function CambiarEstadoArrayById(array, estado) {
+			for (var i = 0; i < array.length; i++) {
+				CambiarEstadoById(array[i], estado);
+			};
+		}
+
+		function GetPrerequisitosRecursiveById(id) {
+			var prerequisitos = GetNodeById(id).prerequisitos;
+			var union = prerequisitos;
+			for (var i = prerequisitos.length - 1; i >= 0; i--) {
+				union = _.union(union, GetPrerequisitosRecursiveById(prerequisitos[i]));
+			};
+			// console.log(union);
+			return union;
+		}
+
+		function GetAperturasById(id) {
+			return GetNodeById(id).aperturas;
+		}
+
+		function GetAperturasRecursiveById(id) {
+			var aperturas = GetNodeById(id).aperturas;
+			var union = aperturas;
+			for (var i = aperturas.length - 1; i >= 0; i--) {
+				union = _.union(union, GetAperturasRecursiveById(aperturas[i]));
+			};
+			// console.log(union);
+			return union;
+		}
+
+		function MostrarAperturasById(id, recursive) {
+			if (recursive) {
+				var aperturas = GetAperturasRecursiveById(id);
+			} else {
+				var aperturas = GetAperturasById(id);
+			}
+			for (var i = aperturas.length - 1; i >= 0; i--) {
+				CambiarEstadoById(aperturas[i], ESTADO_PREREQUISITO);
+			};
+		}
+
+		$('.asignatura').on('mouseenter', function() {
+			if (accion == 'prerequisitos') {
+				var id = GetIdByJqueryElement(this);
+				CambiarEstadoById(id, ESTADO_TOMADO);
+				var prerequisitos = GetPrerequisitosRecursiveById(id);
+				for (var i = prerequisitos.length - 1; i >= 0; i--) {
+					CambiarEstadoById(prerequisitos[i], ESTADO_PREREQUISITO);
+				};
+			}
+			if (accion == 'aperturas') {
+				var id = GetIdByJqueryElement(this);
+				CambiarEstadoById(id, ESTADO_TOMADO);
+				MostrarAperturasById(id);
+			}
+		});
+		$('.asignatura').on('mouseleave', function() {
+			if (accion == 'prerequisitos') {
+				var id = GetIdByJqueryElement(this);
+				CambiarEstadoById(id, ESTADO_INICIAL);
+				// var prerequisitos = GetPrerequisitosById(id);
+				var prerequisitos = GetPrerequisitosRecursiveById(id);
+				// console.log(prerequisitos);
+				for (var i = prerequisitos.length - 1; i >= 0; i--) {
+					CambiarEstadoById(prerequisitos[i], ESTADO_INICIAL);
+				};
+			}
+			if (accion == 'aperturas') {
+				var id = GetIdByJqueryElement(this);
+				CambiarEstadoById(id, ESTADO_INICIAL);
+				var aperturas = GetAperturasRecursiveById(id);
+				for (var i = aperturas.length - 1; i >= 0; i--) {
+					CambiarEstadoById(aperturas[i], ESTADO_INICIAL);
+				};
+			}
+		});
+
+		function hexc(colorval) {
+			var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+			delete(parts[0]);
+			for (var i = 1; i <= 3; ++i) {
+				parts[i] = parseInt(parts[i]).toString(16);
+				if (parts[i].length == 1) parts[i] = '0' + parts[i];
+			}
+			color = '#' + parts.join('');
+		}
+
+		function ApagarAsignatura(asignatura) {
+			ColorearAsignatura(asignatura.id, COLOR_BLANCO);
+			asignaturas_proyectadas = Eliminar(asignatura, asignaturas_proyectadas);
+			for (var i = 0; i < asignatura.aperturas.length; i++) {
+				var nodo = getById(context, asignatura.aperturas[i]);
+				var color = GetHexString($('#asignatura_' + nodo.id).css('backgroundColor'));
+				ColorearAsignatura(nodo.id, COLOR_BLANCO);
+				asignaturas_proyectadas = Eliminar(nodo, asignaturas_proyectadas);
+				if (color == COLOR_AZUL) {
+					ApagarAsignatura(nodo);
+				}
+			};
+		}
+
+		$('.asignatura').on('click', function() {
+			if (accion == 'proyeccion') {
+				var estado = GetEstadoByJqueryElement(this);
+				var id = GetIdByJqueryElement(this);
+
+				if (estado == ESTADO_PREREQUISITO) {
+
+					CambiarEstadoById(id, ESTADO_TOMADO);
+
+					var asignatura = GetNodeById(id);
+					aperturas = asignatura.aperturas;
+
+					// mostramos las aperturas que esten en blanco, de color naranjo
+					for (var i = 0; i < aperturas.length; i++) {
+						if (GetEstadoById(aperturas[i]) == ESTADO_INICIAL) {
+							CambiarEstadoById(aperturas[i], ESTADO_PREREQUISITO);
+						}
+					};
+					// MostrarAperturasById(id);
+				}else if(estado == ESTADO_TOMADO){
+					var aperturas_recursiva = GetAperturasRecursiveById(id);
+					CambiarEstadoById(id, ESTADO_PREREQUISITO);
+					CambiarEstadoArrayById(aperturas_recursiva, ESTADO_INICIAL);
+				}
+			}
+		});
+
+		$('#fw').on('click', function() {
+			accion = 'aperturas';
+			LimpiarAsignaturas();
+			$('#outline').hide();
+		});
+		$('#bw').on('click', function() {
+			accion = 'prerequisitos';
+			LimpiarAsignaturas();
+			$('#outline').hide();
+		});
+		$('#fwbw').on('click', function() {
+			accion = 'proyeccion';
+			$('#spinme').change();
+			$('#spinme').val(0);
+			$('#spinme').click();
+			$('#outline').slideToggle();
+		});
+
+		$('#spinme').spin({
+			max: nivel_mas_alto,
+			min: 0
+		});
+
+		$('#spinme').on('change', function() {
+			accion = 'proyeccion';
+			$('#fwbw').attr('checked', 'checked');
+			if (accion == 'proyeccion') {
+				var nivel_proyeccion = parseInt($(this).val());
+				$('.asignatura').css('background', 'white');
+				CambiarEstadoArrayById(asignaturas_sin_padres, ESTADO_PREREQUISITO);
+				ProyectarNivel(nivel_proyeccion);
+			}
+		});
+	}
 });
