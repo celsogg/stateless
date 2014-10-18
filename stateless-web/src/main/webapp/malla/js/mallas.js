@@ -343,20 +343,22 @@ jQuery(document).ready(function($) {
 
 		$('#fw').on('click', function() {
 			accion = 'aperturas';
-			LimpiarAsignaturas();
+			CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
 			$('#outline').hide();
+			// LimpiarAsignaturas();
 		});
 		$('#bw').on('click', function() {
 			accion = 'prerequisitos';
-			LimpiarAsignaturas();
+			CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
+			// LimpiarAsignaturas();
 			$('#outline').hide();
 		});
 		$('#fwbw').on('click', function() {
 			accion = 'proyeccion';
-			$('#spinme').change();
 			$('#spinme').val(0);
-			$('#spinme').click();
-			$('#outline').slideToggle();
+			$('#spinme').change();
+			$('#outline').show();
+			// $('#outline').slideToggle();
 		});
 
 		$('#spinme').spin({
@@ -366,6 +368,7 @@ jQuery(document).ready(function($) {
 
 		$('#spinme').on('change', function() {
 			accion = 'proyeccion';
+			CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_TOMADO);
 			$('#fwbw').attr('checked', 'checked');
 			if (accion == 'proyeccion') {
 				var nivel_proyeccion = parseInt($(this).val());
