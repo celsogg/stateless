@@ -175,22 +175,32 @@ public class PlanController implements Serializable {
         as = new ArrayList<>(plan.getAsignaturaCollection());
         for (Asignatura a : as) {
             ArrayList <Asignatura> pre, post;
-            jsonB.append("{ nombre: '");
+            jsonB.append("{ \"nombre\": \"");
             jsonB.append(a.getNombreAsignatura());
-            jsonB.append("', id: ");
+            jsonB.append("\", \"id\": ");
             jsonB.append(a.getCodigoAsignatura());
-            jsonB.append(", nivel: ");
+            jsonB.append(", \"nivel\": ");
             jsonB.append(a.getNivelAsignatura());
-            jsonB.append(", anual: ");
+            jsonB.append(", \"anual\": ");
             jsonB.append( a.getEsAnual() == 1 ? "true" : "false" );
+            jsonB.append(", \"sct\": ");
+            jsonB.append(a.getSctAsignatura());
+            jsonB.append(", \"t\": ");
+            jsonB.append(a.getHorasTeoria());
+            jsonB.append(", \"e\": ");
+            jsonB.append(a.getHorasEjercicio());
+            jsonB.append(", \"l\": ");
+            jsonB.append(a.getHorasLaboratorio());
+            jsonB.append(", \"resumen\": ");
+            jsonB.append(a.getResumenAsignatura());
             //requisitos
             pre = new ArrayList<> (a.getAsignaturaCollection());
-            jsonB.append(", prerequisitos: [");
+            jsonB.append(", \"prerequisitos\": [");
             for (Asignatura p : pre) {
                 jsonB.append(p.getCodigoAsignatura());
                 if ( pre.lastIndexOf(p) != pre.size()-1 ) jsonB.append(",");
             }
-            jsonB.append("], aperturas: [");
+            jsonB.append("], \"aperturas\": [");
             //apertura
             post = new ArrayList<> (a.getAsignaturaCollection1());
             for (Asignatura p : post) {
