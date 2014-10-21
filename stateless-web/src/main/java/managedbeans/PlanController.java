@@ -187,7 +187,6 @@ public class PlanController implements Serializable {
             pre = new ArrayList<> (a.getAsignaturaCollection());
             jsonB.append(", prerequisitos: [");
             for (Asignatura p : pre) {
-                System.out.println("====================================");
                 jsonB.append(p.getCodigoAsignatura());
                 if ( pre.lastIndexOf(p) != pre.size()-1 ) jsonB.append(",");
             }
