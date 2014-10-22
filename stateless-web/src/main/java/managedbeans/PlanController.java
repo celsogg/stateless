@@ -191,11 +191,11 @@ public class PlanController implements Serializable {
             jsonB.append(a.getHorasEjercicio());
             jsonB.append(", \"l\": ");
             jsonB.append(a.getHorasLaboratorio());
-            jsonB.append(", \"resumen\": ");
+            jsonB.append(", \"resumen\": \"");
             jsonB.append(a.getResumenAsignatura());
             //requisitos
             pre = new ArrayList<> (a.getAsignaturaCollection());
-            jsonB.append(", \"prerequisitos\": [");
+            jsonB.append("\", \"prerequisitos\": [");
             for (Asignatura p : pre) {
                 jsonB.append(p.getCodigoAsignatura());
                 if ( pre.lastIndexOf(p) != pre.size()-1 ) jsonB.append(",");
