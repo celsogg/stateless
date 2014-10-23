@@ -8,7 +8,6 @@ import sessionbeans.PlanFacadeLocal;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,7 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import sessionbeans.AsignaturaFacadeLocal;
+import org.apache.commons.lang.StringEscapeUtils;
 
 @Named("planController")
 @SessionScoped
@@ -192,7 +191,7 @@ public class PlanController implements Serializable {
             jsonB.append(", \"l\": ");
             jsonB.append(a.getHorasLaboratorio());
             jsonB.append(", \"resumen\": \"");
-            jsonB.append(a.getResumenAsignatura());
+            jsonB.append(StringEscapeUtils.escapeJavaScript(a.getResumenAsignatura()));
             //requisitos
             pre = new ArrayList<> (a.getAsignaturaCollection());
             jsonB.append("\", \"prerequisitos\": [");
@@ -211,7 +210,7 @@ public class PlanController implements Serializable {
             if (as.lastIndexOf(a) != as.size()-1) jsonB.append(",");
         }
         jsonB.append("];");
-        return jsonB.toString();
+        return jsonB.toString() ;
     }
 
 }
