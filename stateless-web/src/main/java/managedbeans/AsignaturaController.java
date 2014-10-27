@@ -22,7 +22,7 @@ import javax.faces.convert.FacesConverter;
 @Named("asignaturaController")
 @SessionScoped
 public class AsignaturaController implements Serializable {
-
+    
     @EJB
     private AsignaturaFacadeLocal ejbFacade;
     private List<Asignatura> items = null;

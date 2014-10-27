@@ -22,23 +22,37 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
+import javax.inject.Inject;
 import org.apache.commons.lang.StringEscapeUtils;
+import sessionbeans.AsignaturaFacadeLocal;
 
 @Named("planController")
 @SessionScoped
 public class PlanController implements Serializable {
-
+ 
     @EJB
     private PlanFacadeLocal ejbFacade;
     private List<Plan> items = null;
     private Plan selected;
     private List<SelectItem> listaPlanes;
     private String selection;
+    private Asignatura selectedAsignatura;
 
+    public Asignatura getSelectedAsignatura() {
+        return selectedAsignatura;
+    }
+
+    public void setSelectedAsignatura(Asignatura selectedAsignatura) {
+        this.selectedAsignatura = selectedAsignatura;
+    }
+
+    @Inject
+    private AsignaturaController asigController;
+    
     public PlanController() {
     }
 
-    public Plan getSelected() {
+     public Plan getSelected() {
         return selected;
     }
 
@@ -63,13 +77,15 @@ public class PlanController implements Serializable {
     }
     
     public List<SelectItem> getListaPlanes(){
-        this.listaPlanes = new ArrayList<SelectItem>();
-        for (int i = 0; i < items.size(); i++) {
-            SelectItemGroup group = new SelectItemGroup(items.get(i).getNombrePlan());
-            SelectItem[] seleccion = new SelectItem[items.get(i).getAsignaturaCollection().size()];
-            for (int j = 0; j < items.get(i).getAsignaturaCollection().size(); j++) {
-                String a = items.get(i).getAsignaturaCollection().get(j).getNombreAsignatura();
-                SelectItem option = new SelectItem(items.get(i).getAsignaturaCollection().get(j).getNombreAsignatura());
+        this.listaPlanes = new ArrayList<>();
+        for (Plan plan : items) {
+            SelectItemGroup group = new SelectItemGroup(plan.getNombrePlan());
+            List<Asignatura> asignaturas = plan.getAsignaturaCollection();
+            SelectItem[] seleccion = new SelectItem[asignaturas.size()];
+            for (int j = 0; j < asignaturas.size(); j++) {
+                Asignatura asignatura = asignaturas.get(j);
+                SelectItem option = new SelectItem(asignatura.getIdAsignatura(), asignatura.getNombreAsignatura());
+                //option.setLabel("asd");
                 seleccion[j] = option;
             }
             group.setSelectItems(seleccion);
@@ -233,11 +249,13 @@ public class PlanController implements Serializable {
         return jsonB.toString() ;
     }
     
-     public String getSelection() {
+    public String getSelection() {
         return selection;
     }
     public void setSelection(String selection) {
         this.selection = selection;
+        setSelectedAsignatura(asigController.getAsignatura(Integer.parseInt(selection)));
     }
+
 
 }
