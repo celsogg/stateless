@@ -308,12 +308,12 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
 <body>
 	<div class="main">
 		<div class="user">
-			<img src="./resources/images/user.png" alt="">
+			
 		</div>
 		<div class="login">
 			<div class="inset">
 				<!-----start-main---->
-				<form>
+				<form action="j_security_check" method=post>
 			         <div>
 						<span><label>Username</label></span>
 						<span><input type="text" class="textbox" id="active" name="j_username"></span>
@@ -324,7 +324,8 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
 					 </div>
 					<div class="sign">
 						<div class="submit">
-						  <input type="submit" onclick="myFunction()" value="LOGIN" >
+						  <input type="submit" onclick="myFunction()" value="submit" >
+                                                  <input type="reset" value="Reset">
 						</div>
 						<span class="forget-pass">
 							<a href="#">Forgot Password?</a>
