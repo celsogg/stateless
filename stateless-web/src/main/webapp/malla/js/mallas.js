@@ -414,28 +414,30 @@ jQuery(document).ready(function ($) {
 //        var elemento = GetNodeByJqueryElement(this);
         var id = GetIdByJqueryElement(esto);
         elemento = GetNodeById(id);
-        if (elemento.resumen && elemento.resumen != 'null' && elemento.resumen != null) {
-            console.log(elemento.resumen);
-            var text = '<p style="font-size: 14px; font-weight: bold;">' + toTitleCase(elemento.nombre) + '</p>' + elemento.resumen + "<br/>";
-            if (elemento.sct) {
-                text += '<span style="color: #1abc9c;">SCT: ' + elemento.sct;
-            }
-            if (elemento.t) {
-                text += '<span style="color: #3498db;">TEL: ' + elemento.t;
-            }
 
-            $(this).qtip({
-                content: {
-                    text: text
-                },
-                style: {classes: 'qtip-cream'},
-                position: {
-                    my: 'top center', // Position my top left...
-                    at: 'bottom center', // at the bottom right of...
-                    target: $(this) // my target
-                },
-            });
+        console.log(elemento.resumen);
+        var text = '';
+        if (elemento.resumen && elemento.resumen != 'null' && elemento.resumen != null) {
+            text += '<p style="font-size: 14px; font-weight: bold;">' + toTitleCase(elemento.nombre) + '</p>' + elemento.resumen + "<br/>";
         }
+        if (elemento.sct) {
+            text += '<span style="color: #1abc9c;">SCT: ' + elemento.sct + '</span>';
+        }
+        if (elemento.t) {
+            text += '&nbsp;<span style="color: #3498db;">TEL: ' + elemento.t + '</span>';
+        }
+
+        $(this).qtip({
+            content: {
+                text: text
+            },
+            style: {classes: 'qtip-cream'},
+            position: {
+                my: 'top center', // Position my top left...
+                at: 'bottom center', // at the bottom right of...
+                target: $(this) // my target
+            },
+        });
 //        $(this).find('div').css('font-size','16px');
     });
 });
