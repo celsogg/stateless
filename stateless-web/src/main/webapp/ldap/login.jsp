@@ -297,12 +297,6 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
 <!--webfonts-->
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700|Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 <!--//webfonts-->
-<script>
-	function myFunction()
-		{
-			alert("Thanks for login");
-		}
-</script>
 </head>
  
 <body>
@@ -324,7 +318,7 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
 					 </div>
 					<div class="sign">
 						<div class="submit">
-						  <input type="submit" onclick="myFunction()" value="submit" >
+						  <input type="submit" value="submit" >
                                                   <input type="reset" value="Reset">
 						</div>
 						<span class="forget-pass">
