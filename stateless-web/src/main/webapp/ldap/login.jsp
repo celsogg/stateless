@@ -307,6 +307,9 @@ input[type="text"]:hover,input[type="Password"]:hover,#active{
 		<div class="login">
 			<div class="inset">
 				<!-----start-main---->
+                                <c:if test="${not empty param.error}">
+                                    Nombre de usuario y contraseña incorrecto
+                                </c:if>
 				<form action="j_security_check" method=post>
 			         <div>
 						<span><label>Username</label></span>
