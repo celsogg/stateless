@@ -7,6 +7,8 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
+        <ui:define name="title"><h:outputText value="Edición de Resúmenes"></h:outputText></ui:define>
+        
         <ui:define name="body">
                 <h:form id="resumenesForm" >
                     <p:multiSelectListbox value="#{planController.selection}" effect="slide" header="group" showHeaders="true">
