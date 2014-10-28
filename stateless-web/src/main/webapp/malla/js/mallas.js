@@ -420,10 +420,11 @@ jQuery(document).ready(function ($) {
         elemento = GetNodeById(id);
 
         console.log(elemento.resumen);
-        var text = '';
+        var text = '<p style="font-size: 14px; font-weight: bold;">' + toTitleCase(elemento.nombre) + '</p>'
         if (elemento.resumen && elemento.resumen != 'null' && elemento.resumen != null) {
-            text += '<p style="font-size: 14px; font-weight: bold;">' + toTitleCase(elemento.nombre) + '</p>' + elemento.resumen + "<br/>";
+            text += elemento.resumen;
         }
+        text += "<br/>";
         if (elemento.sct) {
             text += '<span style="color: #1abc9c;">SCT: ' + elemento.sct + '</span>';
         }
