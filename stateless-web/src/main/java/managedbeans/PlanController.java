@@ -200,11 +200,9 @@ public class PlanController implements Serializable {
 
     }
     
-    public String toJSON(Integer planId){
+    public String toJSON(Plan plan){
         StringBuilder jsonB = new StringBuilder();
         jsonB.append("var context = [");
-        Plan plan = getPlan(planId);
-        
         ArrayList<Asignatura> as;
         as = new ArrayList<>(plan.getAsignaturaCollection());
         for (Asignatura a : as) {
@@ -226,7 +224,7 @@ public class PlanController implements Serializable {
             jsonB.append(", \"l\": ");
             jsonB.append(a.getHorasLaboratorio());
             jsonB.append(", \"resumen\": \"");
-             jsonB.append(StringEscapeUtils.escapeJavaScript(a.getResumenAsignatura()));
+            jsonB.append(StringEscapeUtils.escapeJavaScript(a.getResumenAsignatura()));
             //requisitos
             pre = new ArrayList<> (a.getAsignaturaCollection());
             jsonB.append("\", \"prerequisitos\": [");

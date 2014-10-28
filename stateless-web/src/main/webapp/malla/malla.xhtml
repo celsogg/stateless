@@ -59,7 +59,7 @@ and open the template in the editor.
         </script>
         <div id="main" style="min-width: 1280px; background: url(images/background.png) 100% 0% no-repeat white;">
             <div id="header">
-                <div id="college">FACULTAD DE INGENIERÃÂA</div>
+                <div id="college">FACULTAD DE INGENIERÍA</div>
                 <div id="program">#{planController.getPlan(param['planId']).getNombrePlan()} (#{planController.getPlan(param['planId']).getCodigoPlan()})</div>
             </div>
             <div id="contenedor_outercanvas">
@@ -83,7 +83,7 @@ and open the template in the editor.
             www.usach.cl
         </div>
         <script language="javascript" type="text/javascript">
-            #{planController.toJSON(param['planId'])}
+            #{planController.toJSON(planController.getPlan(param['planId']))}
         </script>
         <script language="javascript" type="text/javascript">var pruebas = false;</script>
     </body>
