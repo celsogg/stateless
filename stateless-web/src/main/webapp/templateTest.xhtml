@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title><ui:insert name="title">Título</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputStylesheet name="css/stateless.css"/>
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
+    </h:head>
+    <h:body>
+        <p:growl id="growl" life="3000" />
+        <nav class="navbar navbar-default" role="navigation" style="border-radius: 0!important;">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Mallas Interactivas</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-fixed-top" id="bs-example-navbar-collapse-1">
+                    <div class="container">
+                        <ul class="nav navbar-nav" style="margin-left: 80px;">
+
+                            <li class=""><h:link outcome="/asignatura/resumenes">Res&uacute;menes</h:link></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Planes<span class="caret"></span></a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <c:forEach var="mallas" items="#{planController.items}">
+                                        <li>
+                                            <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}">
+                                                <f:param name="planId" value="#{mallas.idPlan}"></f:param>
+                                            </h:link>
+                                        </li>
+                                    </c:forEach>
+                                    <!--                                    <li><a href="#">Action</a></li>-->
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><h:link outcome="/ldap/logout.jsp" value="Cerrar Sesi&oacute;n"/></li>
+                        </ul>
+                    </div>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <p:layoutUnit position="center">
+            <ui:insert name="body"/>
+        </p:layoutUnit>
+    </h:body>
+</html>
+
