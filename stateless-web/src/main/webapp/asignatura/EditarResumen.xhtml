@@ -10,13 +10,13 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{planController.selectedAsignatura != null}">
                         <p:outputLabel value="Código" for="codigoAsignatura"/>
-                        <p:inputText id="codigoAsignatura" value="#{planController.selectedAsignatura.codigoAsignatura}" readonly="true"/>
+                        <p:inputText id="codigoAsignatura" value="#{planController.selectedAsignatura.codigoAsignatura}" readonly="true" disabled="true"/>
                         
                         <p:outputLabel value="Nombre" for="nombreAsignatura" />
-                        <p:inputText id="nombreAsignatura" value="#{planController.selectedAsignatura.nombreAsignatura}" title="#{bundle.EditAsignaturaTitle_nombreAsignatura}" readonly="true"/>
+                        <p:inputText id="nombreAsignatura" value="#{planController.selectedAsignatura.nombreAsignatura}" title="#{bundle.EditAsignaturaTitle_nombreAsignatura}" readonly="true" disabled="true"/>
                        
                         <p:outputLabel value="T-E-L" for="tel" />
-                        <p:inputText id="tel" value="#{planController.selectedAsignatura.horasTeoria}-#{planController.selectedAsignatura.horasEjercicio}-#{planController.selectedAsignatura.horasLaboratorio}" title="" readonly="true" />
+                        <p:inputText id="tel" value="#{planController.selectedAsignatura.horasTeoria}-#{planController.selectedAsignatura.horasEjercicio}-#{planController.selectedAsignatura.horasLaboratorio}" title="" readonly="true" disabled="true"/>
                         
                         <p:outputLabel value="Resumen" for="resumenAsignatura" />
                         <p:inputTextarea id="resumenAsignatura" value="#{planController.selectedAsignatura.resumenAsignatura}" title="#{bundle.EditAsignaturaTitle_resumenAsignatura}" />
