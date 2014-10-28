@@ -11,6 +11,34 @@
     <head>
         <meta charset="utf-8">
         <style>
+            .alert {
+                padding: 8px 35px 8px 14px;
+                margin-bottom: 18px;
+                color: #c09853;
+                text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+                background-color: #fcf8e3;
+                border: 1px solid #fbeed5;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px;
+            }
+
+            .alert-heading {
+                color: inherit;
+            }
+
+            .alert .close {
+                position: relative;
+                top: -2px;
+                right: -21px;
+                line-height: 18px;
+            }
+            .alert-danger,
+            .alert-error {
+                color: #b94a48;
+                background-color: #f2dede;
+                border-color: #eed3d7;
+            }
             html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
             article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
             ol,ul{list-style:none;margin:0px;padding:0px;}
@@ -112,8 +140,13 @@
                 float:left;
                 margin-right: 11px;
             }
-            .submit input[type="submit"] {
+            .submit input[type="reset"]{
+                background: #34495e;
+            }
+            .submit input[type="submit"]{
                 background: #F06B37;
+            }
+            .submit input[type="submit"], .submit input[type="reset"]{
                 border: none;
                 outline: none;
                 padding: 0.55em 1.3em 0.6em;
@@ -131,7 +164,7 @@
                 -o-transition: 0.5s all;
                 font-weight: 600;
             }
-            .submit input[type="submit"]:hover{
+            .submit input[type="submit"]:hover, .submit input[type="reset"]:hover{
                 background:#62A0C4;
             }
             .forget{
@@ -308,7 +341,7 @@
                 <div class="inset">
                     <!-----start-main---->
                     <c:if test="${not empty param.error}">
-                        Nombre de usuario y/o contraseña incorrectos
+                        <div class="alert alert-danger" role="alert">Nombre de usuario y/o contraseña incorrectos</div>
                     </c:if>
                     <form action="j_security_check" method=post>
                         <div>
@@ -324,9 +357,9 @@
                                 <input type="submit" value="Iniciar Sesión" >
                                 <input type="reset" value="Reiniciar Campos">
                             </div>
-<!--                            <span class="forget-pass">
-                                <a href="#">Forgot Password?</a>
-                            </span>-->
+                            <!--                            <span class="forget-pass">
+                                                            <a href="#">Forgot Password?</a>
+                                                        </span>-->
                             <div class="clear"> </div>
                         </div>
                     </form>

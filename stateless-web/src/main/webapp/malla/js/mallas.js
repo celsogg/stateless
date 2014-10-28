@@ -445,6 +445,14 @@ jQuery(document).ready(function ($) {
                 target: $(this) // my target
             }
         }
+        
+        if (elemento.nivel == nivel_mas_alto) {
+            position = {
+                my: 'top right', // Position my top left...
+                at: 'bottom left', // at the bottom right of...
+                target: $(this) // my target
+            }
+        }
 
         $(this).qtip({
             content: {
