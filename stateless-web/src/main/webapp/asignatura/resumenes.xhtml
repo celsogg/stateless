@@ -8,17 +8,12 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="body">
-
                 <h:form id="resumenesForm" >
                     <p:multiSelectListbox value="#{planController.selection}" effect="slide" header="group" showHeaders="true">
                         <f:selectItems value="#{planController.listaPlanes}" />
                     </p:multiSelectListbox>
-
-                    <p:commandButton value="Save" icon="ui-icon-check" update="out" style="display:block;margin:10px 0" />
                     <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ResumenEditForm" oncomplete="PF('ResumenEditDialog').show()" />
-                    <h:outputText id="out" value="Value: #{planController.selection}" style="display:block" />
                 </h:form>
- 
             <ui:include src="EditarResumen.xhtml"/>
         </ui:define>
     </ui:composition>

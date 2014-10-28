@@ -24,7 +24,6 @@ import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.inject.Inject;
 import org.apache.commons.lang.StringEscapeUtils;
-import sessionbeans.AsignaturaFacadeLocal;
 
 @Named("planController")
 @SessionScoped
@@ -37,6 +36,9 @@ public class PlanController implements Serializable {
     private List<SelectItem> listaPlanes;
     private String selection;
     private Asignatura selectedAsignatura;
+    
+    @Inject
+    private AsignaturaController asigController;
 
     public Asignatura getSelectedAsignatura() {
         return selectedAsignatura;
@@ -45,9 +47,6 @@ public class PlanController implements Serializable {
     public void setSelectedAsignatura(Asignatura selectedAsignatura) {
         this.selectedAsignatura = selectedAsignatura;
     }
-
-    @Inject
-    private AsignaturaController asigController;
     
     public PlanController() {
     }
@@ -257,5 +256,8 @@ public class PlanController implements Serializable {
         setSelectedAsignatura(asigController.getAsignatura(Integer.parseInt(selection)));
     }
 
-
+    public void updateResumen(){
+        asigController.setSelected(selectedAsignatura);
+        asigController.update();
+    }
 }

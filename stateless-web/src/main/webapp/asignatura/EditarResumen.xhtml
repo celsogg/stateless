@@ -3,42 +3,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
     <ui:composition>
-
-        <p:dialog id="ResumenEditDlg" widgetVar="ResumenEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditAsignaturaTitle}">
+        <p:dialog id="ResumenEditDlg" widgetVar="ResumenEditDialog" modal="true" resizable="true" appendTo="@(body)" header="Editar Resumen Asignatura">
             <h:form id="ResumenEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{planController.selectedAsignatura != null}">
-                        <p:outputLabel value="#{bundle.EditAsignaturaLabel_idAsignatura}" for="idAsignatura" />
-                        <p:inputText id="idAsignatura" value="#{planController.selectedAsignatura.idAsignatura}" title="#{bundle.EditAsignaturaTitle_idAsignatura}" required="true" requiredMessage="#{bundle.EditAsignaturaRequiredMessage_idAsignatura}"/>
-                        <p:outputLabel value="#{bundle.EditAsignaturaLabel_nombreAsignatura}" for="nombreAsignatura" />
-                        <p:inputText id="nombreAsignatura" value="#{planController.selectedAsignatura.nombreAsignatura}" title="#{bundle.EditAsignaturaTitle_nombreAsignatura}" />
-                        <p:outputLabel value="#{bundle.EditAsignaturaLabel_sctAsignatura}" for="sctAsignatura" />
-                        <p:inputText id="codigoAsignatura" value="#{planController.selectedAsignatura.codigoAsignatura}" title="#{bundle.EditAsignaturaTitle_codigoAsignatura}" />
-                        <p:outputLabel value="#{bundle.EditAsignaturaLabel_horasTeoria}" for="horasTeoria" />
-                        <p:inputText id="horasTeoria" value="#{planController.selectedAsignatura.horasTeoria}" title="#{bundle.EditAsignaturaTitle_horasTeoria}" />
-                        <p:outputLabel value="#{bundle.EditAsignaturaLabel_horasEjercicio}" for="horasEjercicio" />
-                        <p:inputText id="horasEjercicio" value="#{planController.selectedAsignatura.horasEjercicio}" title="#{bundle.EditAsignaturaTitle_horasEjercicio}" />
-                        <p:outputLabel value="#{bundle.EditAsignaturaLabel_horasLaboratorio}" for="horasLaboratorio" />
-                        <p:inputText id="horasLaboratorio" value="#{planController.selectedAsignatura.horasLaboratorio}" title="#{bundle.EditAsignaturaTitle_horasLaboratorio}" />
-                        <p:outputLabel value="#{bundle.EditAsignaturaLabel_resumenAsignatura}" for="resumenAsignatura" />
-                        <p:inputText id="resumenAsignatura" value="#{planController.selectedAsignatura.resumenAsignatura}" title="#{bundle.EditAsignaturaTitle_resumenAsignatura}" />
-                        <p:outputLabel value="#{bundle.EditAsignaturaLabel_idPlan}" for="idPlan" />
-                        <p:selectOneMenu id="idPlan" value="#{planController.selectedAsignatura.idPlan}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{planController.itemsAvailableSelectOne}"
-                                           var="idPlanItem"
-                                           itemValue="#{idPlanItem}"/>
-                        </p:selectOneMenu>
+                        <p:outputLabel value="Código" for="codigoAsignatura"/>
+                        <p:inputText id="codigoAsignatura" value="#{planController.selectedAsignatura.codigoAsignatura}" readonly="true"/>
+                        
+                        <p:outputLabel value="Nombre" for="nombreAsignatura" />
+                        <p:inputText id="nombreAsignatura" value="#{planController.selectedAsignatura.nombreAsignatura}" title="#{bundle.EditAsignaturaTitle_nombreAsignatura}" readonly="true"/>
+                       
+                        <p:outputLabel value="T-E-L" for="tel" />
+                        <p:inputText id="tel" value="#{planController.selectedAsignatura.horasTeoria}-#{planController.selectedAsignatura.horasEjercicio}-#{planController.selectedAsignatura.horasLaboratorio}" title="" readonly="true" />
+                        
+                        <p:outputLabel value="Resumen" for="resumenAsignatura" />
+                        <p:inputTextarea id="resumenAsignatura" value="#{planController.selectedAsignatura.resumenAsignatura}" title="#{bundle.EditAsignaturaTitle_resumenAsignatura}" />
                     </p:panelGrid>
-                    <!--<p:commandButton actionListener="{planController.update}" value="{bundle.Save}" update="display,:AsignaturaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AsignaturaEditDialog');"/>-->
-                    <p:commandButton value="#{bundle.Cancel}" onclick="AsignaturaEditDialog.hide()"/>
+                    <p:commandButton actionListener="#{planController.updateResumen()}" value="Guardar" update="display,:growl" oncomplete="handleSubmit(args, 'ResumenEditDialog');"/>
+                    <p:commandButton value="Cancelar" onclick="AsignaturaEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-
     </ui:composition>
 </html>
 
