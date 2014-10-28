@@ -369,6 +369,10 @@ jQuery(document).ready(function ($) {
                     var aperturas_recursiva = GetAperturasRecursiveById(id);
                     CambiarEstadoById(id, ESTADO_PREREQUISITO);
                     CambiarEstadoArrayById(aperturas_recursiva, ESTADO_INICIAL);
+                } else {
+                    $('#myModal').modal({
+                        keyboard: true
+                    });
                 }
             }
         });
@@ -424,7 +428,7 @@ jQuery(document).ready(function ($) {
             text += '<span style="color: #1abc9c;">SCT: ' + elemento.sct + '</span>';
         }
         if (elemento.t) {
-            text += '&nbsp;<span style="color: #3498db;">TEL: ' + elemento.t + '</span>';
+            text += '&nbsp;<span style="color: #3498db;">TEL: ' + elemento.t + ' - ' + elemento.e + ' - ' + elemento.l + '</span>';
         }
 
         $(this).qtip({
