@@ -55,7 +55,7 @@
         </nav>
         <div class="jumbotron">
             <h1>Bienvenido a Mallas Interactivas</h1>
-            <p>Actualmente existen las siguientes mallas interactivas:</p>
+            <p>Actualmente dispone de los siguientes planes:</p>
             <c:forEach var="mallas" items="#{planController.items}">
                 <p>
                     <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}" class="btn btn-success btn-lg">
