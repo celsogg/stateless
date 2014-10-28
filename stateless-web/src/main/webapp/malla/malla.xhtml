@@ -104,7 +104,7 @@ and open the template in the editor.
         </div>
 
         <script language="javascript" type="text/javascript">
-            #{planController.toJSON(param['planId'])}
+            #{planController.toJSON(planController.getPlan(param['planId']))}
         </script>
         <script language="javascript" type="text/javascript">var pruebas = false;</script>
     </body>
