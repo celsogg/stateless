@@ -432,16 +432,26 @@ jQuery(document).ready(function ($) {
             text += '&nbsp;<span style="color: #3498db;">TEL: ' + elemento.t + ' - ' + elemento.e + ' - ' + elemento.l + '</span>';
         }
 
+        var position = {
+            my: 'top center', // Position my top left...
+            at: 'bottom center', // at the bottom right of...
+            target: $(this) // my target
+        }
+
+        if (elemento.nivel == 1) {
+            position = {
+                my: 'top left', // Position my top left...
+                at: 'bottom right', // at the bottom right of...
+                target: $(this) // my target
+            }
+        }
+
         $(this).qtip({
             content: {
                 text: text
             },
             style: {classes: 'qtip-cream'},
-            position: {
-                my: 'top center', // Position my top left...
-                at: 'bottom center', // at the bottom right of...
-                target: $(this) // my target
-            },
+            position: position,
         });
 //        $(this).find('div').css('font-size','16px');
     });
