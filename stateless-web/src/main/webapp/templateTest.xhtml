@@ -3,15 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Mallas Interactivas</title>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
-        <script src="malla/js/jquery-1.7.2.min.js"></script>
-        <script src="bootstrap.min.js"></script>
-        <link href="bootstrap.min.css" rel="stylesheet" />
+        <title><ui:insert name="title">Título</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputStylesheet name="css/stateless.css"/>
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
     </h:head>
     <h:body>
+        <p:growl id="growl" life="3000" />
         <nav class="navbar navbar-default" role="navigation" style="border-radius: 0!important;">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -22,15 +25,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <h:link value="Mallas Interactivas" outcome="index" class="navbar-brand"/>
+                    <a class="navbar-brand" href="#">Mallas Interactivas</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-fixed-top" id="bs-example-navbar-collapse-1">
                     <div class="container">
                         <ul class="nav navbar-nav" style="margin-left: 80px;">
-                            <li><a href="/stateless-web/">Inicio</a></li>
-                            <li><a href="./faces/asignatura/resumenes.xhtml">Res&uacute;menes</a></li>
+
+                            <li class=""><h:link outcome="/asignatura/resumenes">Res&uacute;menes</h:link></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Planes<span class="caret"></span></a>
 
@@ -53,43 +56,9 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-        <div class="jumbotron">
-            <h1>Bienvenido a Mallas Interactivas</h1>
-            <p>Actualmente dispone de los siguientes planes:</p>
-            <c:forEach var="mallas" items="#{planController.items}">
-                <p>
-                    <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}" class="btn btn-success btn-lg">
-                        <f:param name="planId" value="#{mallas.idPlan}"></f:param>
-                    </h:link>
-                </p>
-            </c:forEach>
-        </div>
-        <!--        <br />
-                <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-                <br />
-                <h:link outcome="/admin/List" value="Show All Admin Items"/>
-                <br />
-                <h:link outcome="/asignatura/List" value="Show All Asignatura Items"/>
-                <br />
-                <h:link outcome="/carrera/List" value="Show All Carrera Items"/>
-                <br />
-                <h:link outcome="/habilidad/List" value="Show All Habilidad Items"/>
-                <br />
-                <h:link outcome="/nombres/List" value="Show All Nombres Items"/>
-                <br />
-                <h:link outcome="/plan/List" value="Show All Plan Items"/>
-                <br />
-                <h:link outcome="/profesor/List" value="Show All Profesor Items"/>
-                <br />
-                <h:link outcome="/programaAsignatura/List" value="Show All ProgramaAsignatura Items"/>
-                <br />
-                <h:form >
-                    <c:forEach var="mallas" items="#{planController.items}">
-                        <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}">
-                            <f:param name="planId" value="#{mallas.idPlan}"></f:param>
-                        </h:link><br></br>
-                    </c:forEach>
-                </h:form>-->
+        <p:layoutUnit position="center">
+            <ui:insert name="body"/>
+        </p:layoutUnit>
     </h:body>
 </html>
 

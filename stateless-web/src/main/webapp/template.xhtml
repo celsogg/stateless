@@ -6,9 +6,11 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <title><ui:insert name="title">Título</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputStylesheet name="css/stateless.css"/>
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
     </h:head>
 
     <h:body>
@@ -34,9 +36,9 @@
                 </h:form>
             </p:layoutUnit>
 
-            <p:layoutUnit position="south" size="60">
+<!--            <p:layoutUnit position="south" size="60">
                 <ui:insert name="footer"/>
-            </p:layoutUnit>
+            </p:layoutUnit>-->
 
             <p:layoutUnit position="center">
                 <ui:insert name="body"/>
@@ -47,3 +49,4 @@
     </h:body>
 
 </html>
+
