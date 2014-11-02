@@ -36,6 +36,10 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `asignatura`
@@ -66,7 +70,7 @@ CREATE TABLE `asignatura` (
 -- Dumping data for table `asignatura`
 --
 
-
+LOCK TABLES `asignatura` WRITE;
 /*!40000 ALTER TABLE `asignatura` DISABLE KEYS */;
 INSERT INTO `asignatura` VALUES (3,2,'CÁLCULO I PARA INGENIERÍA',7,1,'10101',6,2,0,'Asignatura teórica-práctica de iniciación al Cálculo para funciones reales de una variable real. Previamente presenta la estructura del conjunto fundamental R de los números reales como cuerpo ordenado completo, y luego el plano real cartesiano. Esta asignatura desarrolla los conceptos, propiedades y aplicaciones de los conceptos básicos del cálculo: límites, continuidad y derivada, mostrando recurrentemente aspectos de geometría analítica en el plano real.',0),(4,2,'ÁLGEBRA I PARA INGENIERÍA',7,1,'10102',6,2,0,'Asignatura teórico-práctica  que tiene como propósito describir los aspectos fundamentales de la matemática, especialmente en relación a las propiedades y aplicaciones de los diferentes tipos usuales de funciones y al estudio de ecuaciones algebraicas',0),(5,2,'FISICA I PARA INGENIERÍA',7,1,'10103',4,2,1,'En esta asignatura se presenta, a nivel fundamental, los conceptos básicos de la física en las temáticas de mecánica, ondas, fluidos y termodinámica.',0),(6,2,'TALLER DE DESARROLLO PERSONAL E INTERGRAL',3,1,'10104',2,0,2,'Asignatura orientada a la reflexión personal desde herramientas de la psicología, con la finalidad de posibilitar el desarrollo de habilidades de autoconciencia en los estudiantes, que permitan generar un proceso de adaptación a la vida universitaria, utilizando como recurso personal  la capacidad de observar sus procesos internos, conocer características de su  personalidad y el estilo de relacionarse consigo mismos, con lo otros y con el mundo exterior.
 Dicho proceso se genera tanto  a nivel personal como en la relación y vinculación con los otros, lo cual abre la posibilidad de generar una vinculación significativa con los demás en este proceso de adaptación a una nueva etapa de la vida.',0),(7,2,'INTRODUCCIÓN A LA INGENIERÍA',2,1,'10125',0,0,2,'Asignatura teórico-práctica  que tiene como propósito describir los aspectos fundamentales de la Ingeniería, el ingeniero y su papel en el entorno laboral, social y medio ambiental.',0),(8,2,'MÉTODOS DE ESTUDIO',2,1,'10126',0,0,2,'Asignatura teórica-taller que tiene como propósito que los alumnos aprendan y comprendan los factores que explican el buen estudio, incluyendo la planificación de las actividades, el control del proceso intelectual y la evaluación de los resultados, a través de herramientas y metodologías de aprendizaje en el contexto de problemas matemáticos.',0),(9,2,'CALCULO II PARA INGENIERÍA',7,2,'10107',6,2,0,'Introduce el estudio del cálculo integral incluida la integral impropia. El  estudio de las series numéricas, las series de potencias, curvas en el espacio y diferenciación de funciones reales de varias variables.
@@ -364,7 +368,7 @@ El curso trata la temática de la “Sociedad del Conocimiento”. Para ello se 
 Desde el área CTS (Ciencia Tecnología y Sociedad) el objetivo es que los estudiantes estén alertas a las dificultades y oportunidades del uso de la TIC en la sociedad. Los alumnos(as) descubren cuáles son los riesgos al asumir el paradigma dominante de la tecnología. Este modelo se presenta “neutro” y sin conexión con el impacto ético, político, psicológico, social y medio ambiental.
 Se describirán las consecuencias que se generan con los cambios de prácticas que moviliza la tecnología informática. Inspeccionando las posibilidades y riesgos en la seguridad de los ciudadanos que pudiera ocasionar. ',0),(171,4,'SISTEMAS DE INFORMACIÓN',4,5,'13261',4,0,2,'La asignatura considera la entrega de los conceptos y técnicas que permiten comprender la estructura y funcionamiento de una organización y cómo los flujos de información deben ser definidos y administrados para apoyar al logro de los objetivos organizacionales.  ',0),(172,4,'INGLÉS III',3,5,'10132',0,0,2,NULL,0),(173,4,'SISTEMAS OPERATIVOS',7,6,'13212',4,2,2,NULL,0),(174,4,'TALLER DE BASES DE DATOS',6,6,'13215',2,0,4,NULL,0),(175,4,'ADMINISTRACIÓN Y GESTIÓN INFORMÁTICA',5,6,'13262',4,0,2,NULL,0),(176,4,'TÉCNICAS DE INGENIERÍA DE SOFTWARE',5,6,'13265',4,0,2,NULL,0),(177,4,'REDES COMPUTACIONALES',6,6,'13266',4,2,2,NULL,0),(178,4,'INGLÉS IV',3,6,'10233',0,0,2,NULL,0),(179,4,'PROYECTO DE INGENIERÍA DE SOFTWARE',7,7,'13267',2,0,6,NULL,0),(180,4,'TÓPICOS DE ESPECIALIDAD I',6,7,'13268',4,0,2,NULL,0),(181,4,'TÓPICOS DE ESPECIALIDAD II',6,7,'13269',4,0,2,NULL,0),(182,4,'TÓPICOS DE ESPECIALIDAD III',6,7,'13270',4,0,2,NULL,0),(183,4,'SEMINARIO DE COMPUTACIÓN E INFORMÁTICA',2,7,'13276',2,0,4,NULL,0),(184,4,'TRABAJO DE TITULACIÓN',30,8,'13277',0,0,2,NULL,0);
 /*!40000 ALTER TABLE `asignatura` ENABLE KEYS */;
-
+UNLOCK TABLES;
 
 --
 -- Table structure for table `asignatura_habilidad`
@@ -387,6 +391,10 @@ CREATE TABLE `asignatura_habilidad` (
 -- Dumping data for table `asignatura_habilidad`
 --
 
+LOCK TABLES `asignatura_habilidad` WRITE;
+/*!40000 ALTER TABLE `asignatura_habilidad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asignatura_habilidad` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `asignatura_intermedia`
@@ -409,11 +417,11 @@ CREATE TABLE `asignatura_intermedia` (
 -- Dumping data for table `asignatura_intermedia`
 --
 
-
+LOCK TABLES `asignatura_intermedia` WRITE;
 /*!40000 ALTER TABLE `asignatura_intermedia` DISABLE KEYS */;
 INSERT INTO `asignatura_intermedia` VALUES (3,NULL),(4,NULL),(5,NULL),(6,NULL),(7,NULL),(8,NULL),(9,3),(10,4),(11,5),(12,4),(13,NULL),(14,11),(14,9),(15,6),(16,8),(17,9),(17,10),(18,12),(19,3),(20,9),(21,9),(22,10),(22,14),(23,18),(24,18),(25,16),(26,7),(26,21),(27,23),(28,22),(29,23),(30,23),(30,24),(31,25),(32,17),(32,20),(33,28),(34,24),(35,26),(35,15),(36,27),(36,29),(37,31),(38,21),(39,28),(40,34),(41,19),(41,35),(42,29),(43,20),(43,30),(44,38),(45,39),(46,19),(47,42),(48,41),(49,32),(50,45),(51,46),(52,36),(52,47),(53,50),(53,51),(53,52),(54,48),(54,49),(54,51),(55,50),(55,51),(55,52),(56,45),(57,51),(57,52),(58,53),(58,56),(59,54),(59,55),(60,54),(60,55),(61,46),(61,48),(62,57),(63,62),(64,NULL),(65,NULL),(66,NULL),(67,NULL),(68,NULL),(69,64),(70,64),(70,65),(71,64),(71,66),(72,68),(73,64),(74,64),(75,70),(75,68),(76,72),(77,70),(78,74),(79,72),(80,67),(80,71),(81,76),(82,71),(82,77),(83,78),(84,79),(85,79),(86,73),(86,82),(87,81),(87,82),(88,81),(89,81),(89,82),(90,78),(90,80),(91,86),(92,84),(93,84),(93,85),(93,86),(93,87),(94,90),(94,92),(95,90),(96,87),(96,91),(97,92),(98,83),(99,94),(99,97),(100,93),(101,93),(101,94),(102,94),(102,95),(102,96),(102,97),(103,83),(104,98),(104,99),(104,101),(105,102),(106,102),(107,102),(108,103),(109,89),(109,96),(110,89),(110,96),(111,102),(112,111),(113,NULL),(114,NULL),(115,NULL),(116,NULL),(117,NULL),(118,113),(119,117),(120,113),(121,117),(122,113),(122,114),(122,115),(122,116),(122,117),(123,120),(124,120),(124,117),(125,121),(126,114),(127,126),(128,125),(129,121),(130,125),(131,120),(132,118),(132,119),(132,120),(132,121),(133,128),(134,127),(135,127),(136,128),(137,133),(137,135),(138,133),(139,124),(139,135),(140,127),(140,128),(140,129),(140,130),(141,122),(142,140),(143,NULL),(144,NULL),(145,NULL),(146,NULL),(147,NULL),(148,NULL),(149,143),(150,144),(151,145),(152,144),(153,NULL),(154,149),(154,151),(155,146),(156,148),(157,149),(157,152),(158,152),(159,149),(160,147),(160,159),(161,143),(162,150),(162,154),(163,158),(164,158),(165,156),(166,161),(167,163),(168,162),(169,163),(170,155),(171,160),(172,165),(173,168),(174,167),(174,169),(175,166),(176,169),(177,168),(178,172),(179,175),(179,174),(179,176),(180,173),(180,174),(180,175),(180,176),(180,177),(180,178),(181,173),(181,174),(181,175),(181,176),(181,177),(181,178),(182,173),(182,174),(182,175),(182,176),(182,177),(182,178),(183,173),(183,174),(184,183);
 /*!40000 ALTER TABLE `asignatura_intermedia` ENABLE KEYS */;
-
+UNLOCK TABLES;
 
 --
 -- Table structure for table `carrera`
@@ -433,11 +441,11 @@ CREATE TABLE `carrera` (
 -- Dumping data for table `carrera`
 --
 
-
+LOCK TABLES `carrera` WRITE;
 /*!40000 ALTER TABLE `carrera` DISABLE KEYS */;
 INSERT INTO `carrera` VALUES (1,'Ingeniería civil informática'),(2,'Ingeniería de ejecución en computación e informática');
 /*!40000 ALTER TABLE `carrera` ENABLE KEYS */;
-
+UNLOCK TABLES;
 
 --
 -- Table structure for table `habilidad`
@@ -458,10 +466,10 @@ CREATE TABLE `habilidad` (
 -- Dumping data for table `habilidad`
 --
 
-
+LOCK TABLES `habilidad` WRITE;
 /*!40000 ALTER TABLE `habilidad` DISABLE KEYS */;
 /*!40000 ALTER TABLE `habilidad` ENABLE KEYS */;
-
+UNLOCK TABLES;
 
 --
 -- Table structure for table `nombres`
@@ -480,11 +488,11 @@ CREATE TABLE `nombres` (
 -- Dumping data for table `nombres`
 --
 
-
+LOCK TABLES `nombres` WRITE;
 /*!40000 ALTER TABLE `nombres` DISABLE KEYS */;
 INSERT INTO `nombres` VALUES ('Celso'),('Giovanni'),('Luis'),('Matias'),('Miguel');
 /*!40000 ALTER TABLE `nombres` ENABLE KEYS */;
-
+UNLOCK TABLES;
 
 --
 -- Table structure for table `plan`
@@ -509,11 +517,11 @@ CREATE TABLE `plan` (
 -- Dumping data for table `plan`
 --
 
-
+LOCK TABLES `plan` WRITE;
 /*!40000 ALTER TABLE `plan` DISABLE KEYS */;
 INSERT INTO `plan` VALUES (1,1,'Civil plan 2001',2001,'1863'),(2,1,'Civil plan 2012',2012,'1363'),(3,2,'Ejecucion plan 2001',2001,'1853'),(4,2,'Ejecucion plan 2012',2012,'1353');
 /*!40000 ALTER TABLE `plan` ENABLE KEYS */;
-
+UNLOCK TABLES;
 
 --
 -- Table structure for table `profesor`
@@ -536,11 +544,11 @@ CREATE TABLE `profesor` (
 -- Dumping data for table `profesor`
 --
 
-
+LOCK TABLES `profesor` WRITE;
 /*!40000 ALTER TABLE `profesor` DISABLE KEYS */;
 INSERT INTO `profesor` VALUES (1,'Consuelo.Ramirez','Consuelo','Ramírez Santibáñez','123'),(2,'Maria.Parodi','María Carolina','Parodi Davila','123'),(3,'Monica.Villanueva','Mónica','Villanueva Ilufi','123'),(4,'Erika.Rosas','Erika','Rosas Olivo','123'),(5,'Rodrigo.Pizarro','Rodrigo','Pizarro Guzmán','123'),(6,'Jacqueline.Kohler','Jacqueline','Kohler Casasempere','123'),(7,'Max.Chacon','Max','Chacón Pacheco','123'),(8,'Miguel.Fuentes','Miguel','Fuente Villalobos','123'),(9,'Fernando.Rannou','Fernando','Rannou Fuentes','123'),(10,'Mauricio.Marin','Mauricio','Marín Caihuan','123'),(11,'Manuel.Manriquez','Manuel','Manriquez López','123'),(12,'Bruno.Jerardino','Bruno','Jerardino Wiesenborn','123'),(13,'Rosa.Muñoz','Rosa','Muñoz Calanchie','123');
 /*!40000 ALTER TABLE `profesor` ENABLE KEYS */;
-
+UNLOCK TABLES;
 
 --
 -- Table structure for table `profesor_asignatura`
@@ -563,10 +571,10 @@ CREATE TABLE `profesor_asignatura` (
 -- Dumping data for table `profesor_asignatura`
 --
 
-
+LOCK TABLES `profesor_asignatura` WRITE;
 /*!40000 ALTER TABLE `profesor_asignatura` DISABLE KEYS */;
 /*!40000 ALTER TABLE `profesor_asignatura` ENABLE KEYS */;
-
+UNLOCK TABLES;
 
 --
 -- Table structure for table `programa_asignatura`
@@ -590,10 +598,10 @@ CREATE TABLE `programa_asignatura` (
 -- Dumping data for table `programa_asignatura`
 --
 
-
+LOCK TABLES `programa_asignatura` WRITE;
 /*!40000 ALTER TABLE `programa_asignatura` DISABLE KEYS */;
 /*!40000 ALTER TABLE `programa_asignatura` ENABLE KEYS */;
-
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

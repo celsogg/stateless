@@ -65,31 +65,34 @@
             </c:forEach>
         </div>
         <!--        <br />
-                <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-                <br />
-                <h:link outcome="/admin/List" value="Show All Admin Items"/>
-                <br />
-                <h:link outcome="/asignatura/List" value="Show All Asignatura Items"/>
-                <br />
-                <h:link outcome="/carrera/List" value="Show All Carrera Items"/>
-                <br />
-                <h:link outcome="/habilidad/List" value="Show All Habilidad Items"/>
-                <br />
-                <h:link outcome="/nombres/List" value="Show All Nombres Items"/>
-                <br />
-                <h:link outcome="/plan/List" value="Show All Plan Items"/>
-                <br />
-                <h:link outcome="/profesor/List" value="Show All Profesor Items"/>
-                <br />
-                <h:link outcome="/programaAsignatura/List" value="Show All ProgramaAsignatura Items"/>
-                <br />
-                <h:form >
-                    <c:forEach var="mallas" items="#{planController.items}">
-                        <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}">
-                            <f:param name="planId" value="#{mallas.idPlan}"></f:param>
-                        </h:link><br></br>
-                    </c:forEach>
-                </h:form>-->
+        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        <br />
+        <h:link outcome="/admin/List" value="Show All Admin Items"/>
+        <br />
+        <h:link outcome="/asignatura/List" value="Show All Asignatura Items"/>
+        <br />
+        <h:link outcome="/carrera/List" value="Show All Carrera Items"/>
+        <br />
+        <h:link outcome="/habilidad/List" value="Show All Habilidad Items"/>
+        <br />
+        <h:link outcome="/nombres/List" value="Show All Nombres Items"/>
+        <br />
+        <h:link outcome="/plan/List" value="Show All Plan Items"/>
+        <br />
+        <h:link outcome="/profesor/List" value="Show All Profesor Items"/>
+        <br />
+        <h:link outcome="/programaAsignatura/List" value="Show All ProgramaAsignatura Items"/>
+        <br />
+        <h:form >
+            <c:forEach var="mallas" items="#{planController.items}">
+                <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}">
+                    <f:param name="planId" value="#{mallas.idPlan}"></f:param>
+                </h:link><br></br>
+            </c:forEach>
+        </h:form>-->
+        <br />
+        <h:link outcome="/usuario/List" value="Show All Usuario Items"/>
     </h:body>
+
 </html>
 
