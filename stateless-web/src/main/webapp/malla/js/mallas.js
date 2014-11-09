@@ -518,6 +518,9 @@ jQuery(document).ready(function($) {
             $('#fwbw').attr('checked', 'checked');
             if (accion == 'proyeccion' || accion == 'tomar_ramos') {
                 var nivel_proyeccion = parseInt($(this).val());
+                for (var i = context.length - 1; i >= 0; i--) {
+                    CambiarEstadoById( context[i].id, ESTADO_INICIAL );
+                };
                 $('.asignatura').css('background', 'white');
                 CambiarEstadoArrayById(asignaturas_sin_padres, ESTADO_PREREQUISITO);
                 ProyectarNivel(nivel_proyeccion);
