@@ -12,8 +12,6 @@
             <h:form id="PlanCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{planController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePlanLabel_idPlan}" for="idPlan" />
-                        <p:inputText id="idPlan" value="#{planController.selected.idPlan}" title="#{bundle.CreatePlanTitle_idPlan}" required="true" requiredMessage="#{bundle.CreatePlanRequiredMessage_idPlan}"/>
                         <p:outputLabel value="#{bundle.CreatePlanLabel_nombrePlan}" for="nombrePlan" />
                         <p:inputText id="nombrePlan" value="#{planController.selected.nombrePlan}" title="#{bundle.CreatePlanTitle_nombrePlan}" />
                         <p:outputLabel value="#{bundle.CreatePlanLabel_anioPlan}" for="anioPlan" />
@@ -23,7 +21,7 @@
                         <p:outputLabel value="#{bundle.CreatePlanLabel_idCarrera}" for="idCarrera" />
                         <p:selectOneMenu id="idCarrera" value="#{planController.selected.idCarrera}" >
                             <f:selectItems value="#{carreraController.itemsAvailableSelectOne}"
-                                           var="idCarreraItem"
+                                           itemLabel="#{idCarreraItem.nombreCarrera}" var="idCarreraItem"
                                            itemValue="#{idCarreraItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
