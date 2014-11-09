@@ -24,6 +24,7 @@ import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.inject.Inject;
 import org.apache.commons.lang.StringEscapeUtils;
+import sessionbeans.PlanFacade;
 
 @Named("planController")
 @SessionScoped
@@ -31,6 +32,7 @@ public class PlanController implements Serializable {
 
     @EJB
     private PlanFacadeLocal ejbFacade;
+    private PlanFacade ejbPlanFacade;
     private List<Plan> items = null;
     private Plan selected;
     private List<SelectItem> listaPlanes;
@@ -116,6 +118,13 @@ public class PlanController implements Serializable {
         if (items == null) {
             items = getFacade().findAll();
         }
+        return items;
+    }
+    
+    public List<Plan> getItemsByVisible() {
+        //if (items == null) {
+        List<Plan> items = getFacade().findByVisiblePlan();
+        //}
         return items;
     }
 

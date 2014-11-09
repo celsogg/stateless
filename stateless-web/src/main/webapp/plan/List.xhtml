@@ -55,7 +55,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPlanTitle_visiblePlan}"/>
                             </f:facet>
-                            <h:outputText value="#{item.visiblePlan}"/>
+                            <h:outputText value="#{item.visiblePlanString}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{planController.prepareCreate}" update=":PlanCreateForm" oncomplete="PF('PlanCreateDialog').show()"/>

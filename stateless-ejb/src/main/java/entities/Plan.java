@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Plan.findByNombrePlan", query = "SELECT p FROM Plan p WHERE p.nombrePlan = :nombrePlan"),
     @NamedQuery(name = "Plan.findByAnioPlan", query = "SELECT p FROM Plan p WHERE p.anioPlan = :anioPlan"),
     @NamedQuery(name = "Plan.findByCodigoPlan", query = "SELECT p FROM Plan p WHERE p.codigoPlan = :codigoPlan"),
-    @NamedQuery(name = "Plan.findByVisiblePlan", query = "SELECT P FROM Plan p WHERE p.visiblePlan = :visiblePlan")})
+    @NamedQuery(name = "Plan.findByVisiblePlan", query = "SELECT P FROM Plan p WHERE p.visiblePlan = 1")})
 public class Plan implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,7 +54,7 @@ public class Plan implements Serializable {
     @Column(name = "CODIGO_PLAN")
     private String codigoPlan;
     @Column(name = "VISIBLE_PLAN")
-        private Boolean visiblePlan;
+        private Boolean visiblePlan = false;
     @JoinColumn(name = "ID_CARRERA", referencedColumnName = "ID_CARRERA")
     @ManyToOne
     private Carrera idCarrera;
@@ -111,6 +111,10 @@ public class Plan implements Serializable {
 
     public Boolean getVisiblePlan() {
         return visiblePlan;
+    }
+    
+    public String getVisiblePlanString() {
+        return ( visiblePlan != null && visiblePlan )? "Si" : "No";
     }
 
     public void setVisiblePlan(Boolean visiblePlan) {

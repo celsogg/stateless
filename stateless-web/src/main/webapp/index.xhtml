@@ -35,7 +35,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Planes<span class="caret"></span></a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <c:forEach var="mallas" items="#{planController.items}">
+                                    <c:forEach var="mallas" items="#{planController.itemsByVisible}">
                                         <li>
                                             <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}">
                                                 <f:param name="planId" value="#{mallas.idPlan}"></f:param>
@@ -66,9 +66,9 @@
         <div class="jumbotron">
             <h1>Bienvenido a Mallas Interactivas</h1>
             <p>Actualmente dispone de los siguientes planes:</p>
-            <c:forEach var="mallas" items="#{planController.items}">
+            <c:forEach var="mallas" items="#{planController.itemsByVisible}">
                 <p>
-                    <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}" class="btn btn-success btn-lg">
+                    <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}" class="btn btn-success btn-lg" >
                         <f:param name="planId" value="#{mallas.idPlan}"></f:param>
                     </h:link>
                 </p>

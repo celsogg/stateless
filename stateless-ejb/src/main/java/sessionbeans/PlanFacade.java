@@ -6,9 +6,11 @@
 package sessionbeans;
 
 import entities.Plan;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,5 +29,16 @@ public class PlanFacade extends AbstractFacade<Plan> implements PlanFacadeLocal 
     public PlanFacade() {
         super(Plan.class);
     }
+
+    @Override
+    public List<Plan> findByVisiblePlan() {
+        Query query;
+        query = em.createNamedQuery("Plan.findByVisiblePlan");
+        
+        return query.getResultList();
+        
+    }
+
+   
     
 }
