@@ -28,7 +28,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 @Named("planController")
 @SessionScoped
 public class PlanController implements Serializable {
- 
+
     @EJB
     private PlanFacadeLocal ejbFacade;
     private List<Plan> items = null;
@@ -36,7 +36,7 @@ public class PlanController implements Serializable {
     private List<SelectItem> listaPlanes;
     private String selection;
     private Asignatura selectedAsignatura;
-    
+
     @Inject
     private AsignaturaController asigController;
 
@@ -47,11 +47,11 @@ public class PlanController implements Serializable {
     public void setSelectedAsignatura(Asignatura selectedAsignatura) {
         this.selectedAsignatura = selectedAsignatura;
     }
-    
+
     public PlanController() {
     }
 
-     public Plan getSelected() {
+    public Plan getSelected() {
         return selected;
     }
 
@@ -74,8 +74,8 @@ public class PlanController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
-    
-    public List<SelectItem> getListaPlanes(){
+
+    public List<SelectItem> getListaPlanes() {
         this.listaPlanes = new ArrayList<>();
         for (Plan plan : items) {
             SelectItemGroup group = new SelectItemGroup(plan.getNombrePlan());
@@ -92,7 +92,7 @@ public class PlanController implements Serializable {
         }
         return listaPlanes;
     }
-    
+
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PlanCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -199,14 +199,14 @@ public class PlanController implements Serializable {
         }
 
     }
-    
-    public String toJSON(Plan plan){
+
+    public String toJSON(Plan plan) {
         StringBuilder jsonB = new StringBuilder();
         jsonB.append("var context = [");
         ArrayList<Asignatura> as;
         as = new ArrayList<>(plan.getAsignaturaCollection());
         for (Asignatura a : as) {
-            ArrayList <Asignatura> pre, post;
+            ArrayList<Asignatura> pre, post;
             jsonB.append("{ \"nombre\": \"");
             jsonB.append(a.getNombreAsignatura());
             jsonB.append("\", \"id\": ");
@@ -214,7 +214,7 @@ public class PlanController implements Serializable {
             jsonB.append(", \"nivel\": ");
             jsonB.append(a.getNivelAsignatura());
             jsonB.append(", \"anual\": ");
-            jsonB.append( a.getEsAnual() == 1 ? "true" : "false" );
+            jsonB.append(a.getEsAnual() == 1 ? "true" : "false");
             jsonB.append(", \"sct\": ");
             jsonB.append(a.getSctAsignatura());
             jsonB.append(", \"t\": ");
@@ -226,35 +226,49 @@ public class PlanController implements Serializable {
             jsonB.append(", \"resumen\": \"");
             jsonB.append(StringEscapeUtils.escapeJavaScript(a.getResumenAsignatura()));
             //requisitos
-            pre = new ArrayList<> (a.getAsignaturaCollection());
+            pre = new ArrayList<>(a.getAsignaturaCollection());
             jsonB.append("\", \"prerequisitos\": [");
             for (Asignatura p : pre) {
                 jsonB.append(p.getCodigoAsignatura());
-                if ( pre.lastIndexOf(p) != pre.size()-1 ) jsonB.append(",");
+                if (pre.lastIndexOf(p) != pre.size() - 1) {
+                    jsonB.append(",");
+                }
             }
             jsonB.append("], \"aperturas\": [");
             //apertura
-            post = new ArrayList<> (a.getAsignaturaCollection1());
+            post = new ArrayList<>(a.getAsignaturaCollection1());
             for (Asignatura p : post) {
                 jsonB.append(p.getCodigoAsignatura());
-                if ( post.lastIndexOf(p) != post.size()-1 ) jsonB.append(",");
+                if (post.lastIndexOf(p) != post.size() - 1) {
+                    jsonB.append(",");
+                }
             }
             jsonB.append("] }");
-            if (as.lastIndexOf(a) != as.size()-1) jsonB.append(",");
+            if (as.lastIndexOf(a) != as.size() - 1) {
+                jsonB.append(",");
+            }
         }
         jsonB.append("];");
-        return jsonB.toString() ;
+        return jsonB.toString();
     }
-    
+
+    public String getAccion(String parametro) {
+        if (parametro.isEmpty()) {
+            return "false";
+        }
+        return "true";
+    }
+
     public String getSelection() {
         return selection;
     }
+
     public void setSelection(String selection) {
         this.selection = selection;
         setSelectedAsignatura(asigController.getAsignatura(Integer.parseInt(selection)));
     }
 
-    public void updateResumen(){
+    public void updateResumen() {
         asigController.setSelected(selectedAsignatura);
         asigController.update();
     }
