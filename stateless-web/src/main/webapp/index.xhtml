@@ -5,7 +5,6 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <h:outputLabel value="Ha entrado como: "/><h:outputText value=" #{loginController.username}"/>
         <title>Mallas Interactivas</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
         <script src="malla/js/jquery-1.7.2.min.js"></script>
@@ -54,9 +53,11 @@
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
+                            <span style="color: white;">Ha entrado como: #{loginController.username},
                             <h:form>
                             <h:commandLink action="#{loginController.logout}" value="Logout" />
                             </h:form>
+                                </span>
                         </ul>
                     </div>
                 </div><!-- /.navbar-collapse -->

@@ -15,6 +15,55 @@ jQuery(document).ready(function($) {
         return asignaturas_sin_padres;
     }
 
+    function CambiarValorSCT(sct) {
+        $('#sct_y_tel').text('SCT: ' + sct);
+        if (sct < 25) {
+                    $('#sct_y_tel').addClass('label-info');
+
+                    $('#sct_y_tel').removeClass('label-danger');
+                    $('#sct_y_tel').removeClass('label-warning');
+                } else if (sct < 30) {
+                    $('#sct_y_tel').removeClass('label-info');
+                    $('#sct_y_tel').removeClass('label-danger');
+
+                    $('#sct_y_tel').addClass('label-warning');
+
+                    $('#sct_y_tel').qtip({
+                        content: {
+                            text: "Tener entre 25 y 30 SCT implica una carga superior a la recomendada."
+                        },
+                        style: {
+                            classes: 'qtip-cream'
+                        },
+                        position: {
+                            my: 'top center', // Position my top left...
+                            at: 'bottom center', // at the bottom right of...
+                            target: $('#sct_y_tel') // my target
+                        },
+                    });
+                } else {
+                    $('#sct_y_tel').removeClass('label-info');
+
+                    $('#sct_y_tel').addClass('label-danger');
+
+                    $('#sct_y_tel').removeClass('label-warning');
+
+                    $('#sct_y_tel').qtip({
+                        content: {
+                            text: "Tener mas de 30 SCT en un semestre implica una gran carga académica y no es recomendable."
+                        },
+                        style: {
+                            classes: 'qtip-cream'
+                        },
+                        position: {
+                            my: 'top center', // Position my top left...
+                            at: 'bottom center', // at the bottom right of...
+                            target: $('#sct_y_tel') // my target
+                        },
+                    });
+                }
+    }
+
     var asignaturas_sin_padres = GetAsignaturasSinPadres();
 
     var se_esta_realizando_toma_de_ramos = false;
@@ -438,52 +487,7 @@ jQuery(document).ready(function($) {
                     }
                 };
 
-                $('#sct_y_tel').text('SCT: ' + tiene_sct ? sct_totales : '-');
-                if (sct_totales < 25) {
-                    $('#sct_y_tel').addClass('label-info');
-
-                    $('#sct_y_tel').removeClass('label-danger');
-                    $('#sct_y_tel').removeClass('label-warning');
-                } else if (sct_totales < 30) {
-                    $('#sct_y_tel').removeClass('label-info');
-                    $('#sct_y_tel').removeClass('label-danger');
-
-                    $('#sct_y_tel').addClass('label-warning');
-
-                    $('#sct_y_tel').qtip({
-                        content: {
-                            text: "Tener entre 25 y 30 SCT implica una carga superior a la recomendada."
-                        },
-                        style: {
-                            classes: 'qtip-cream'
-                        },
-                        position: {
-                            my: 'top center', // Position my top left...
-                            at: 'bottom center', // at the bottom right of...
-                            target: $('#sct_y_tel') // my target
-                        },
-                    });
-                } else {
-                    $('#sct_y_tel').removeClass('label-info');
-
-                    $('#sct_y_tel').addClass('label-danger');
-
-                    $('#sct_y_tel').removeClass('label-warning');
-
-                    $('#sct_y_tel').qtip({
-                        content: {
-                            text: "Tener mas de 30 SCT en un semestre implica una gran carga académica y no es recomendable."
-                        },
-                        style: {
-                            classes: 'qtip-cream'
-                        },
-                        position: {
-                            my: 'top center', // Position my top left...
-                            at: 'bottom center', // at the bottom right of...
-                            target: $('#sct_y_tel') // my target
-                        },
-                    });
-                }
+                CambiarValorSCT(sct_totales);
             }
         });
 
@@ -519,17 +523,31 @@ jQuery(document).ready(function($) {
             if (accion == 'proyeccion' || accion == 'tomar_ramos') {
                 var nivel_proyeccion = parseInt($(this).val());
                 for (var i = context.length - 1; i >= 0; i--) {
-                    CambiarEstadoById( context[i].id, ESTADO_INICIAL );
+                    CambiarEstadoById(context[i].id, ESTADO_INICIAL);
                 };
                 $('.asignatura').css('background', 'white');
                 CambiarEstadoArrayById(asignaturas_sin_padres, ESTADO_PREREQUISITO);
                 ProyectarNivel(nivel_proyeccion);
+                CambiarValorSCT(0);
             }
         });
 
         $('#boton_fijar').on('click', function() {
-            se_esta_realizando_toma_de_ramos = true;
-            $(this).text('Liberar');
+            if (se_esta_realizando_toma_de_ramos) {
+                $(this).text('Fijar');
+                for (var i = context.length - 1; i >= 0; i--) {
+                    if (GetEstadoById(context[i].id) == ESTADO_SIMULANDO_TOMA) {
+                        CambiarEstadoById(context[i].id, ESTADO_PREREQUISITO);
+                        var aperturas_recursiva = GetAperturasRecursiveById(context[i].id);
+                        CambiarEstadoArrayById(aperturas_recursiva, ESTADO_INICIAL);
+                        CambiarValorSCT(0);
+                    }
+                };
+                se_esta_realizando_toma_de_ramos = false;
+            } else {
+                se_esta_realizando_toma_de_ramos = true;
+                $(this).text('Liberar');
+            }
         });
 
         if (tomar_ramos) {
@@ -544,7 +562,7 @@ jQuery(document).ready(function($) {
     }
 
     for (var i = context.length - 1; i >= 0; i--) {
-        CambiarEstadoById( context[i].id, GetEstadoById( context[i].id ) );
+        CambiarEstadoById(context[i].id, GetEstadoById(context[i].id));
     };
 
     if (!tomar_ramos) {
