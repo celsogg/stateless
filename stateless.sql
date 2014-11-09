@@ -22,26 +22,27 @@ USE `stateless`;
 -- Table structure for table `usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
+DROP TABLE IF EXISTS `USUARIO`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuario` (
-  `ID` int(11) NOT NULL,
-  `APELLIDO` varchar(255) DEFAULT NULL,
-  `NOMBRE` varchar(255) DEFAULT NULL,
-  `ROL` varchar(255) DEFAULT NULL,
-  `UID` varchar(255) DEFAULT NULL,
+CREATE TABLE `USUARIO` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `APELLIDO` varchar(128) DEFAULT NULL,
+  `NOMBRE` varchar(128) DEFAULT NULL,
+  `ROL` varchar(20) DEFAULT NULL,
+  `UID` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuario`
+-- Dumping data for table `USUARIO`
 --
 
-LOCK TABLES `usuario` WRITE;
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+LOCK TABLES `USUARIO` WRITE;
+/*!40000 ALTER TABLE `USUARIO` DISABLE KEYS */;
+INSERT INTO `USUARIO` VALUES (1,'Carcamo','Miguel','alumno','1010'),(2,'sor','profe','profesor','1001');
+/*!40000 ALTER TABLE `USUARIO` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -240,6 +241,7 @@ CREATE TABLE `plan` (
   `NOMBRE_PLAN` varchar(128) DEFAULT NULL,
   `ANIO_PLAN` int(11) DEFAULT NULL,
   `CODIGO_PLAN` varchar(32) DEFAULT NULL,
+  `VISIBLE_PLAN` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`ID_PLAN`),
   KEY `FK_RELATIONSHIP_9` (`ID_CARRERA`),
   CONSTRAINT `FK_RELATIONSHIP_9` FOREIGN KEY (`ID_CARRERA`) REFERENCES `carrera` (`ID_CARRERA`)
@@ -252,7 +254,7 @@ CREATE TABLE `plan` (
 
 LOCK TABLES `plan` WRITE;
 /*!40000 ALTER TABLE `plan` DISABLE KEYS */;
-INSERT INTO `plan` VALUES (1,1,'Civil plan 2001',2001,'1863'),(2,1,'Civil plan 2012',2012,'1363'),(3,2,'Ejecucion plan 2001',2001,'1853'),(4,2,'Ejecucion plan 2012',2012,'1353');
+INSERT INTO `plan` VALUES (1,1,'Civil plan 2001',2001,'1863',1),(2,1,'Civil plan 2012',2012,'1363',1),(3,2,'Ejecucion plan 2001',2001,'1853',1),(4,2,'Ejecucion plan 2012',2012,'1353',1);
 /*!40000 ALTER TABLE `plan` ENABLE KEYS */;
 UNLOCK TABLES;
 

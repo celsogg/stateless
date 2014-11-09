@@ -69,13 +69,21 @@ and open the template in the editor.
                 </div>
                 <div id="control">
                     <div id="radio">
-                        <input type="radio" name="rg" id="fw" checked="checked"/>APERTURA<br/>
-                        <input type="radio" name="rg" id="bw"/>PRERREQUISITOS<br/>
-                        <input type="radio" name="rg" id="fwbw"/>PROYECCION
-                        <div id="outline" class="outline">
-                            <!-- <div id="outline" class="outline" style="visibility: hidden;"> -->
-                            Nivel
-                            <input class="spin-decimal" id="spinme" value="0" type="text"/>
+                        <div id="apertura"><input type="radio" name="rg" id="fw" checked="checked"/>APERTURA</div>
+                        <div id="prerequisitos"><input type="radio" name="rg" id="bw"/>PRERREQUISITOS</div>
+                        <div id="tomar_ramos_div">
+                            <button id="boton_fijar" type="button" class="btn btn-success">Fijar</button>
+                            <span id="sct_y_tel" class="label label-info" style="font-size: 14px; padding: 12px 20px;">SCT: 0</span>
+                            <br />
+                            Nivel <input class="spin-decimal" id="spinme" value="0" type="text"/>
+                        </div>
+                        <div id="proyeccion">
+                            <input type="radio" name="rg" id="fwbw"/>PROYECCION
+                            <div id="outline" class="outline">
+                                <!-- <div id="outline" class="outline" style="visibility: hidden;"> -->
+                                Nivel
+                                <input class="spin-decimal" id="spinme" value="0" type="text"/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,6 +112,7 @@ and open the template in the editor.
         </div>
 
         <script language="javascript" type="text/javascript">
+            var tomar_ramos = #{ planController.getAccion( param['tomar_ramos'] ) };
             #{planController.toJSON(planController.getPlan(param['planId']))}
         </script>
         <script language="javascript" type="text/javascript">var pruebas = false;</script>

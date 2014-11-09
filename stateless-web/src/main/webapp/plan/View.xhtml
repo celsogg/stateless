@@ -12,16 +12,14 @@
             <h:form id="PlanViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{planController.selected != null}">
-                        <h:outputText value="#{bundle.ViewPlanLabel_idPlan}"/>
-                        <h:outputText value="#{planController.selected.idPlan}" title="#{bundle.ViewPlanTitle_idPlan}"/>
                         <h:outputText value="#{bundle.ViewPlanLabel_nombrePlan}"/>
                         <h:outputText value="#{planController.selected.nombrePlan}" title="#{bundle.ViewPlanTitle_nombrePlan}"/>
                         <h:outputText value="#{bundle.ViewPlanLabel_anioPlan}"/>
                         <h:outputText value="#{planController.selected.anioPlan}" title="#{bundle.ViewPlanTitle_anioPlan}"/>
                         <h:outputText value="#{bundle.ViewPlanLabel_codigoPlan}"/>
                         <h:outputText value="#{planController.selected.codigoPlan}" title="#{bundle.ViewPlanTitle_codigoPlan}"/>
-                        <h:outputText value="#{bundle.ViewPlanLabel_idCarrera}"/>
-                        <h:outputText value="#{planController.selected.idCarrera}" title="#{bundle.ViewPlanTitle_idCarrera}"/>
+                        <h:outputText value="#{bundle.ViewPlanLabel_visiblePlan}"/>
+                        <h:outputText value="#{planController.selected.visiblePlan}" title="#{bundle.ViewPlanTitle_visiblePlan}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="PlanViewDialog.hide()"/>
                 </h:panelGroup>

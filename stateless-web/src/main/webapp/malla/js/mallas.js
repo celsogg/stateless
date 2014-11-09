@@ -1,17 +1,6 @@
 var accion = 'aperturas';
 
-jQuery(document).ready(function ($) {
-
-    var ESTADO_INICIAL = 0;
-    var ESTADO_TOMADO = 1;
-    var ESTADO_PREREQUISITO = 2;
-
-    function toTitleCase(str)
-    {
-        return str.replace(/\w\S*/g, function (txt) {
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        });
-    }
+jQuery(document).ready(function($) {
 
     function GetAsignaturasSinPadres() {
         var asignaturas_sin_padres = [];
@@ -20,14 +9,37 @@ jQuery(document).ready(function ($) {
 
         for (var i = 0; i < context.length; i++) {
             son_hijos = _.union(son_hijos, context[i].aperturas);
-        }
-        ;
+        };
         asignaturas_sin_padres = _.difference(context_ids, son_hijos);
 
         return asignaturas_sin_padres;
     }
 
     var asignaturas_sin_padres = GetAsignaturasSinPadres();
+
+    var se_esta_realizando_toma_de_ramos = false;
+
+    if (tomar_ramos) {
+        $('#apertura').hide();
+        $('#prerequisitos').hide();
+        $('#proyeccion').hide();
+        // se_esta_realizando_toma_de_ramos = true;
+    } else {
+        $('#tomar_ramos_div').hide();
+    }
+
+    var ESTADO_INICIAL = 0;
+    var ESTADO_TOMADO = 1;
+    var ESTADO_PREREQUISITO = 2;
+    var ESTADO_SIMULANDO_TOMA = 3;
+    var ESTADO_PREREQUISITO_NO_TOMABLE = 4;
+
+
+    function toTitleCase(str) {
+        return str.replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    }
 
     function GetHexString(rgbString) {
         var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -59,7 +71,7 @@ jQuery(document).ready(function ($) {
                 nivel_mas_alto = context[i].nivel;
         }
 
-        Handlebars.registerHelper('imprimir', function (asignaturas) {
+        Handlebars.registerHelper('imprimir', function(asignaturas) {
             var html = '<div>';
             var nivel_actual = 1;
             var asignaturas_impresas = 0;
@@ -123,7 +135,7 @@ jQuery(document).ready(function ($) {
         $('#outercanvas').html(html);
 
         var mas_alto = 0;
-        $('.contenedor_asignatura').each(function () {
+        $('.contenedor_asignatura').each(function() {
             var alto = $(this).height();
             if (alto > mas_alto) {
                 mas_alto = alto;
@@ -138,7 +150,7 @@ jQuery(document).ready(function ($) {
 
         // $('#contenedor_outercanvas').height($('#outercanvas').height() + 250);
 
-        $('.centrar_vertical span').each(function () {
+        $('.centrar_vertical span').each(function() {
             var elemento = $(this);
             var height = elemento.height();
             var parent = elemento.parent();
@@ -147,8 +159,11 @@ jQuery(document).ready(function ($) {
             parent.css('padding-top', nuevo_alto + 'px');
         });
 
+        // TIENEN QUE ESTAR EN MAYUSCULA
         var COLOR_NARANJO = '#FF7319';
+        var COLOR_NARANJO_NO_TOMABLE = '#F39C12';
         var COLOR_AZUL = '#0052CC';
+        var COLOR_ROJO = '#E74C3C';
         var COLOR_BLANCO = 'white';
 
         function ProyectarNivel(nivel) {
@@ -158,15 +173,13 @@ jQuery(document).ready(function ($) {
                     MostrarAperturasById(context[i].id);
                     // CambiarEstadoById(context[i].id, ESTADO_TOMADO);
                 }
-            }
-            ;
+            };
             if (nivel == 0) {
                 for (var i = 0; i < context.length; i++) {
                     if (context[i].nivel == 1) {
                         CambiarEstadoById(context[i].id, ESTADO_PREREQUISITO);
                     }
-                }
-                ;
+                };
             }
         }
 
@@ -183,8 +196,14 @@ jQuery(document).ready(function ($) {
             if (background == COLOR_NARANJO) {
                 return ESTADO_PREREQUISITO;
             }
+            if (background == COLOR_NARANJO_NO_TOMABLE) {
+                return ESTADO_PREREQUISITO_NO_TOMABLE;
+            }
             if (background == COLOR_BLANCO) {
                 return ESTADO_INICIAL;
+            }
+            if (background == COLOR_ROJO) {
+                return ESTADO_SIMULANDO_TOMA;
             }
             return ESTADO_SIN_ESTADO;
 
@@ -201,15 +220,27 @@ jQuery(document).ready(function ($) {
             if (estado == ESTADO_PREREQUISITO) {
                 return COLOR_NARANJO;
             }
+            if (estado == ESTADO_PREREQUISITO_NO_TOMABLE) {
+                return COLOR_NARANJO_NO_TOMABLE;
+            }
             if (estado == ESTADO_INICIAL) {
                 return COLOR_BLANCO;
             }
-            return 'black';
+            if (estado == ESTADO_SIMULANDO_TOMA) {
+                return COLOR_ROJO;
+            }
+            return 'BLACK';
         }
 
         function CambiarEstadoById(id, estado) {
             var color = GetColorByEstado(estado);
             $('#asignatura_' + id).css('background', color);
+
+            var color_texto = '#000000'; // Negro
+            if (color == COLOR_AZUL || color == COLOR_NARANJO || color == COLOR_ROJO) {
+                color_texto = '#FFFFFF'; // Blanco
+            }
+            $('#asignatura_' + id).css('color', color_texto); // Blanco
         }
 
         function GetNodeById(id) {
@@ -217,8 +248,7 @@ jQuery(document).ready(function ($) {
                 if (context[i].id == id) {
                     return context[i];
                 }
-            }
-            ;
+            };
         }
 
         function GetNodeByJqueryElement(esto) {
@@ -227,8 +257,7 @@ jQuery(document).ready(function ($) {
                 if (context[i].id == id) {
                     return GetNodeById(context[i]);
                 }
-            }
-            ;
+            };
         }
 
         function GetPrerequisitosById(id) {
@@ -238,8 +267,7 @@ jQuery(document).ready(function ($) {
         function CambiarEstadoArrayById(array, estado) {
             for (var i = 0; i < array.length; i++) {
                 CambiarEstadoById(array[i], estado);
-            }
-            ;
+            };
         }
 
         function GetPrerequisitosRecursiveById(id) {
@@ -247,9 +275,7 @@ jQuery(document).ready(function ($) {
             var union = prerequisitos;
             for (var i = prerequisitos.length - 1; i >= 0; i--) {
                 union = _.union(union, GetPrerequisitosRecursiveById(prerequisitos[i]));
-            }
-            ;
-            // console.log(union);
+            };
             return union;
         }
 
@@ -262,9 +288,7 @@ jQuery(document).ready(function ($) {
             var union = aperturas;
             for (var i = aperturas.length - 1; i >= 0; i--) {
                 union = _.union(union, GetAperturasRecursiveById(aperturas[i]));
-            }
-            ;
-            // console.log(union);
+            };
             return union;
         }
 
@@ -276,19 +300,17 @@ jQuery(document).ready(function ($) {
             }
             for (var i = aperturas.length - 1; i >= 0; i--) {
                 CambiarEstadoById(aperturas[i], ESTADO_PREREQUISITO);
-            }
-            ;
+            };
         }
 
-        $('.asignatura').on('mouseenter', function () {
+        $('.asignatura').on('mouseenter', function() {
             if (accion == 'prerequisitos') {
                 var id = GetIdByJqueryElement(this);
                 CambiarEstadoById(id, ESTADO_TOMADO);
                 var prerequisitos = GetPrerequisitosRecursiveById(id);
                 for (var i = prerequisitos.length - 1; i >= 0; i--) {
                     CambiarEstadoById(prerequisitos[i], ESTADO_PREREQUISITO);
-                }
-                ;
+                };
             }
             if (accion == 'aperturas') {
                 var id = GetIdByJqueryElement(this);
@@ -296,17 +318,15 @@ jQuery(document).ready(function ($) {
                 MostrarAperturasById(id);
             }
         });
-        $('.asignatura').on('mouseleave', function () {
+        $('.asignatura').on('mouseleave', function() {
             if (accion == 'prerequisitos') {
                 var id = GetIdByJqueryElement(this);
                 CambiarEstadoById(id, ESTADO_INICIAL);
                 // var prerequisitos = GetPrerequisitosById(id);
                 var prerequisitos = GetPrerequisitosRecursiveById(id);
-                // console.log(prerequisitos);
                 for (var i = prerequisitos.length - 1; i >= 0; i--) {
                     CambiarEstadoById(prerequisitos[i], ESTADO_INICIAL);
-                }
-                ;
+                };
             }
             if (accion == 'aperturas') {
                 var id = GetIdByJqueryElement(this);
@@ -314,8 +334,7 @@ jQuery(document).ready(function ($) {
                 var aperturas = GetAperturasRecursiveById(id);
                 for (var i = aperturas.length - 1; i >= 0; i--) {
                     CambiarEstadoById(aperturas[i], ESTADO_INICIAL);
-                }
-                ;
+                };
             }
         });
 
@@ -341,55 +360,146 @@ jQuery(document).ready(function ($) {
                 if (color == COLOR_AZUL) {
                     ApagarAsignatura(nodo);
                 }
-            }
-            ;
+            };
         }
 
-        $('.asignatura').on('click', function () {
-            if (accion == 'proyeccion') {
-                var estado = GetEstadoByJqueryElement(this);
-                var id = GetIdByJqueryElement(this);
+        $('.asignatura').on('click', function() {
+            if (accion == 'proyeccion' || accion == 'tomar_ramos') {
+                if (!se_esta_realizando_toma_de_ramos) {
+                    var estado = GetEstadoByJqueryElement(this);
+                    var id = GetIdByJqueryElement(this);
 
-                if (estado == ESTADO_PREREQUISITO) {
+                    if (estado == ESTADO_PREREQUISITO) {
 
-                    CambiarEstadoById(id, ESTADO_TOMADO);
+                        CambiarEstadoById(id, ESTADO_TOMADO);
 
-                    var asignatura = GetNodeById(id);
-                    aperturas = asignatura.aperturas;
+                        var asignatura = GetNodeById(id);
+                        aperturas = asignatura.aperturas;
 
-                    // mostramos las aperturas que esten en blanco, de color naranjo
-                    for (var i = 0; i < aperturas.length; i++) {
-                        if (GetEstadoById(aperturas[i]) == ESTADO_INICIAL) {
-                            CambiarEstadoById(aperturas[i], ESTADO_PREREQUISITO);
+                        // mostramos las aperturas que esten en blanco, de color naranjo
+                        for (var i = 0; i < aperturas.length; i++) {
+                            if (GetEstadoById(aperturas[i]) == ESTADO_INICIAL) {
+                                CambiarEstadoById(aperturas[i], ESTADO_PREREQUISITO);
+                            }
+                        };
+                        // MostrarAperturasById(id);
+                    } else if (estado == ESTADO_TOMADO) {
+                        var aperturas_recursiva = GetAperturasRecursiveById(id);
+                        CambiarEstadoById(id, ESTADO_PREREQUISITO);
+                        CambiarEstadoArrayById(aperturas_recursiva, ESTADO_INICIAL);
+                    } else {
+                        $('#myModal').modal({
+                            keyboard: true
+                        });
+                    }
+                } else { // se está relizando toma de ramos
+                    var estado = GetEstadoByJqueryElement(this);
+                    var id = GetIdByJqueryElement(this);
+
+                    if (estado == ESTADO_PREREQUISITO) {
+
+                        CambiarEstadoById(id, ESTADO_SIMULANDO_TOMA);
+
+                        var asignatura = GetNodeById(id);
+                        aperturas = asignatura.aperturas;
+
+                        // mostramos las aperturas que esten en blanco, de color naranjo
+                        for (var i = 0; i < aperturas.length; i++) {
+                            if (GetEstadoById(aperturas[i]) == ESTADO_INICIAL) {
+                                CambiarEstadoById(aperturas[i], ESTADO_PREREQUISITO_NO_TOMABLE);
+                            }
+                        };
+                    } else if (estado == ESTADO_SIMULANDO_TOMA) {
+                        CambiarEstadoById(id, ESTADO_PREREQUISITO);
+
+                        var asignatura = GetNodeById(id);
+                        aperturas = asignatura.aperturas;
+
+                        // mostramos las aperturas que esten en blanco, de color naranjo
+                        for (var i = 0; i < aperturas.length; i++) {
+                            if (GetEstadoById(aperturas[i]) == ESTADO_PREREQUISITO_NO_TOMABLE) {
+                                CambiarEstadoById(aperturas[i], ESTADO_INICIAL);
+                            }
+                        };
+                    } else {
+                        $('#myModal').modal({
+                            keyboard: true
+                        });
+                    }
+                }
+                var sct_totales = 0;
+                var tiene_sct = false;
+                for (var i = context.length - 1; i >= 0; i--) {
+                    if (GetEstadoById(context[i].id) == ESTADO_SIMULANDO_TOMA) {
+                        if (context[i].sct) {
+                            tiene_sct = true;
+                            sct_totales += context[i].sct;
                         }
                     }
-                    ;
-                    // MostrarAperturasById(id);
-                } else if (estado == ESTADO_TOMADO) {
-                    var aperturas_recursiva = GetAperturasRecursiveById(id);
-                    CambiarEstadoById(id, ESTADO_PREREQUISITO);
-                    CambiarEstadoArrayById(aperturas_recursiva, ESTADO_INICIAL);
+                };
+
+                $('#sct_y_tel').text('SCT: ' + tiene_sct ? sct_totales : '-');
+                if (sct_totales < 25) {
+                    $('#sct_y_tel').addClass('label-info');
+
+                    $('#sct_y_tel').removeClass('label-danger');
+                    $('#sct_y_tel').removeClass('label-warning');
+                } else if (sct_totales < 30) {
+                    $('#sct_y_tel').removeClass('label-info');
+                    $('#sct_y_tel').removeClass('label-danger');
+
+                    $('#sct_y_tel').addClass('label-warning');
+
+                    $('#sct_y_tel').qtip({
+                        content: {
+                            text: "Tener entre 25 y 30 SCT implica una carga superior a la recomendada."
+                        },
+                        style: {
+                            classes: 'qtip-cream'
+                        },
+                        position: {
+                            my: 'top center', // Position my top left...
+                            at: 'bottom center', // at the bottom right of...
+                            target: $('#sct_y_tel') // my target
+                        },
+                    });
                 } else {
-                    $('#myModal').modal({
-                        keyboard: true
+                    $('#sct_y_tel').removeClass('label-info');
+
+                    $('#sct_y_tel').addClass('label-danger');
+
+                    $('#sct_y_tel').removeClass('label-warning');
+
+                    $('#sct_y_tel').qtip({
+                        content: {
+                            text: "Tener mas de 30 SCT en un semestre implica una gran carga académica y no es recomendable."
+                        },
+                        style: {
+                            classes: 'qtip-cream'
+                        },
+                        position: {
+                            my: 'top center', // Position my top left...
+                            at: 'bottom center', // at the bottom right of...
+                            target: $('#sct_y_tel') // my target
+                        },
                     });
                 }
             }
         });
 
-        $('#fw').on('click', function () {
+        $('#fw').on('click', function() {
             accion = 'aperturas';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
             $('#outline').hide();
             // LimpiarAsignaturas();
         });
-        $('#bw').on('click', function () {
+        $('#bw').on('click', function() {
             accion = 'prerequisitos';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
             // LimpiarAsignaturas();
             $('#outline').hide();
         });
-        $('#fwbw').on('click', function () {
+        $('#fwbw').on('click', function() {
             accion = 'proyeccion';
             $('#spinme').val(0);
             $('#spinme').change();
@@ -402,65 +512,91 @@ jQuery(document).ready(function ($) {
             min: 0
         });
 
-        $('#spinme').on('change', function () {
+        $('#spinme').on('change', function() {
             accion = 'proyeccion';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_TOMADO);
             $('#fwbw').attr('checked', 'checked');
-            if (accion == 'proyeccion') {
+            if (accion == 'proyeccion' || accion == 'tomar_ramos') {
                 var nivel_proyeccion = parseInt($(this).val());
+                for (var i = context.length - 1; i >= 0; i--) {
+                    CambiarEstadoById( context[i].id, ESTADO_INICIAL );
+                };
                 $('.asignatura').css('background', 'white');
                 CambiarEstadoArrayById(asignaturas_sin_padres, ESTADO_PREREQUISITO);
                 ProyectarNivel(nivel_proyeccion);
             }
         });
-    }
-    $('.asignatura').each(function (key, esto) {
-//        var elemento = GetNodeByJqueryElement(this);
-        var id = GetIdByJqueryElement(esto);
-        elemento = GetNodeById(id);
 
-        console.log(elemento.resumen);
-        var text = '<p style="font-size: 14px; font-weight: bold;">' + toTitleCase(elemento.nombre) + '</p>'
-        if (elemento.resumen && elemento.resumen != 'null' && elemento.resumen != null) {
-            text += elemento.resumen;
-        }
-        text += "<br/>";
-        if (elemento.sct) {
-            text += '<span style="color: #1abc9c;">SCT: ' + elemento.sct + '</span>';
-        }
-        if (elemento.t) {
-            text += '&nbsp;<span style="color: #3498db;">TEL: ' + elemento.t + ' - ' + elemento.e + ' - ' + elemento.l + '</span>';
-        }
-
-        var position = {
-            my: 'top center', // Position my top left...
-            at: 'bottom center', // at the bottom right of...
-            target: $(this) // my target
-        }
-
-        if (elemento.nivel == 1) {
-            position = {
-                my: 'top left', // Position my top left...
-                at: 'bottom right', // at the bottom right of...
-                target: $(this) // my target
-            }
-        }
-        
-        if (elemento.nivel == nivel_mas_alto) {
-            position = {
-                my: 'top right', // Position my top left...
-                at: 'bottom left', // at the bottom right of...
-                target: $(this) // my target
-            }
-        }
-
-        $(this).qtip({
-            content: {
-                text: text
-            },
-            style: {classes: 'qtip-cream'},
-            position: position,
+        $('#boton_fijar').on('click', function() {
+            se_esta_realizando_toma_de_ramos = true;
+            $(this).text('Liberar');
         });
-//        $(this).find('div').css('font-size','16px');
-    });
+
+        if (tomar_ramos) {
+            accion = 'tomar_ramos';
+            // console.log(_.pluck(context, 'id'));
+            CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_TOMADO);
+            var nivel_proyeccion = parseInt($(this).val());
+            $('.asignatura').css('background', 'white');
+            CambiarEstadoArrayById(asignaturas_sin_padres, ESTADO_PREREQUISITO);
+            ProyectarNivel(nivel_proyeccion);
+        }
+    }
+
+    for (var i = context.length - 1; i >= 0; i--) {
+        CambiarEstadoById( context[i].id, GetEstadoById( context[i].id ) );
+    };
+
+    if (!tomar_ramos) {
+        $('.asignatura').each(function(key, esto) {
+            //        var elemento = GetNodeByJqueryElement(this);
+            var id = GetIdByJqueryElement(esto);
+            elemento = GetNodeById(id);
+
+            var text = '<p style="font-size: 14px; font-weight: bold;">' + toTitleCase(elemento.nombre) + '</p>'
+            if (elemento.resumen && elemento.resumen != 'null' && elemento.resumen != null) {
+                text += elemento.resumen;
+            }
+            text += "<br/>";
+            if (elemento.sct) {
+                text += '<span style="color: #1abc9c;">SCT: ' + elemento.sct + '</span>';
+            }
+            if (elemento.t) {
+                text += '&nbsp;<span style="color: #3498db;">TEL: ' + elemento.t + ' - ' + elemento.e + ' - ' + elemento.l + '</span>';
+            }
+
+            var position = {
+                my: 'top center', // Position my top left...
+                at: 'bottom center', // at the bottom right of...
+                target: $(this) // my target
+            }
+
+            if (elemento.nivel == 1) {
+                position = {
+                    my: 'top left', // Position my top left...
+                    at: 'bottom right', // at the bottom right of...
+                    target: $(this) // my target
+                }
+            }
+
+            if (elemento.nivel == nivel_mas_alto) {
+                position = {
+                    my: 'top right', // Position my top left...
+                    at: 'bottom left', // at the bottom right of...
+                    target: $(this) // my target
+                }
+            }
+
+            $(this).qtip({
+                content: {
+                    text: text
+                },
+                style: {
+                    classes: 'qtip-cream'
+                },
+                position: position,
+            });
+            //        $(this).find('div').css('font-size','16px');
+        });
+    }
 });

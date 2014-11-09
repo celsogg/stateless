@@ -42,6 +42,12 @@
                                                 <f:param name="planId" value="#{mallas.idPlan}"></f:param>
                                             </h:link>
                                         </li>
+                                        <li>
+                                            <h:link outcome="/malla/malla" value="#{mallas.nombrePlan} (Tomar ramos)">
+                                                <f:param name="planId" value="#{mallas.idPlan}"></f:param>
+                                                <f:param name="tomar_ramos" value="true"></f:param>
+                                            </h:link>
+                                        </li>
                                     </c:forEach>
                                     <!--                                    <li><a href="#">Action</a></li>-->
                                 </ul>
