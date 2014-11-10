@@ -11,12 +11,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
  * @author miguel
  */
 @Entity
+@Table(name = "USUARIO")
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT p FROM Usuario p"),
+    @NamedQuery(name = "Usuario.findByUid", query = "SELECT p FROM Usuario p WHERE p.uid = :uid")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

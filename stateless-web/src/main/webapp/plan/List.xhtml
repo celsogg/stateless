@@ -29,9 +29,9 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPlanTitle_idPlan}"/>
+                                <h:outputText  value="#{bundle.ListPlanTitle_idCarrera}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idPlan}"/>
+                            <h:outputText value="#{item.idCarrera.nombreCarrera}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -53,9 +53,9 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPlanTitle_idCarrera}"/>
+                                <h:outputText value="#{bundle.ListPlanTitle_visiblePlan}"/>
                             </f:facet>
-                            <h:outputText value="#{item.idCarrera}"/>
+                            <h:outputText value="#{item.visiblePlanString}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{planController.prepareCreate}" update=":PlanCreateForm" oncomplete="PF('PlanCreateDialog').show()"/>

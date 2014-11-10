@@ -25,6 +25,8 @@ public interface PlanFacadeLocal {
     Plan find(Object id);
 
     List<Plan> findAll();
+    
+    List<Plan> findByVisiblePlan();
 
     List<Plan> findRange(int[] range);
 

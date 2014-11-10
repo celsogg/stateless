@@ -175,7 +175,7 @@ public class PdfDownloadController extends HttpServlet {
 //        table.addCell("row 1; cell 2");
 //        table.addCell("row 2; cell 1");
 //        table.addCell("row 2; cell 2");
-        System.out.println(asignaturas.toString());
+        //System.out.println(asignaturas.toString());
         for (Asignatura asignatura : asignaturas) {
 //            System.out.println(asignatura.getCodigoAsignatura() + " "+asignatura.getNombreAsignatura()+" "+
 //                    asignatura.getHorasTeoria() +" "+
