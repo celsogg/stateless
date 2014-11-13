@@ -4,15 +4,18 @@ package managedbeans;
  *
  * @author Celso
  */
-import com.itextpdf.text.Chunk;
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 import entities.Asignatura;
 import entities.Plan;
 import javax.servlet.ServletException;
@@ -25,12 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
 
 public class PdfDownloadController extends HttpServlet {
 
     public static final String FILE_SEPARATOR = System.getProperty("file.separator");
-    private static final int BYTES_DOWNLOAD = 1024;
+    public static final String LOGO_USACH_URL = "/resources/images/UDS_HCOLOR.png";
     
     @Inject
     private PlanController planController;
@@ -43,19 +45,17 @@ public class PdfDownloadController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        DocumentException ex = null;
+    throws ServletException, IOException {
         ByteArrayOutputStream baosPDF = null;
         
         try {
-            //System.out.println(request.getParameter("planId"));
             Plan plan;
             plan = planController.getPlan(Integer.parseInt(request.getParameter("planId")));
             
             baosPDF = generatePDFDocumentBytes(plan);
             StringBuffer sbFilename = new StringBuffer();
-            sbFilename.append("filename_");
-            sbFilename.append(System.currentTimeMillis());
+            sbFilename.append("Plan_");
+            sbFilename.append(plan.getCodigoPlan());
             sbFilename.append(".pdf");
 
             // Read the HTTP 1.1 specification for full details
@@ -97,7 +97,7 @@ public class PdfDownloadController extends HttpServlet {
     }
 
     protected ByteArrayOutputStream generatePDFDocumentBytes(Plan plan)
-            throws DocumentException {
+    throws DocumentException, BadElementException, IOException {
         Document doc = new Document();
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
         PdfWriter docWriter = null;
@@ -114,37 +114,47 @@ public class PdfDownloadController extends HttpServlet {
             //doc.setFooter(footer);
             doc.open();
             
-            PdfPTable table = new PdfPTable(5);
-            table.setWidthPercentage(100);
-            table.setWidths(new int[]{1, 4, 1,1,2});
-            PdfPCell cell;
-            cell = new PdfPCell(new Phrase("CÓDIGO"));
-            table.addCell(cell);
-            cell = new PdfPCell(new Phrase("ASIGNATURA"));
-            table.addCell(cell);
-            cell = new PdfPCell(new Phrase("T-E-L"));
-            table.addCell(cell);
-            cell = new PdfPCell(new Phrase("SCT"));
-            table.addCell(cell);
-            cell = new PdfPCell(new Phrase("REQUISITOS"));
-            table.addCell(cell);
-            doc.add(table);
+            Image logo = Image.getInstance(getServletContext().getResource(LOGO_USACH_URL));
+            logo.scalePercent(10f);
+            logo.setAlignment(Element.ALIGN_RIGHT);
+            doc.add(logo);
+            
+            doc.add(new Phrase("\n"+plan.getIdCarrera().getNombreCarrera()+"\n", new Font(FontFamily.HELVETICA, 22)));
+            doc.add(new Phrase("Plan de Estudios "+plan.getCodigoPlan()+" ("+plan.getAnioPlan()+")"));
+//            PdfPTable table = new PdfPTable(5);
+//            table.setWidthPercentage(100);
+//            table.setWidths(new int[]{1, 4, 1,1,2});
+//            PdfPCell cell;
+//            cell = new PdfPCell(new Phrase("CÓDIGO"));
+//            table.addCell(cell);
+//            cell = new PdfPCell(new Phrase("ASIGNATURA"));
+//            table.addCell(cell);
+//            cell = new PdfPCell(new Phrase("T-E-L"));
+//            table.addCell(cell);
+//            cell = new PdfPCell(new Phrase("SCT"));
+//            table.addCell(cell);
+//            cell = new PdfPCell(new Phrase("REQUISITOS"));
+//            table.addCell(cell);
+//            doc.add(table);
             doc.add( new Phrase("\n"));
             doc.add( new Phrase("\n"));
             //table = createTable();
             Integer totalNiveles = getTotalNiveles(plan);
             for (int i = 0; i < totalNiveles; i++) {
-                doc.add( new Phrase("Nivel " + (i+1) ));
-                doc.add(createTableNivel(getAsignaturasNivel(plan, i+1)));
+                Paragraph para = new Paragraph("Nivel " + (i+1) + "\n\n");
+                para.setAlignment(Element.ALIGN_RIGHT);
+                doc.add(para);
+                doc.add(new LineSeparator());
+                doc.add(createInfoNivel(getAsignaturasNivel(plan, i+1)));
                 doc.add( new Phrase("\n"));
             }
             //doc.add(table);
             //doc.add(new Paragraph("This document was created by a class named: " + this.getClass().getName()));
             //doc.add(new Paragraph("This document was created on " + new java.util.Date()));
             //doc.add(new Paragraph("This is a multi-page document."));
-        } catch (DocumentException dex) {
+        } catch (DocumentException /*| IOException*/ ex) {
             baosPDF.reset();
-            throw dex;
+            throw ex;
         } finally {
             if (doc != null) {
                 doc.close();
@@ -153,14 +163,13 @@ public class PdfDownloadController extends HttpServlet {
                 docWriter.close();
             }
         }
-
         if (baosPDF.size() < 1) {
             throw new DocumentException("document has " + baosPDF.size() + " bytes");
         }
         return baosPDF;
     }
 
-    private PdfPTable createTableNivel(ArrayList<Asignatura> asignaturas) throws DocumentException {
+/*    private PdfPTable createTableNivel(ArrayList<Asignatura> asignaturas) throws DocumentException {
         PdfPTable table = new PdfPTable(5);
         table.setWidthPercentage(100);
         table.setWidths(new int[]{1, 4, 1,1,2});
@@ -207,7 +216,7 @@ public class PdfDownloadController extends HttpServlet {
         }
         return table;
     }
-
+*/
     private Integer getTotalNiveles(Plan plan) {
         Integer max = 0;
         for (Asignatura a : plan.getAsignaturaCollection()) {
@@ -223,5 +232,38 @@ public class PdfDownloadController extends HttpServlet {
             if (Objects.equals(asig.getNivelAsignatura(), nivel)) asignaturas.add(asig);
         }
         return asignaturas;
+    }
+
+    private Element createInfoNivel(ArrayList<Asignatura> asignaturasNivel) {
+        StringBuilder contentSB = new StringBuilder();
+        for (Asignatura asig : asignaturasNivel) {
+            contentSB.append("\nAsignatura: ").append(blankIfNull(asig.getCodigoAsignatura()));
+            contentSB.append(" - ").append(blankIfNull(asig.getNombreAsignatura())).append("\n");
+            contentSB.append("Resultados de aprendizaje: ").append(blankIfNull(asig.getResumenAsignatura()));
+            contentSB.append("\nRequisitos: ");
+            List<Asignatura> requisitos =  (List<Asignatura>) asig.getAsignaturaCollection();
+            if (requisitos.isEmpty()){
+                contentSB.append("Ingreso\n\n");
+            }else{
+                for (int i = 0; i < requisitos.size(); i++) {
+                    contentSB.append(blankIfNull(requisitos.get(i).getCodigoAsignatura()));
+                    contentSB.append(" - ");
+                }
+                contentSB.replace(contentSB.length()-3, contentSB.length(), "\n\n");
+            }
+        }
+        return new Paragraph(contentSB.toString());
+    }
+    
+    /**
+     * 
+     * @param str
+     * @return 
+     */
+    private String blankIfNull(String str){
+        String ret;
+        if (str == null) ret = "";
+        else ret = str;
+        return ret;
     }
 }
