@@ -63,7 +63,7 @@
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PlanEditForm" oncomplete="PF('PlanEditDialog').show()" disabled="#{empty planController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{planController.destroy}" update=":growl,datalist" disabled="#{empty planController.selected}"/>
                             <p:commandButton id="uploadCsvButton"   icon="ui-icon-arrowthickstop-1-n
- " value="Subir Csv Asignaturas" update="" oncomplete="PF('PlanUpdateCsvDialog').show()" disabled="#{empty planController.selected}"/>
+                                             " value="Subir Csv Asignaturas" update=":growl, datalist" oncomplete="PF('PlanUpdateCsvDialog').show()" disabled="#{empty planController.selected or not(planController.selected.asignaturaCollection.size() eq 0)}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

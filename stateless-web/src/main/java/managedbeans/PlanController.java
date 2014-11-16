@@ -12,9 +12,7 @@ import sessionbeans.PlanFacadeLocal;
 
 import java.io.Serializable;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -36,7 +34,6 @@ import javax.inject.Inject;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.UploadedFile;
 import sessionbeans.PlanFacade;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -57,7 +54,6 @@ public class PlanController implements Serializable {
     private UploadedFile csvFile = null;
     private boolean csvWithHeader = false;
     private boolean csvFileSelected = false;
-    private List<Asignatura> csvAsignaturas = null;
 
     @Inject
     private AsignaturaController asigController;
@@ -321,17 +317,14 @@ public class PlanController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
+    
     public void handleFileUpload(FileUploadEvent event) throws IOException {
-        //Plan plan = new Plan();
-        //setSelected(plan);
         
         UploadedFile uf = event.getFile();
         
-        String prefix = FilenameUtils.getBaseName(uf.getFileName()); 
-        String suffix = FilenameUtils.getExtension(uf.getFileName());
         File save;
         save = File.createTempFile("temp", ".csv");
-        //System.out.println(save.toPath());
+
         uf.getContents();
         Files.copy(uf.getInputstream(), save.toPath(),  StandardCopyOption.REPLACE_EXISTING);
         
@@ -342,10 +335,6 @@ public class PlanController implements Serializable {
         while ((line = br.readLine()) != null) {
             Asignatura asignatura = new Asignatura();
             String[] strs = getCsvLineCols(line);
-            for (String str : strs) {
-                //System.out.println(str);
-                
-            }
             
             asignatura.setIdPlan(selected);
             
@@ -357,15 +346,14 @@ public class PlanController implements Serializable {
             asignatura.setNivelAsignatura(Integer.parseInt(strs[5]));
             Short s = 0;
             asignatura.setEsAnual(s);
-            //System.out.println("asignatura "+asignatura.getCodigoAsignatura()+" "+asignatura.getNombreAsignatura());
+
             if (strs[6].compareToIgnoreCase("ingreso") != 0) {
                 String[] requisitosStrs = strs[6].replace("\"", "").split(",");
                 ArrayList<Asignatura> requisitos = new ArrayList<>();
                 for (String requisito : requisitosStrs) {
-                    //System.out.println("---"+requisito);
+
                     for (Asignatura a : asignaturas) {
                         if (a.getCodigoAsignatura().compareToIgnoreCase(requisito.trim()) == 0) {
-                            //System.out.println("---"+a.getCodigoAsignatura()+" "+a.getNombreAsignatura());
                             requisitos.add(a);
                         }
                     }                  
@@ -375,25 +363,10 @@ public class PlanController implements Serializable {
             asignaturas.add(asignatura);
         }
         
-//        for (Asignatura asig : asignaturas) {
-//            for (Asignatura req : asig.getAsignaturaCollection()) {
-//                req
-//            }
-//        }
-        
-        csvAsignaturas = asignaturas;
-        
         FacesMessage message = new FacesMessage("Succesful", uf.getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, message);
         RequestContext context = RequestContext.getCurrentInstance();
  
-        //context.execute("alert('hi')");
-        
-        //System.out.println(plan.toString());
-        //context.execute("PF('PlanCreateDialog').show()");
-        //System.out.println("fin hadle fiel");
-        //selected.setAsignaturaCollection(csvAsignaturas);
-        //System.out.println("-plan "+selected.getCodigoPlan()+" "+selected.getIdPlan());
         selected.setAsignaturaCollection(asignaturas);
     }
     
