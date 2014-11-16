@@ -2,11 +2,17 @@ package managedbeans;
 
 import entities.Asignatura;
 import entities.Plan;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.PlanFacadeLocal;
 
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,15 +22,21 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.inject.Inject;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.primefaces.context.RequestContext;
 import sessionbeans.PlanFacade;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 @Named("planController")
 @SessionScoped
@@ -38,6 +50,10 @@ public class PlanController implements Serializable {
     private List<SelectItem> listaPlanes;
     private String selection;
     private Asignatura selectedAsignatura;
+    
+    private UploadedFile csvFile = null;
+    private boolean csvWithHeader = false;
+    private boolean csvFileSelected = false;
 
     @Inject
     private AsignaturaController asigController;
@@ -97,6 +113,7 @@ public class PlanController implements Serializable {
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PlanCreated"));
+        System.out.println("create!");
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
@@ -216,22 +233,14 @@ public class PlanController implements Serializable {
         as = new ArrayList<>(plan.getAsignaturaCollection());
         for (Asignatura a : as) {
             ArrayList<Asignatura> pre, post;
-            jsonB.append("{ \"nombre\": \"");
-            jsonB.append(a.getNombreAsignatura());
-            jsonB.append("\", \"id\": ");
-            jsonB.append(a.getCodigoAsignatura());
-            jsonB.append(", \"nivel\": ");
-            jsonB.append(a.getNivelAsignatura());
-            jsonB.append(", \"anual\": ");
-            jsonB.append(a.getEsAnual() == 1 ? "true" : "false");
-            jsonB.append(", \"sct\": ");
-            jsonB.append(a.getSctAsignatura());
-            jsonB.append(", \"t\": ");
-            jsonB.append(a.getHorasTeoria());
-            jsonB.append(", \"e\": ");
-            jsonB.append(a.getHorasEjercicio());
-            jsonB.append(", \"l\": ");
-            jsonB.append(a.getHorasLaboratorio());
+            jsonB.append("{ \"nombre\": \"").append(a.getNombreAsignatura());
+            jsonB.append("\", \"id\": ").append(a.getCodigoAsignatura());
+            jsonB.append(", \"nivel\": ").append(a.getNivelAsignatura());
+            jsonB.append(", \"anual\": ").append(a.getEsAnual() == 1 ? "true" : "false");
+            jsonB.append(", \"sct\": ").append(a.getSctAsignatura());
+            jsonB.append(", \"t\": ").append(a.getHorasTeoria());
+            jsonB.append(", \"e\": ").append(a.getHorasEjercicio());
+            jsonB.append(", \"l\": ").append(a.getHorasLaboratorio());
             jsonB.append(", \"resumen\": \"");
             jsonB.append(StringEscapeUtils.escapeJavaScript(a.getResumenAsignatura()));
             //requisitos
@@ -280,5 +289,103 @@ public class PlanController implements Serializable {
     public void updateResumen() {
         asigController.setSelected(selectedAsignatura);
         asigController.update();
+    }
+    
+    //
+
+    public void setCsvWithHeader(boolean csvWithHeader) {
+        this.csvWithHeader = csvWithHeader;
+    }
+    
+    public boolean isCsvWithHeader(){
+        return csvWithHeader;
+    }
+    
+    public UploadedFile getFile() {
+        return csvFile;
+    }
+ 
+    public void setFile(UploadedFile file) {
+        this.csvFile = file;
+    }
+     
+    public void upload() throws IOException {
+        if(csvFile != null) {
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            //context.redirect(context.getRequestContextPath() + "/plan/CompleteCsv.xhtml");
+            FacesMessage message = new FacesMessage("Succesful", csvFile.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+    
+    public void handleFileUpload(FileUploadEvent event) throws IOException {
+        
+        UploadedFile uf = event.getFile();
+        
+        File save;
+        save = File.createTempFile("temp", ".csv");
+
+        uf.getContents();
+        Files.copy(uf.getInputstream(), save.toPath(),  StandardCopyOption.REPLACE_EXISTING);
+        
+        ArrayList <Asignatura> asignaturas = new ArrayList<>();
+        
+        BufferedReader br = new BufferedReader(new FileReader(save));
+        String line = "";
+        while ((line = br.readLine()) != null) {
+            Asignatura asignatura = new Asignatura();
+            String[] strs = getCsvLineCols(line);
+            
+            asignatura.setIdPlan(selected);
+            
+            asignatura.setCodigoAsignatura(strs[0]);
+            asignatura.setNombreAsignatura(strs[1]);
+            asignatura.setHorasTeoria(Integer.parseInt(strs[2]));
+            asignatura.setHorasEjercicio(Integer.parseInt(strs[3]));
+            asignatura.setHorasLaboratorio(Integer.parseInt(strs[4]));
+            asignatura.setNivelAsignatura(Integer.parseInt(strs[5]));
+            Short s = 0;
+            asignatura.setEsAnual(s);
+
+            if (strs[6].compareToIgnoreCase("ingreso") != 0) {
+                String[] requisitosStrs = strs[6].replace("\"", "").split(",");
+                ArrayList<Asignatura> requisitos = new ArrayList<>();
+                for (String requisito : requisitosStrs) {
+
+                    for (Asignatura a : asignaturas) {
+                        if (a.getCodigoAsignatura().compareToIgnoreCase(requisito.trim()) == 0) {
+                            requisitos.add(a);
+                        }
+                    }                  
+                }
+                asignatura.setAsignaturaCollection(requisitos);
+            }
+            asignaturas.add(asignatura);
+        }
+        
+        FacesMessage message = new FacesMessage("Succesful", uf.getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        RequestContext context = RequestContext.getCurrentInstance();
+ 
+        selected.setAsignaturaCollection(asignaturas);
+    }
+    
+    private String[] getCsvLineCols(String line){
+        String otherThanQuote = " [^\"] ";
+        String quotedString = String.format(" \" %s* \" ", otherThanQuote);
+        String regex = String.format("(?x) "+ // enable comments, ignore white spaces
+                ",                         "+ // match a comma
+                "(?=                       "+ // start positive look ahead
+                "  (                       "+ //   start group 1
+                "    %s*                   "+ //     match 'otherThanQuote' zero or more times
+                "    %s                    "+ //     match 'quotedString'
+                "  )*                      "+ //   end group 1 and repeat it zero or more times
+                "  %s*                     "+ //   match 'otherThanQuote'
+                "  $                       "+ // match the end of the string
+                ")                         ", // stop positive look ahead
+                otherThanQuote, quotedString, otherThanQuote);
+
+        String[] tokens = line.split(regex, -1);
+        return tokens;
     }
 }
