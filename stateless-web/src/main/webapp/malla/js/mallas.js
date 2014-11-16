@@ -2,6 +2,24 @@ var accion = 'aperturas';
 
 jQuery(document).ready(function ($) {
 
+    for (var i = context.length - 1; i >= 0; i--) {
+        context[i].aperturas = [];
+    };
+    
+    for (var i = 0, max = context.length; i < max; i++) {
+        var aperturas = [];
+        for (var j = 0; j < max; j++) {
+            for (var k = 0; k < context[ j ].prerequisitos.length; k++) {
+                console.log(context[ j ].id + ": " + context[ j ].prerequisitos[ k ] + " == " + context[ i ].id);
+                if(context[ j ].prerequisitos[ k ] == context[ i ].id){
+                    aperturas.push(context[ j ].id);
+                    break;
+                }
+            }
+        }
+        context[ i ].aperturas = aperturas;
+    }
+
     function GetAsignaturasSinPadres() {
         var asignaturas_sin_padres = [];
         var son_hijos = [];
