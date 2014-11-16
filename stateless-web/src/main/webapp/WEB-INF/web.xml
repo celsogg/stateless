@@ -22,6 +22,14 @@
         <servlet-name>PdfDownloadController</servlet-name>
         <url-pattern>/pdfservlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PdfMallaDownloadController</servlet-name>
+        <servlet-class>managedbeans.PdfMallaDownloadController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PdfMallaDownloadController</servlet-name>
+        <url-pattern>/pdfmallaservlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

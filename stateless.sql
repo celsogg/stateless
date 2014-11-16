@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `stateless` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `stateless`;
--- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: stateless
 -- ------------------------------------------------------
--- Server version	5.5.40-0ubuntu0.14.04.1
+-- Server version	5.6.21-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,34 +16,6 @@ USE `stateless`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
---
--- Table structure for table `usuario`
---
-
-DROP TABLE IF EXISTS `USUARIO`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `USUARIO` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `APELLIDO` varchar(128) DEFAULT NULL,
-  `NOMBRE` varchar(128) DEFAULT NULL,
-  `ROL` varchar(20) DEFAULT NULL,
-  `UID` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `USUARIO`
---
-
-LOCK TABLES `USUARIO` WRITE;
-/*!40000 ALTER TABLE `USUARIO` DISABLE KEYS */;
-INSERT INTO `USUARIO` VALUES (1,'Carcamo','Miguel','alumno','1010'),(2,'sor','profe','profesor','1001');
-/*!40000 ALTER TABLE `USUARIO` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `admin`
@@ -90,8 +62,8 @@ CREATE TABLE `asignatura` (
   `ES_ANUAL` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`ID_ASIGNATURA`),
   KEY `FK_RELATIONSHIP_4` (`ID_PLAN`),
-  CONSTRAINT `FK_RELATIONSHIP_4` FOREIGN KEY (`ID_PLAN`) REFERENCES `plan` (`ID_PLAN`)
-) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK_RELATIONSHIP_4` FOREIGN KEY (`ID_PLAN`) REFERENCES `plan` (`ID_PLAN`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1404 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,8 +114,8 @@ CREATE TABLE `asignatura_intermedia` (
   `ASI_ID_ASIGNATURA` int(11) DEFAULT NULL,
   KEY `FK_RELATIONSHIP_6` (`ID_ASIGNATURA`),
   KEY `FK_RELATIONSHIP_7` (`ASI_ID_ASIGNATURA`),
-  CONSTRAINT `FK_RELATIONSHIP_6` FOREIGN KEY (`ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`),
-  CONSTRAINT `FK_RELATIONSHIP_7` FOREIGN KEY (`ASI_ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`)
+  CONSTRAINT `FK_RELATIONSHIP_6` FOREIGN KEY (`ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_RELATIONSHIP_7` FOREIGN KEY (`ASI_ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -213,7 +185,7 @@ DROP TABLE IF EXISTS `nombres`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `nombres` (
-  `nombre` varchar(50) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
   PRIMARY KEY (`nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -224,7 +196,6 @@ CREATE TABLE `nombres` (
 
 LOCK TABLES `nombres` WRITE;
 /*!40000 ALTER TABLE `nombres` DISABLE KEYS */;
-INSERT INTO `nombres` VALUES ('Celso'),('Giovanni'),('Luis'),('Matias'),('Miguel');
 /*!40000 ALTER TABLE `nombres` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,10 +213,11 @@ CREATE TABLE `plan` (
   `ANIO_PLAN` int(11) DEFAULT NULL,
   `CODIGO_PLAN` varchar(32) DEFAULT NULL,
   `VISIBLE_PLAN` tinyint(4) DEFAULT '0',
+  `VERSION_PLAN` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`ID_PLAN`),
   KEY `FK_RELATIONSHIP_9` (`ID_CARRERA`),
   CONSTRAINT `FK_RELATIONSHIP_9` FOREIGN KEY (`ID_CARRERA`) REFERENCES `carrera` (`ID_CARRERA`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -254,7 +226,7 @@ CREATE TABLE `plan` (
 
 LOCK TABLES `plan` WRITE;
 /*!40000 ALTER TABLE `plan` DISABLE KEYS */;
-INSERT INTO `plan` VALUES (1,1,'Civil plan 2001',2001,'1863',1),(2,1,'Civil plan 2012',2012,'1363',1),(3,2,'Ejecucion plan 2001',2001,'1853',1),(4,2,'Ejecucion plan 2012',2012,'1353',1);
+INSERT INTO `plan` VALUES (1,1,'Civil plan 2001',2001,'1863',1,NULL),(2,1,'Civil plan 2012',2012,'1363',1,NULL),(3,2,'Ejecucion plan 2001',2001,'1853',1,NULL),(4,2,'Ejecucion plan 2012',2012,'1353',1,NULL);
 /*!40000 ALTER TABLE `plan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -337,6 +309,79 @@ LOCK TABLES `programa_asignatura` WRITE;
 /*!40000 ALTER TABLE `programa_asignatura` DISABLE KEYS */;
 /*!40000 ALTER TABLE `programa_asignatura` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `sequence`
+--
+
+DROP TABLE IF EXISTS `sequence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sequence` (
+  `SEQ_NAME` varchar(50) NOT NULL,
+  `SEQ_COUNT` decimal(38,0) DEFAULT NULL,
+  PRIMARY KEY (`SEQ_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sequence`
+--
+
+LOCK TABLES `sequence` WRITE;
+/*!40000 ALTER TABLE `sequence` DISABLE KEYS */;
+INSERT INTO `sequence` VALUES ('SEQ_GEN',0);
+/*!40000 ALTER TABLE `sequence` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuario` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `APELLIDO` varchar(128) DEFAULT NULL,
+  `NOMBRE` varchar(128) DEFAULT NULL,
+  `ROL` varchar(20) DEFAULT NULL,
+  `UID` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'Carcamo','Miguel','alumno','1010'),(2,'sor','profe','profesor','1001');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuarios` (
+  `ID` bigint(20) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuarios`
+--
+
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -347,4 +392,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-02  1:08:12
+-- Dump completed on 2014-11-16 11:39:26
