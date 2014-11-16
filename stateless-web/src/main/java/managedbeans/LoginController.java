@@ -68,6 +68,7 @@ public class LoginController {
 
         try {
             request.login(this.username, this.password);
+            setUsername(this.username);
             //System.out.println(this.username);
             /*Usuario user;
             if((Usuario) em.createNamedQuery("findByUid")!=null){
