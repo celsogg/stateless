@@ -6,6 +6,8 @@ import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.AsignaturaFacadeLocal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -53,6 +55,43 @@ public class AsignaturaController implements Serializable {
         selected = new Asignatura();
         initializeEmbeddableKey();
         return selected;
+    }
+    
+     public String getNombresAsignaturaString(Asignatura asignatura){
+        
+        String salida = "";
+        
+        for (Asignatura a1 : asignatura.getAsignaturaCollection()) {
+            salida = salida + a1.getNombreAsignatura() + "\n";
+        }
+        
+        return salida;
+    }
+    
+    public String getNombresAsignatura2String(Collection<Asignatura> a){
+        String salida = "";
+        
+        for (Asignatura a1 : a) {
+            salida = salida + a1.getNombreAsignatura()+ "\n";
+        }
+        return salida;
+    }
+    
+    public void borrarRequisito(Asignatura asignatura, Integer id_requisito){
+        ArrayList<Asignatura> requisitos = new ArrayList<>(selected.getAsignaturaCollection());
+        System.out.println("entre");
+        for (Asignatura requi : requisitos) {
+            if(requi.getIdAsignatura() == id_requisito) {
+                System.out.println(requi.getNombreAsignatura());
+                System.out.println(requi.getIdAsignatura());
+                requisitos.remove(requi);
+                break;
+            }
+        }
+        selected.setAsignaturaCollection(requisitos);  
+        update();    
+        System.out.println("hago el update");
+        
     }
 
     public void create() {
