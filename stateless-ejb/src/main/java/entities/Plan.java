@@ -120,8 +120,8 @@ public class Plan implements Serializable {
     public void setVisiblePlan(Boolean visiblePlan) {
         this.visiblePlan = visiblePlan;
     }
-    
-    
+
+
 
     @XmlTransient
     public List<Asignatura> getAsignaturaCollection() {
@@ -156,5 +156,5 @@ public class Plan implements Serializable {
     public String toString() {
         return "entities.Plan[ idPlan=" + idPlan + " ]";
     }
-    
-}
+
+    }
