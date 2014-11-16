@@ -10,7 +10,6 @@ jQuery(document).ready(function ($) {
         var aperturas = [];
         for (var j = 0; j < max; j++) {
             for (var k = 0; k < context[ j ].prerequisitos.length; k++) {
-                console.log(context[ j ].id + ": " + context[ j ].prerequisitos[ k ] + " == " + context[ i ].id);
                 if(context[ j ].prerequisitos[ k ] == context[ i ].id){
                     aperturas.push(context[ j ].id);
                     break;
