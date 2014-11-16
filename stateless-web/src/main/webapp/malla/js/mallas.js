@@ -1,6 +1,23 @@
 var accion = 'aperturas';
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
+
+    for (var i = context.length - 1; i >= 0; i--) {
+        context[i].aperturas = [];
+    };
+    
+    for (var i = 0, max = context.length; i < max; i++) {
+        var aperturas = [];
+        for (var j = 0; j < max; j++) {
+            for (var k = 0; k < context[ j ].prerequisitos.length; k++) {
+                if(context[ j ].prerequisitos[ k ] == context[ i ].id){
+                    aperturas.push(context[ j ].id);
+                    break;
+                }
+            }
+        }
+        context[ i ].aperturas = aperturas;
+    }
 
     function GetAsignaturasSinPadres() {
         var asignaturas_sin_padres = [];
@@ -9,7 +26,8 @@ jQuery(document).ready(function($) {
 
         for (var i = 0; i < context.length; i++) {
             son_hijos = _.union(son_hijos, context[i].aperturas);
-        };
+        }
+        ;
         asignaturas_sin_padres = _.difference(context_ids, son_hijos);
 
         return asignaturas_sin_padres;
@@ -18,50 +36,50 @@ jQuery(document).ready(function($) {
     function CambiarValorSCT(sct) {
         $('#sct_y_tel').text('SCT: ' + sct);
         if (sct < 25) {
-                    $('#sct_y_tel').addClass('label-info');
+            $('#sct_y_tel').addClass('label-info');
 
-                    $('#sct_y_tel').removeClass('label-danger');
-                    $('#sct_y_tel').removeClass('label-warning');
-                } else if (sct < 30) {
-                    $('#sct_y_tel').removeClass('label-info');
-                    $('#sct_y_tel').removeClass('label-danger');
+            $('#sct_y_tel').removeClass('label-danger');
+            $('#sct_y_tel').removeClass('label-warning');
+        } else if (sct < 30) {
+            $('#sct_y_tel').removeClass('label-info');
+            $('#sct_y_tel').removeClass('label-danger');
 
-                    $('#sct_y_tel').addClass('label-warning');
+            $('#sct_y_tel').addClass('label-warning');
 
-                    $('#sct_y_tel').qtip({
-                        content: {
-                            text: "Tener entre 25 y 30 SCT implica una carga superior a la recomendada."
-                        },
-                        style: {
-                            classes: 'qtip-cream'
-                        },
-                        position: {
-                            my: 'top center', // Position my top left...
-                            at: 'bottom center', // at the bottom right of...
-                            target: $('#sct_y_tel') // my target
-                        },
-                    });
-                } else {
-                    $('#sct_y_tel').removeClass('label-info');
+            $('#sct_y_tel').qtip({
+                content: {
+                    text: "Tener entre 25 y 30 SCT implica una carga superior a la recomendada."
+                },
+                style: {
+                    classes: 'qtip-cream'
+                },
+                position: {
+                    my: 'top center', // Position my top left...
+                    at: 'bottom center', // at the bottom right of...
+                    target: $('#sct_y_tel') // my target
+                },
+            });
+        } else {
+            $('#sct_y_tel').removeClass('label-info');
 
-                    $('#sct_y_tel').addClass('label-danger');
+            $('#sct_y_tel').addClass('label-danger');
 
-                    $('#sct_y_tel').removeClass('label-warning');
+            $('#sct_y_tel').removeClass('label-warning');
 
-                    $('#sct_y_tel').qtip({
-                        content: {
-                            text: "Tener mas de 30 SCT en un semestre implica una gran carga académica y no es recomendable."
-                        },
-                        style: {
-                            classes: 'qtip-cream'
-                        },
-                        position: {
-                            my: 'top center', // Position my top left...
-                            at: 'bottom center', // at the bottom right of...
-                            target: $('#sct_y_tel') // my target
-                        },
-                    });
-                }
+            $('#sct_y_tel').qtip({
+                content: {
+                    text: "Tener mas de 30 SCT en un semestre implica una gran carga académica y no es recomendable."
+                },
+                style: {
+                    classes: 'qtip-cream'
+                },
+                position: {
+                    my: 'top center', // Position my top left...
+                    at: 'bottom center', // at the bottom right of...
+                    target: $('#sct_y_tel') // my target
+                },
+            });
+        }
     }
 
     var asignaturas_sin_padres = GetAsignaturasSinPadres();
@@ -85,7 +103,7 @@ jQuery(document).ready(function($) {
 
 
     function toTitleCase(str) {
-        return str.replace(/\w\S*/g, function(txt) {
+        return str.replace(/\w\S*/g, function (txt) {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         });
     }
@@ -120,7 +138,7 @@ jQuery(document).ready(function($) {
                 nivel_mas_alto = context[i].nivel;
         }
 
-        Handlebars.registerHelper('imprimir', function(asignaturas) {
+        Handlebars.registerHelper('imprimir', function (asignaturas) {
             var html = '<div>';
             var nivel_actual = 1;
             var asignaturas_impresas = 0;
@@ -184,7 +202,7 @@ jQuery(document).ready(function($) {
         $('#outercanvas').html(html);
 
         var mas_alto = 0;
-        $('.contenedor_asignatura').each(function() {
+        $('.contenedor_asignatura').each(function () {
             var alto = $(this).height();
             if (alto > mas_alto) {
                 mas_alto = alto;
@@ -199,7 +217,7 @@ jQuery(document).ready(function($) {
 
         // $('#contenedor_outercanvas').height($('#outercanvas').height() + 250);
 
-        $('.centrar_vertical span').each(function() {
+        $('.centrar_vertical span').each(function () {
             var elemento = $(this);
             var height = elemento.height();
             var parent = elemento.parent();
@@ -222,13 +240,15 @@ jQuery(document).ready(function($) {
                     MostrarAperturasById(context[i].id);
                     // CambiarEstadoById(context[i].id, ESTADO_TOMADO);
                 }
-            };
+            }
+            ;
             if (nivel == 0) {
                 for (var i = 0; i < context.length; i++) {
                     if (context[i].nivel == 1) {
                         CambiarEstadoById(context[i].id, ESTADO_PREREQUISITO);
                     }
-                };
+                }
+                ;
             }
         }
 
@@ -297,7 +317,8 @@ jQuery(document).ready(function($) {
                 if (context[i].id == id) {
                     return context[i];
                 }
-            };
+            }
+            ;
         }
 
         function GetNodeByJqueryElement(esto) {
@@ -306,7 +327,8 @@ jQuery(document).ready(function($) {
                 if (context[i].id == id) {
                     return GetNodeById(context[i]);
                 }
-            };
+            }
+            ;
         }
 
         function GetPrerequisitosById(id) {
@@ -316,7 +338,8 @@ jQuery(document).ready(function($) {
         function CambiarEstadoArrayById(array, estado) {
             for (var i = 0; i < array.length; i++) {
                 CambiarEstadoById(array[i], estado);
-            };
+            }
+            ;
         }
 
         function GetPrerequisitosRecursiveById(id) {
@@ -324,7 +347,8 @@ jQuery(document).ready(function($) {
             var union = prerequisitos;
             for (var i = prerequisitos.length - 1; i >= 0; i--) {
                 union = _.union(union, GetPrerequisitosRecursiveById(prerequisitos[i]));
-            };
+            }
+            ;
             return union;
         }
 
@@ -337,7 +361,8 @@ jQuery(document).ready(function($) {
             var union = aperturas;
             for (var i = aperturas.length - 1; i >= 0; i--) {
                 union = _.union(union, GetAperturasRecursiveById(aperturas[i]));
-            };
+            }
+            ;
             return union;
         }
 
@@ -349,17 +374,19 @@ jQuery(document).ready(function($) {
             }
             for (var i = aperturas.length - 1; i >= 0; i--) {
                 CambiarEstadoById(aperturas[i], ESTADO_PREREQUISITO);
-            };
+            }
+            ;
         }
 
-        $('.asignatura').on('mouseenter', function() {
+        $('.asignatura').on('mouseenter', function () {
             if (accion == 'prerequisitos') {
                 var id = GetIdByJqueryElement(this);
                 CambiarEstadoById(id, ESTADO_TOMADO);
                 var prerequisitos = GetPrerequisitosRecursiveById(id);
                 for (var i = prerequisitos.length - 1; i >= 0; i--) {
                     CambiarEstadoById(prerequisitos[i], ESTADO_PREREQUISITO);
-                };
+                }
+                ;
             }
             if (accion == 'aperturas') {
                 var id = GetIdByJqueryElement(this);
@@ -367,7 +394,7 @@ jQuery(document).ready(function($) {
                 MostrarAperturasById(id);
             }
         });
-        $('.asignatura').on('mouseleave', function() {
+        $('.asignatura').on('mouseleave', function () {
             if (accion == 'prerequisitos') {
                 var id = GetIdByJqueryElement(this);
                 CambiarEstadoById(id, ESTADO_INICIAL);
@@ -375,7 +402,8 @@ jQuery(document).ready(function($) {
                 var prerequisitos = GetPrerequisitosRecursiveById(id);
                 for (var i = prerequisitos.length - 1; i >= 0; i--) {
                     CambiarEstadoById(prerequisitos[i], ESTADO_INICIAL);
-                };
+                }
+                ;
             }
             if (accion == 'aperturas') {
                 var id = GetIdByJqueryElement(this);
@@ -383,7 +411,8 @@ jQuery(document).ready(function($) {
                 var aperturas = GetAperturasRecursiveById(id);
                 for (var i = aperturas.length - 1; i >= 0; i--) {
                     CambiarEstadoById(aperturas[i], ESTADO_INICIAL);
-                };
+                }
+                ;
             }
         });
 
@@ -409,10 +438,11 @@ jQuery(document).ready(function($) {
                 if (color == COLOR_AZUL) {
                     ApagarAsignatura(nodo);
                 }
-            };
+            }
+            ;
         }
 
-        $('.asignatura').on('click', function() {
+        $('.asignatura').on('click', function () {
             if (accion == 'proyeccion' || accion == 'tomar_ramos') {
                 if (!se_esta_realizando_toma_de_ramos) {
                     var estado = GetEstadoByJqueryElement(this);
@@ -430,7 +460,8 @@ jQuery(document).ready(function($) {
                             if (GetEstadoById(aperturas[i]) == ESTADO_INICIAL) {
                                 CambiarEstadoById(aperturas[i], ESTADO_PREREQUISITO);
                             }
-                        };
+                        }
+                        ;
                         // MostrarAperturasById(id);
                     } else if (estado == ESTADO_TOMADO) {
                         var aperturas_recursiva = GetAperturasRecursiveById(id);
@@ -457,7 +488,8 @@ jQuery(document).ready(function($) {
                             if (GetEstadoById(aperturas[i]) == ESTADO_INICIAL) {
                                 CambiarEstadoById(aperturas[i], ESTADO_PREREQUISITO_NO_TOMABLE);
                             }
-                        };
+                        }
+                        ;
                     } else if (estado == ESTADO_SIMULANDO_TOMA) {
                         CambiarEstadoById(id, ESTADO_PREREQUISITO);
 
@@ -469,7 +501,8 @@ jQuery(document).ready(function($) {
                             if (GetEstadoById(aperturas[i]) == ESTADO_PREREQUISITO_NO_TOMABLE) {
                                 CambiarEstadoById(aperturas[i], ESTADO_INICIAL);
                             }
-                        };
+                        }
+                        ;
                     } else {
                         $('#myModal').modal({
                             keyboard: true
@@ -485,25 +518,26 @@ jQuery(document).ready(function($) {
                             sct_totales += context[i].sct;
                         }
                     }
-                };
+                }
+                ;
 
                 CambiarValorSCT(sct_totales);
             }
         });
 
-        $('#fw').on('click', function() {
+        $('#fw').on('click', function () {
             accion = 'aperturas';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
             $('#outline').hide();
             // LimpiarAsignaturas();
         });
-        $('#bw').on('click', function() {
+        $('#bw').on('click', function () {
             accion = 'prerequisitos';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
             // LimpiarAsignaturas();
             $('#outline').hide();
         });
-        $('#fwbw').on('click', function() {
+        $('#fwbw').on('click', function () {
             accion = 'proyeccion';
             $('#spinme').val(0);
             $('#spinme').change();
@@ -516,7 +550,7 @@ jQuery(document).ready(function($) {
             min: 0
         });
 
-        $('#spinme').on('change', function() {
+        $('#spinme').on('change', function () {
             accion = 'proyeccion';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_TOMADO);
             $('#fwbw').attr('checked', 'checked');
@@ -524,7 +558,8 @@ jQuery(document).ready(function($) {
                 var nivel_proyeccion = parseInt($(this).val());
                 for (var i = context.length - 1; i >= 0; i--) {
                     CambiarEstadoById(context[i].id, ESTADO_INICIAL);
-                };
+                }
+                ;
                 $('.asignatura').css('background', 'white');
                 CambiarEstadoArrayById(asignaturas_sin_padres, ESTADO_PREREQUISITO);
                 ProyectarNivel(nivel_proyeccion);
@@ -532,8 +567,10 @@ jQuery(document).ready(function($) {
             }
         });
 
-        $('#boton_fijar').on('click', function() {
+        $('#boton_fijar').on('click', function () {
             if (se_esta_realizando_toma_de_ramos) {
+                $(this).removeClass('btn-warning');
+                $(this).addClass('btn-success');
                 $(this).text('Fijar');
                 for (var i = context.length - 1; i >= 0; i--) {
                     if (GetEstadoById(context[i].id) == ESTADO_SIMULANDO_TOMA) {
@@ -542,10 +579,13 @@ jQuery(document).ready(function($) {
                         CambiarEstadoArrayById(aperturas_recursiva, ESTADO_INICIAL);
                         CambiarValorSCT(0);
                     }
-                };
+                }
+                ;
                 se_esta_realizando_toma_de_ramos = false;
             } else {
                 se_esta_realizando_toma_de_ramos = true;
+                $(this).removeClass('btn-success');
+                $(this).addClass('btn-warning');
                 $(this).text('Liberar');
             }
         });
@@ -563,10 +603,11 @@ jQuery(document).ready(function($) {
 
     for (var i = context.length - 1; i >= 0; i--) {
         CambiarEstadoById(context[i].id, GetEstadoById(context[i].id));
-    };
+    }
+    ;
 
     if (!tomar_ramos) {
-        $('.asignatura').each(function(key, esto) {
+        $('.asignatura').each(function (key, esto) {
             //        var elemento = GetNodeByJqueryElement(this);
             var id = GetIdByJqueryElement(esto);
             elemento = GetNodeById(id);
@@ -617,4 +658,65 @@ jQuery(document).ready(function($) {
             //        $(this).find('div').css('font-size','16px');
         });
     }
+
+    var tour;
+
+    tour = new Shepherd.Tour({
+        defaults: {
+            classes: 'shepherd-theme-arrows'
+        }
+    });
+
+    var primera_asignatura = "#asignatura_" + context[ 0 ].id;
+    var boton_anterior = {
+        text: 'Anterior',
+        action: tour.back
+    };
+    var boton_siguiente = {
+        text: 'Siguiente',
+        action: tour.next
+    };
+
+    var boton_siguiente_listo = {
+        text: 'Listo',
+        action: tour.next
+    };
+
+    var boton_finalizar = {
+        text: 'Fin',
+        action: tour.cancel
+    };
+
+    tour.addStep('example', {
+        title: 'Indica tus asignaturas aprobadas',
+        text: 'Selecciona esta asignatura para indicar que está aprobada',
+        attachTo: "#asignatura_" + context[ 0 ].id,
+        advanceOn: '.docs-link click',
+        buttons: [boton_siguiente_listo]
+    });
+    tour.addStep('example', {
+        title: 'Iniciar la simulación',
+        text: 'Ahora haz click aquí para indicar que ya ingresaste tus asignaturas aprobadas y deseas iniciar la simulación',
+        attachTo: "#boton_fijar",
+        advanceOn: '.docs-link click',
+        buttons: [boton_anterior, boton_siguiente_listo]
+    });
+    tour.addStep('example', {
+        title: '¡Simula!',
+        text: 'Ahora haz click en esta asignatura, cambiará su color a rojo indicando que está elegida',
+        attachTo: "#asignatura_" + context[ 1 ].id,
+        advanceOn: '.docs-link click',
+        buttons: [boton_anterior, boton_siguiente]
+    });
+    tour.addStep('example', {
+        title: 'SCT',
+        text: 'En esta ventana se mostrarán los SCT acumulados de tu simulación',
+        attachTo: "#sct_y_tel",
+        advanceOn: '.docs-link click',
+        buttons: [boton_anterior, boton_finalizar]
+    });
+
+    $('#boton_tutorial').on('click', function () {
+        tour.start();
+    })
 });
