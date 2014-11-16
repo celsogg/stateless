@@ -6,7 +6,9 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -89,6 +91,8 @@ public class Asignatura implements Serializable {
     @OneToMany(mappedBy = "idAsignatura")
     private Collection<ProgramaAsignatura> programaAsignaturaCollection;
 
+
+    
     public Asignatura() {
     }
 
@@ -172,7 +176,10 @@ public class Asignatura implements Serializable {
     public Collection<Asignatura> getAsignaturaCollection() {
         return asignaturaCollection;
     }
-
+    
+    
+    
+    
     public void setAsignaturaCollection(Collection<Asignatura> asignaturaCollection) {
         this.asignaturaCollection = asignaturaCollection;
     }

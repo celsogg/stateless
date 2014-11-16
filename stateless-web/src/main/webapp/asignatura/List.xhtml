@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/template.xhtml">
 
@@ -24,8 +25,8 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton guardarButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton guardarButton"/>
 
                         <p:column>
                             <f:facet name="header">
@@ -75,25 +76,36 @@
                             </f:facet>
                             <h:outputText value="#{item.horasLaboratorio}"/>
                         </p:column>
+
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAsignaturaTitle_resumenAsignatura}"/>
+                                <h:outputText value="Pre-requisitos" />
                             </f:facet>
-                            <h:outputText value="#{item.resumenAsignatura}"/>
+                            <h:outputText value="#{asignaturaController.getNombresAsignaturaString(item)}" />
                         </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Proyeccion" />
+                            </f:facet>
+                            <h:outputText value="#{asignaturaController.getNombresAsignatura2String(item.asignaturaCollection1)}" />
+                        </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAsignaturaTitle_idPlan}"/>
                             </f:facet>
                             <h:outputText value="#{item.idPlan}"/>
                         </p:column>
+                        
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{asignaturaController.prepareCreate}" update=":AsignaturaCreateForm" oncomplete="PF('AsignaturaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AsignaturaViewForm" oncomplete="PF('AsignaturaViewDialog').show()" disabled="#{empty asignaturaController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AsignaturaEditForm" oncomplete="PF('AsignaturaEditDialog').show()" disabled="#{empty asignaturaController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{asignaturaController.destroy}" update=":growl,datalist" disabled="#{empty asignaturaController.selected}"/>
+                            <p:commandButton id="guardarButton" actionListener="#{asignaturaController.borrarRequisito(null, 9)}" value="Eliminar requisito"/>
                         </f:facet>
-                    </p:dataTable>
+                    </p:dataTable> 
                 </p:panel>
             </h:form>
 
