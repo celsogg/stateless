@@ -114,13 +114,24 @@ public class PdfMallaDownloadController extends HttpServlet {
             //doc.setFooter(footer);
             doc.open();
 
-            int maximo_nivel = 12;
-            Font font_asignaturas = FontFactory.getFont(FontFactory.HELVETICA, 8);
+            ArrayList<Asignatura> asignaturas = new ArrayList<>(plan.getAsignaturaCollection());
+
+            int maximo_nivel = 1;
+            for (int i = 0; i < asignaturas.size(); i++) {
+                if (asignaturas.get(i).getNivelAsignatura() > maximo_nivel) {
+                    maximo_nivel = asignaturas.get(i).getNivelAsignatura();
+                }
+            }
+//            FontFactory.register("resources/OpenSans-Regular.ttf","OpenSans");
+//            Font f = FontFactory.getFont("OpenSans", "Cp1253", true);
+//            Font font_asignaturas = FontFactory.getFont(f.getFamilyname(), 7);
+            Font font_asignaturas = FontFactory.getFont(FontFactory.HELVETICA, 7);
 
             PdfPTable table = new PdfPTable(maximo_nivel);
+            table.setSplitLate(false); // default value
             table.setWidthPercentage(100); //Width 100%
-            table.setSpacingBefore(10f); //Space before table
-            table.setSpacingAfter(10f); //Space after table
+//            table.setSpacingBefore(10f); //Space before table
+//            table.setSpacingAfter(10f); //Space after table
 
             float columnWidths[] = new float[maximo_nivel];
             for (int i = 0; i < maximo_nivel; i++) {
@@ -128,21 +139,40 @@ public class PdfMallaDownloadController extends HttpServlet {
             }
             table.setWidths(columnWidths);
 
-            ArrayList<Asignatura> as;
-            as = new ArrayList<>(plan.getAsignaturaCollection());
-
-            for (int i = 0; i < maximo_nivel; i++) {
-                PdfPCell cell = new PdfPCell(new Paragraph("Nivel " + (i + 1)));
+            for (int i = 0; i < maximo_nivel / 2; i++) {
+                PdfPCell cell = new PdfPCell(new Paragraph((i + 1) + "° Año", font_asignaturas));
+                cell.setNoWrap(true);
                 cell.setRightIndent(1);
                 cell.setBorderColor(BaseColor.BLACK);
                 cell.setPaddingLeft(10);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                if (i % 2 == 0) {
+                    cell.setBackgroundColor(new BaseColor(255,185,140));
+                }else{
+                    cell.setBackgroundColor(new BaseColor(255,143,71));
+                }
+                cell.setColspan(2);
+                table.addCell(cell);
+            }
+
+            for (int i = 0; i < maximo_nivel; i++) {
+                PdfPCell cell = new PdfPCell(new Paragraph("Semestre " + (i + 1), font_asignaturas));
+                cell.setRightIndent(1);
+                cell.setBorderColor(BaseColor.BLACK);
+                cell.setPaddingLeft(10);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                if (i % 2 == 0) {
+                    cell.setBackgroundColor(new BaseColor(128, 169, 230));
+                } else {
+                    cell.setBackgroundColor(new BaseColor(204, 220, 245));
+                }
                 table.addCell(cell);
             }
 
             int asignaturas_impresas = 0;
-            int total_asignaturas = as.size();
+            int total_asignaturas = asignaturas.size();
             Boolean imprimio;
             Boolean[] asignaturas_impresas_array = new Boolean[total_asignaturas];
             int nivel_actual = 1;
@@ -151,24 +181,29 @@ public class PdfMallaDownloadController extends HttpServlet {
             for (int i = 0; i < total_asignaturas; i++) {
                 asignaturas_impresas_array[i] = false;
             }
+            int celdas_escritas = 0;
             while (asignaturas_impresas < total_asignaturas) {
                 imprimio = false;
                 for (int i = 0; i < total_asignaturas; i++) {
-                    if (!asignaturas_impresas_array[i] && as.get(i).getNivelAsignatura() == nivel_actual) {
+                    if (!asignaturas_impresas_array[i] && asignaturas.get(i).getNivelAsignatura() == nivel_actual) {
                         imprimio = true;
                         asignaturas_impresas_array[i] = true;
 
-                        PdfPCell cell = new PdfPCell(new Paragraph(as.get(i).getNombreAsignatura() + "_" + as.get(i).getEsAnual(), font_asignaturas));
+                        PdfPCell cell = new PdfPCell(new Paragraph(asignaturas.get(i).getNombreAsignatura(), font_asignaturas));
                         cell.setBorderColor(BaseColor.BLACK);
-                        cell.setPaddingLeft(8);
-                        if (as.get(i).getEsAnual() == 1) {
+                        cell.setPaddingLeft(4);
+                        cell.setPaddingRight(4);
+                        if (asignaturas.get(i).getEsAnual() == 1) {
                             cell.setColspan(2);
+                            celdas_escritas++;
                         }
+                        celdas_escritas++;
+
                         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         table.addCell(cell);
 
-                        if (as.get(i).getEsAnual() == 1) {
+                        if (asignaturas.get(i).getEsAnual() == 1) {
                             nivel_actual = (nivel_actual + 1) % maximo_nivel;
                         }
                         asignaturas_impresas++;
@@ -178,28 +213,24 @@ public class PdfMallaDownloadController extends HttpServlet {
                     }
                 }
                 if (!imprimio) {
-                    PdfPCell cell = new PdfPCell(new Paragraph("------", font_asignaturas));
+                    PdfPCell cell = new PdfPCell(new Paragraph("", font_asignaturas));
                     cell.setBorderColor(BaseColor.BLACK);
                     cell.setPaddingLeft(8);
                     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                     cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                     table.addCell(cell);
-                }
-                if (nivel_actual == maximo_nivel) {
-                    for (int i = nivel_actual + 1; i < 12; i++) {
-                        PdfPCell cell = new PdfPCell(new Paragraph("++++++", font_asignaturas));
-                        cell.setBorderColor(BaseColor.BLACK);
-                        cell.setPaddingLeft(8);
-                        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                        table.addCell(cell);
-                    }
+                    celdas_escritas++;
                 }
                 nivel_actual = (nivel_actual) % maximo_nivel + 1;
             }
-
-            for (Asignatura a : as) {
-
+            while (celdas_escritas % maximo_nivel != 0) {
+                PdfPCell cell = new PdfPCell(new Paragraph("", font_asignaturas));
+                cell.setBorderColor(BaseColor.BLACK);
+                cell.setPaddingLeft(8);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                table.addCell(cell);
+                celdas_escritas++;
             }
 
             doc.add(table);
