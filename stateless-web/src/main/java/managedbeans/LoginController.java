@@ -9,6 +9,7 @@ package managedbeans;
 import entities.Usuario;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -17,10 +18,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -35,12 +32,11 @@ import sessionbeans.UsuarioFacadeLocal;
 @SessionScoped
 @Named("loginController")
 public class LoginController {
-    private EntityManager em;
+    
     private String username;
     private String password;
     private boolean isLoggedIn;
     private String originalURL;
-    private boolean isAdmin;
     
     @PostConstruct
     public void init() {
@@ -61,27 +57,37 @@ public class LoginController {
     @EJB
     private UsuarioFacadeLocal userService;
 
-    public void login() throws IOException, ServletException {
+    public String login() throws IOException, ServletException {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-
-        try {
-            request.login(this.username, this.password);
-            setUsername(this.username);
-            //System.out.println(this.username);
-            /*Usuario user;
-            if((Usuario) em.createNamedQuery("findByUid")!=null){
-                user = (Usuario) em.createNamedQuery("findByUid")
-                        .setParameter("uid", this.username)
-                        .getSingleResult();
-                externalContext.getSessionMap().put("user", user);
-            }*/
-            externalContext.redirect(originalURL);
-        } catch (ServletException e) {
-            // Handle unknown username/password in request.login().
-            context.addMessage(null, new FacesMessage("Unknown login"));
-        }
+        String navto = "";
+        String message = "";
+        try{
+        request.login(this.username, this.password);
+        setUsername(this.username);
+        //System.out.println(this.username);
+        List<Usuario> results;
+        results = userService.findUsuarioByUid(request.getUserPrincipal().getName());
+        Usuario user;
+        if(!results.isEmpty()){
+            user = results.get(0);
+            String rol = user.getRol();
+            if(rol.equalsIgnoreCase("administrador")){
+                message = "Username: "+ request.getUserPrincipal().getName()+" You are administrator";
+                navto = "admin";
+                }
+            }else{
+                message = "Username: "+ request.getUserPrincipal().getName()+" You are student";
+                navto = "estudiante";
+            }
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));  
+            return navto;
+            } catch (ServletException e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An Error ocurred: login failed",null));
+            }
+            return "failure";
     }
 
     public void logout() throws IOException {
