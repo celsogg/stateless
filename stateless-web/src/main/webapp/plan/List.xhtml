@@ -26,30 +26,31 @@
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton uploadCsvButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton uploadCsvButton"/>
-
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPlanTitle_codigoPlan}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigoPlan}"/>
+                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText  value="#{bundle.ListPlanTitle_idCarrera}"/>
                             </f:facet>
                             <h:outputText value="#{item.idCarrera.nombreCarrera}"/>
                         </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Año . Versión"/>
+                            </f:facet>
+                            <h:outputText value="#{item.anioPlan} . #{item.versionPlan}"/>
+                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListPlanTitle_nombrePlan}"/>
                             </f:facet>
                             <h:outputText value="#{item.nombrePlan}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPlanTitle_anioPlan}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.anioPlan}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPlanTitle_codigoPlan}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.codigoPlan}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

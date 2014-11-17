@@ -54,7 +54,9 @@ public class Plan implements Serializable {
     @Column(name = "CODIGO_PLAN")
     private String codigoPlan;
     @Column(name = "VISIBLE_PLAN")
-        private Boolean visiblePlan = false;
+    private Boolean visiblePlan = false;
+    @Column(name = "VERSION_PLAN")
+    private String versionPlan;
     @JoinColumn(name = "ID_CARRERA", referencedColumnName = "ID_CARRERA")
     @ManyToOne
     private Carrera idCarrera;
@@ -121,7 +123,13 @@ public class Plan implements Serializable {
         this.visiblePlan = visiblePlan;
     }
 
+    public String getVersionPlan() {
+        return versionPlan;
+    }
 
+    public void setVersionPlan(String versionPlan) {
+        this.versionPlan = versionPlan;
+    }
 
     @XmlTransient
     public List<Asignatura> getAsignaturaCollection() {

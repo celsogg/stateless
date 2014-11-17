@@ -363,10 +363,10 @@ public class PlanController implements Serializable {
             asignaturas.add(asignatura);
         }
         
-        FacesMessage message = new FacesMessage("Succesful", uf.getFileName() + " is uploaded.");
+        FacesMessage message = new FacesMessage("Succesful", "El archivo \"" + uf.getFileName() + "\" se ha subido con éxito, guarde los cambios");
         FacesContext.getCurrentInstance().addMessage(null, message);
         RequestContext context = RequestContext.getCurrentInstance();
- 
+        csvFileSelected = true;
         selected.setAsignaturaCollection(asignaturas);
     }
     
@@ -388,4 +388,14 @@ public class PlanController implements Serializable {
         String[] tokens = line.split(regex, -1);
         return tokens;
     }
+
+    public boolean isCsvFileSelected() {
+        return csvFileSelected;
+    }
+
+    public void setCsvFileSelected(boolean csvFileSelected) {
+        this.csvFileSelected = csvFileSelected;
+    }
+    
+    
 }
