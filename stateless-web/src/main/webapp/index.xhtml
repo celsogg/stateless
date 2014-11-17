@@ -179,7 +179,11 @@
                 </div>
                 <div class="top-menu">
                     <ul class="nav pull-right top-menu">
-                        <li><a class="logout" href="login.html">Logout</a></li>
+                        <li>
+                            <h:form>
+                                <h:commandLink action="#{loginController.logout}" value="Logout" />
+                            </h:form>
+                        </li>
                     </ul>
                 </div>
             </header>
@@ -207,9 +211,10 @@
                         <li class="sub-menu">
                             <a href="javascript:;" >
                                 <i class="fa fa-desktop"></i>
-                                <span>UI Elements</span>
+                                <span>Planes</span>
                             </a>
                             <ul class="sub">
+                                <li><h:outputLink value="myimages/#{element}/image.jpg"></h:outputLink></li>
                                 <li><a  href="general.html">General</a></li>
                                 <li><a  href="buttons.html">Buttons</a></li>
                                 <li><a  href="panels.html">Panels</a></li>
