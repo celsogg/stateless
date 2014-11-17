@@ -24,6 +24,17 @@
         <h:outputStylesheet name="css/style-responsive.css" />
 
         <h:outputScript name="Chart.js"></h:outputScript>
+        <style>
+            .logout{
+                border: 1px solid #64c3c2 !important;
+                margin-top: 15px!important;
+                margin-right: 15px;
+                padding: 5px 15px;
+                background: #68dff0;
+                border-radius: 4px;
+                -webkit-border-radius: 4px;
+            }
+        </style>
     </h:head>
 
     <h:body>
@@ -182,9 +193,11 @@
             <div class="top-menu">
                 <ul class="nav pull-right top-menu">
                     <li>
-                        <h:form>
-                            <h:commandLink action="#{loginController.logout}" value="Logout" />
-                        </h:form>
+                        <ul class="nav pull-right top-menu" style="padding-top: 15px;">
+                            <h:form>
+                                <h:commandLink action="#{loginController.logout}" value="Cerrar Sesi&oacute;n" class="logout" />
+                            </h:form>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -243,57 +256,57 @@
                         </ul>
                     </li>
 
-<!--                    <li class="sub-menu">
-                        <a href="javascript:;" >
-                            <i class="fa fa-cogs"></i>
-                            <span>Components</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a  href="calendar.html">Calendar</a></li>
-                            <li><a  href="gallery.html">Gallery</a></li>
-                            <li><a  href="todo_list.html">Todo List</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;" >
-                            <i class="fa fa-book"></i>
-                            <span>Extra Pages</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a  href="blank.html">Blank Page</a></li>
-                            <li><a  href="login.html">Login</a></li>
-                            <li><a  href="lock_screen.html">Lock Screen</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;" >
-                            <i class="fa fa-tasks"></i>
-                            <span>Forms</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a  href="form_component.html">Form Components</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;" >
-                            <i class="fa fa-th"></i>
-                            <span>Data Tables</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a  href="basic_table.html">Basic Table</a></li>
-                            <li><a  href="responsive_table.html">Responsive Table</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;" >
-                            <i class=" fa fa-bar-chart-o"></i>
-                            <span>Charts</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a  href="morris.html">Morris</a></li>
-                            <li><a  href="chartjs.html">Chartjs</a></li>
-                        </ul>
-                    </li>-->
+                    <!--                    <li class="sub-menu">
+                                            <a href="javascript:;" >
+                                                <i class="fa fa-cogs"></i>
+                                                <span>Components</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li><a  href="calendar.html">Calendar</a></li>
+                                                <li><a  href="gallery.html">Gallery</a></li>
+                                                <li><a  href="todo_list.html">Todo List</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="sub-menu">
+                                            <a href="javascript:;" >
+                                                <i class="fa fa-book"></i>
+                                                <span>Extra Pages</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li><a  href="blank.html">Blank Page</a></li>
+                                                <li><a  href="login.html">Login</a></li>
+                                                <li><a  href="lock_screen.html">Lock Screen</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="sub-menu">
+                                            <a href="javascript:;" >
+                                                <i class="fa fa-tasks"></i>
+                                                <span>Forms</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li><a  href="form_component.html">Form Components</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="sub-menu">
+                                            <a href="javascript:;" >
+                                                <i class="fa fa-th"></i>
+                                                <span>Data Tables</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li><a  href="basic_table.html">Basic Table</a></li>
+                                                <li><a  href="responsive_table.html">Responsive Table</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="sub-menu">
+                                            <a href="javascript:;" >
+                                                <i class=" fa fa-bar-chart-o"></i>
+                                                <span>Charts</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li><a  href="morris.html">Morris</a></li>
+                                                <li><a  href="chartjs.html">Chartjs</a></li>
+                                            </ul>
+                                        </li>-->
 
                 </ul>
                 <!-- sidebar menu end-->
@@ -350,16 +363,16 @@
         </script>
 
         <script type="application/javascript">
-            $(document).ready(function() {
-            $("#date-popover").popover({
-            html: true,
-            trigger: "manual"
-            });
-            $("#date-popover").hide();
-            $("#date-popover").click(function(e) {
-            $(this).hide();
-            });
-            });
+            //            $(document).ready(function() {
+            //            $("#date-popover").popover({
+            //            html: true,
+            //            trigger: "manual"
+            //            });
+            //            $("#date-popover").hide();
+            //            $("#date-popover").click(function(e) {
+            //            $(this).hide();
+            //            });
+            //            });
 
 
             function myNavFunction(id) {
