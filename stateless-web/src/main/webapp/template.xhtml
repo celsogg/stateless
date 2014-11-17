@@ -198,17 +198,22 @@
                     <!--<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>-->
                     <h5 class="centered">Bienvenido #{loginController.username}</h5>
 
-                    <li class="mt">
-                        <h:outputLink class="active" value="/stateless-web/usuario/List.xhtml">
+                    <li class="sub-menu">
+                        <h:outputLink value="/stateless-web/usuario/List.xhtml">
                             <i class="fa fa-dashboard"></i>
                             <span>Administrar Usuarios</span>
                         </h:outputLink>
                     </li>
-
+                    <li class="sub-menu">
+                        <h:outputLink value="/stateless-web/plan/List.xhtml">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Administrar Planes</span>
+                        </h:outputLink>
+                    </li>
                     <li class="sub-menu">
                         <a href="javascript:;" >
                             <i class="fa fa-desktop"></i>
-                            <span>Planes</span>
+                            <span>Mallas</span>
                         </a>
                         <ul class="sub">
                             <c:forEach var="mallas" items="#{planController.itemsByVisible}">
@@ -238,7 +243,7 @@
                         </ul>
                     </li>
 
-                    <li class="sub-menu">
+<!--                    <li class="sub-menu">
                         <a href="javascript:;" >
                             <i class="fa fa-cogs"></i>
                             <span>Components</span>
@@ -288,7 +293,7 @@
                             <li><a  href="morris.html">Morris</a></li>
                             <li><a  href="chartjs.html">Chartjs</a></li>
                         </ul>
-                    </li>
+                    </li>-->
 
                 </ul>
                 <!-- sidebar menu end-->
@@ -304,9 +309,66 @@
             </section>
         </section>
 
-<!--        <ui:insert name="body"/>-->
+        <!--        <ui:insert name="body"/>-->
         <ui:insert name="footer"/>
+        <!-- js placed at the end of the document so the pages load faster -->
+        <h:outputScript library="js" name="jquery.dcjqaccordion.2.7.js" />
+        <h:outputScript library="js" name="jquery.scrollTo.min.js" />
+        <h:outputScript library="js" name="jquery.nicescroll.js" />
+        <h:outputScript library="js" name="jquery.sparkline.js" />
 
+
+        <!--common script for all pages-->
+        <h:outputScript library="js" name="common-scripts.js" />
+
+        <h:outputScript name="jquery.gritter.js" />
+        <h:outputScript name="js/gritter-conf.js" />
+
+        <!--script for this page-->
+        <h:outputScript library="js" name="sparkline-chart.js" />
+        <h:outputScript library="js" name="zabuto_calendar.js" />
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+//                var unique_id = $.gritter.add({
+//                    // (string | mandatory) the heading of the notification
+//                    title: 'Welcome to Dashgum!',
+//                    // (string | mandatory) the text inside the notification
+//                    text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo. Free version for <a href="http://blacktie.co" target="_blank" style="color:#ffd777">BlackTie.co</a>.',
+//                    // (string | optional) the image to display on the left
+//                    image: 'resources/images/ui-sam.jpg',
+//                    // (bool | optional) if you want it to fade out on its own or just sit there
+//                    sticky: true,
+//                    // (int | optional) the time you want it to be alive for before fading out
+//                    time: '',
+//                    // (string | optional) the class name you want to apply to that specific message
+//                    class_name: 'my-sticky-class'
+//                });
+
+                return false;
+            });
+        </script>
+
+        <script type="application/javascript">
+            $(document).ready(function() {
+            $("#date-popover").popover({
+            html: true,
+            trigger: "manual"
+            });
+            $("#date-popover").hide();
+            $("#date-popover").click(function(e) {
+            $(this).hide();
+            });
+            });
+
+
+            function myNavFunction(id) {
+            $("#date-popover").hide();
+            var nav = $("#" + id).data("navigation");
+            var to = $("#" + id).data("to");
+            console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
+            }
+        </script>
     </h:body>
 
 </html>
