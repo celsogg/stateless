@@ -20,8 +20,6 @@
                         <p:inputText id="apellido" value="#{usuarioController.selected.apellido}" title="#{bundle.CreateUsuarioTitle_apellido}" />
                         <p:outputLabel value="#{bundle.CreateUsuarioLabel_rol}" for="rol" />
                         <p:inputText id="rol" value="#{usuarioController.selected.rol}" title="#{bundle.CreateUsuarioTitle_rol}" />
-                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{usuarioController.selected.id}" title="#{bundle.CreateUsuarioTitle_id}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{usuarioController.create}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args,'UsuarioCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="UsuarioCreateDialog.hide()"/>
