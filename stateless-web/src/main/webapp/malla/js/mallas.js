@@ -54,8 +54,8 @@ jQuery(document).ready(function ($) {
                     classes: 'qtip-cream'
                 },
                 position: {
-                    my: 'top center', // Position my top left...
-                    at: 'bottom center', // at the bottom right of...
+                    my: 'left center', // Position my top left...
+                    at: 'right center', // at the bottom right of...
                     target: $('#sct_y_tel') // my target
                 },
             });
@@ -74,12 +74,13 @@ jQuery(document).ready(function ($) {
                     classes: 'qtip-cream'
                 },
                 position: {
-                    my: 'top center', // Position my top left...
-                    at: 'bottom center', // at the bottom right of...
+                    my: 'left center', // Position my top left...
+                    at: 'right center', // at the bottom right of...
                     target: $('#sct_y_tel') // my target
                 },
             });
         }
+        $('#sct_y_tel').mouseover();
     }
 
     var asignaturas_sin_padres = GetAsignaturasSinPadres();
@@ -90,9 +91,19 @@ jQuery(document).ready(function ($) {
         $('#apertura').hide();
         $('#prerequisitos').hide();
         $('#proyeccion').hide();
-        // se_esta_realizando_toma_de_ramos = true;
+        var hay_sct = false;
+        for(var i = 0; i < context.length; i++){
+            if(context[ i ].sct && context[ i ].sct > 0){
+                hay_sct = true;
+                break;
+            }
+        }
+        if(!hay_sct){
+            $('#sct_y_tel').hide();
+        }
     } else {
         $('#tomar_ramos_div').hide();
+        $('#boton_tutorial').hide();
     }
 
     var ESTADO_INICIAL = 0;
@@ -539,18 +550,18 @@ jQuery(document).ready(function ($) {
         });
         $('#fwbw').on('click', function () {
             accion = 'proyeccion';
-            $('#spinme').val(0);
-            $('#spinme').change();
+            $('#spinme, #spinme_tomar_ramos').val(0);
+            $('#spinme, #spinme_tomar_ramos').change();
             $('#outline').show();
             // $('#outline').slideToggle();
         });
 
-        $('#spinme').spin({
+        $('#spinme, #spinme_tomar_ramos').spin({
             max: nivel_mas_alto,
             min: 0
         });
 
-        $('#spinme').on('change', function () {
+        $('#spinme, #spinme_tomar_ramos').on('change', function () {
             accion = 'proyeccion';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_TOMADO);
             $('#fwbw').attr('checked', 'checked');
