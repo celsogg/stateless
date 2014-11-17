@@ -214,10 +214,30 @@
                                 <span>Planes</span>
                             </a>
                             <ul class="sub">
-                                <li><h:outputLink value="myimages/#{element}/image.jpg"></h:outputLink></li>
-                                <li><a  href="general.html">General</a></li>
-                                <li><a  href="buttons.html">Buttons</a></li>
-                                <li><a  href="panels.html">Panels</a></li>
+                                <c:forEach var="mallas" items="#{planController.itemsByVisible}">
+                                    <li>
+                                        <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}">
+                                            <f:param name="planId" value="#{mallas.idPlan}"></f:param>
+                                        </h:link>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;" >
+                                <i class="fa fa-desktop"></i>
+                                <span>Planifica tu semestre</span>
+                            </a>
+                            <ul class="sub">
+                                <c:forEach var="mallas" items="#{planController.itemsByVisible}">
+                                    <li>
+                                        <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}">
+                                            <f:param name="planId" value="#{mallas.idPlan}"></f:param>
+                                            <f:param name="tomar_ramos" value="true"></f:param>
+                                        </h:link>
+                                    </li>
+                                </c:forEach>
                             </ul>
                         </li>
 
