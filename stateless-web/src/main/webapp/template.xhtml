@@ -211,18 +211,22 @@
                     <!--<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>-->
                     <h5 class="centered">Bienvenido #{loginController.username} (#{loginController.rol})</h5>
 
-                    <li class="sub-menu">
-                        <h:outputLink value="/stateless-web/usuario/List.xhtml">
-                            <i class="fa fa-dashboard"></i>
-                            <span>Administrar Usuarios</span>
-                        </h:outputLink>
-                    </li>
-                    <li class="sub-menu">
-                        <h:outputLink value="/stateless-web/plan/List.xhtml">
-                            <i class="fa fa-dashboard"></i>
-                            <span>Administrar Planes</span>
-                        </h:outputLink>
-                    </li>
+                    <c:if test="${loginController.esAdmin()}">
+                        <li class="sub-menu">
+                            <h:outputLink value="/stateless-web/usuario/List.xhtml">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Administrar Usuarios</span>
+                            </h:outputLink>
+                        </li>
+                    </c:if>
+                    <c:if test="${loginController.esAdmin()}">
+                        <li class="sub-menu">
+                            <h:outputLink value="/stateless-web/plan/List.xhtml">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Administrar Planes</span>
+                            </h:outputLink>
+                        </li>
+                    </c:if>
                     <li class="sub-menu">
                         <a href="javascript:;" >
                             <i class="fa fa-desktop"></i>

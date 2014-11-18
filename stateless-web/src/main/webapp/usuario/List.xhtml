@@ -14,7 +14,6 @@
             <h:outputText value="#{bundle.ListUsuarioTitle}"></h:outputText>
         </ui:define>
 
-
         <ui:define name="body">
             <c:if test="${loginController.esAdmin()}">
                 <h:form id="UsuarioListForm">
@@ -69,7 +68,7 @@
                 <ui:include src="View.xhtml"/>
             </c:if>
             <c:if test="${loginController.noEsAdmin()}">
-                No tiene permisos
+                <ui:include src="/sin_permisos.xhtml" />
             </c:if>
         </ui:define>
     </ui:composition>

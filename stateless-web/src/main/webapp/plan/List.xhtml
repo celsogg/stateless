@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/template.xhtml">
 
@@ -14,67 +15,71 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="PlanListForm">
-                <p:panel header="#{bundle.ListPlanTitle}">
-                    <p:dataTable id="datalist" value="#{planController.items}" var="item"
-                                 selectionMode="single" selection="#{planController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.idPlan}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
+            <c:if test="${loginController.esAdmin()}">
+                <h:form id="PlanListForm">
+                    <p:panel header="#{bundle.ListPlanTitle}">
+                        <p:dataTable id="datalist" value="#{planController.items}" var="item"
+                                     selectionMode="single" selection="#{planController.selected}"
+                                     paginator="true"
+                                     rowKey="#{item.idPlan}"
+                                     rows="10"
+                                     rowsPerPageTemplate="10,20,30,40,50"
+                                     >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton uploadCsvButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton uploadCsvButton"/>
-                        
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPlanTitle_codigoPlan}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.codigoPlan}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText  value="#{bundle.ListPlanTitle_idCarrera}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idCarrera.nombreCarrera}"/>
-                        </p:column>
-                        
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Año . Versión"/>
-                            </f:facet>
-                            <h:outputText value="#{item.anioPlan} . #{item.versionPlan}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPlanTitle_nombrePlan}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nombrePlan}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListPlanTitle_visiblePlan}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.visiblePlanString}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{planController.prepareCreate}" update=":PlanCreateForm" oncomplete="PF('PlanCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PlanViewForm" oncomplete="PF('PlanViewDialog').show()" disabled="#{empty planController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PlanEditForm" oncomplete="PF('PlanEditDialog').show()" disabled="#{empty planController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{planController.destroy}" update=":growl,datalist" disabled="#{empty planController.selected}"/>
-                            <p:commandButton id="uploadCsvButton"   icon="ui-icon-arrowthickstop-1-n
-                                             " value="Subir Csv Asignaturas" update=":growl, datalist" oncomplete="PF('PlanUpdateCsvDialog').show()" disabled="#{empty planController.selected or not(planController.selected.asignaturaCollection.size() eq 0)}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
+                            <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton uploadCsvButton"/>
+                            <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton uploadCsvButton"/>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
-            <ui:include src="UploadCsv.xhtml"/>
-            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListPlanTitle_codigoPlan}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codigoPlan}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText  value="#{bundle.ListPlanTitle_idCarrera}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.idCarrera.nombreCarrera}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Año . Versión"/>
+                                </f:facet>
+                                <h:outputText value="#{item.anioPlan} . #{item.versionPlan}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListPlanTitle_nombrePlan}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nombrePlan}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListPlanTitle_visiblePlan}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.visiblePlanString}"/>
+                            </p:column>
+                            <f:facet name="footer">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{planController.prepareCreate}" update=":PlanCreateForm" oncomplete="PF('PlanCreateDialog').show()"/>
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PlanViewForm" oncomplete="PF('PlanViewDialog').show()" disabled="#{empty planController.selected}"/>
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PlanEditForm" oncomplete="PF('PlanEditDialog').show()" disabled="#{empty planController.selected}"/>
+                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{planController.destroy}" update=":growl,datalist" disabled="#{empty planController.selected}"/>
+                                <p:commandButton id="uploadCsvButton"   icon="ui-icon-arrowthickstop-1-n
+                                                 " value="Subir Csv Asignaturas" update=":growl, datalist" oncomplete="PF('PlanUpdateCsvDialog').show()" disabled="#{empty planController.selected or not(planController.selected.asignaturaCollection.size() eq 0)}"/>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+
+                <ui:include src="Create.xhtml"/>
+                <ui:include src="Edit.xhtml"/>
+                <ui:include src="View.xhtml"/>
+                <ui:include src="UploadCsv.xhtml"/>
+            </c:if>
+            <c:if test="${loginController.noEsAdmin()}">
+                <ui:include src="/sin_permisos.xhtml" />
+            </c:if>
         </ui:define>
     </ui:composition>
 
