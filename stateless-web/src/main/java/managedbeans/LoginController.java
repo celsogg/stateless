@@ -73,14 +73,17 @@ public class LoginController {
         if(!results.isEmpty()){
             user = results.get(0);
             String rol = user.getRol();
-            if(rol.equalsIgnoreCase("administrador")){
-                message = "Username: "+ request.getUserPrincipal().getName()+" You are administrator";
-                navto = "admin";
-                }
+            if(rol.equalsIgnoreCase("superadministrador")){
+                message = "Username: "+ request.getUserPrincipal().getName()+" You are superadmin";
+                navto = "superadmin";
+            }else if(rol.equalsIgnoreCase("administrador")){
+                message = "Username: "+ request.getUserPrincipal().getName()+" You are admin";
+                navto = "administrador";
             }else{
                 message = "Username: "+ request.getUserPrincipal().getName()+" You are student";
                 navto = "estudiante";
             }
+        }
             
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));  
             return navto;
