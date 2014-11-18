@@ -11,7 +11,7 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>log4jServlet</servlet-name>
+        <servlet-name>ServletContextListener</servlet-name>
         <servlet-class>managedbeans.Log4jInitServlet</servlet-class>
     </servlet>
     <servlet-mapping>
@@ -35,13 +35,11 @@
         <url-pattern>/pdfmallaservlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>log4jServlet</servlet-name>
-        <url-pattern>/log4jInitServlet</url-pattern>
+        <servlet-name>ServletContextListener</servlet-name>
+        <url-pattern>/ServletContextListener</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
@@ -50,60 +48,6 @@
         <error-code>403</error-code>
         <location>/ldap/403.xhtml</location>
     </error-page>
-    <security-constraint>
-        <display-name>Alumno</display-name>
-        <web-resource-collection>
-            <web-resource-name>Alumnos</web-resource-name>
-            <description/>
-            <url-pattern>/alumno/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>Alumno</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>Superadministrador</display-name>
-        <web-resource-collection>
-            <web-resource-name>Superadministrador</web-resource-name>
-            <description/>
-            <url-pattern>/superadministrador/*</url-pattern>
-        </web-resource-collection>
-        <web-resource-collection>
-            <web-resource-name>Usuarios</web-resource-name>
-            <description/>
-            <url-pattern>/usuario/*</url-pattern>
-        </web-resource-collection>
-        <web-resource-collection>
-            <web-resource-name>Planes</web-resource-name>
-            <description/>
-            <url-pattern>/plan/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>Superadministrador</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>Administrador</display-name>
-        <web-resource-collection>
-            <web-resource-name>Administrador</web-resource-name>
-            <description/>
-            <url-pattern>/administrador/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>Administrador</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>diinfRealm</realm-name>
@@ -119,9 +63,5 @@
     <security-role>
         <description/>
         <role-name>Alumno</role-name>
-    </security-role>
-    <security-role>
-        <description/>
-        <role-name>Superadministrador</role-name>
     </security-role>
 </web-app>

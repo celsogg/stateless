@@ -6,10 +6,10 @@
 
 package managedbeans;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
 import javax.servlet.http.HttpServlet;
-import org.apache.log4j.PropertyConfigurator;
 
 /**
  *
@@ -20,15 +20,10 @@ public class Log4jInitServlet extends HttpServlet {
     
     /**
      *
-     * @param config
-     * @throws ServletException
+     * @param event
      */
-    @Override
-    public void init (ServletConfig config) throws ServletException { 
-        String root = config.getServletContext().getRealPath("/");
-
-        //  String log4jLocation = config.getInitParameter("log4jLocation");
-
-        System.setProperty("webRoot", root); 
+    public void contextInitialized (ServletContextEvent event){ 
+        ServletContext context = event.getServletContext();
+        System.setProperty("rootPath", context.getRealPath("/")); 
     }
 }
