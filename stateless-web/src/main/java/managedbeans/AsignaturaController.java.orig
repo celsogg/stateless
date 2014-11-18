@@ -23,10 +23,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+<<<<<<< HEAD
+import javax.servlet.http.HttpServletRequest;
+=======
 import javax.inject.Inject;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
-import javax.servlet.http.HttpServletRequest;
+>>>>>>> 7b06f616a1c316223d23ef39ed0b8399c0e936db
 
 @Named("asignaturaController")
 @SessionScoped
@@ -37,12 +40,16 @@ public class AsignaturaController implements Serializable {
     private List<Asignatura> items = null;
     private List<Asignatura> itemsPlan = null;
     private Asignatura selected;
+<<<<<<< HEAD
     final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
+    
+=======
     
     @Inject
     private PlanController planController;
     
     private DualListModel<Asignatura> DLAsignaturas;
+>>>>>>> 7b06f616a1c316223d23ef39ed0b8399c0e936db
 
     public AsignaturaController() {
     }
@@ -141,7 +148,8 @@ public class AsignaturaController implements Serializable {
         }
          for (Asignatura proye1 : proyeccion) {
              System.out.println("algo" + proye1.getNombreAsignatura());
-         }      
+         }
+        
         
         
      }
@@ -157,12 +165,19 @@ public class AsignaturaController implements Serializable {
         System.out.println("entre");
         
         for (Asignatura requi : requisitos) {
+<<<<<<< HEAD
+            if(requi.getIdAsignatura() == id_requisito) {
+                System.out.println(requi.getNombreAsignatura());
+                System.out.println(requi.getIdAsignatura());
+                logger.info("El usuario "+getLoggedInUser().getName() +" ha eliminado el requisito "+requi.getNombreAsignatura()+" de la asignatura "+ getSelected().getNombreAsignatura());
+=======
             if(requi.getIdAsignatura() == 9) {
                 System.out.println("nombre proyecion" + asigna.getNombreAsignatura());
                 System.out.println("id proyeccion" + asigna.getIdAsignatura());
                 System.out.println("nombre asig requi: " + requi.getNombreAsignatura());
                 System.out.println(" id asign : " + requi.getIdAsignatura());
-                logger.info("El usuario "+getLoggedInUser().getName() +" ha eliminado el requisito "+requi.getNombreAsignatura()+" de la asignatura "+ getSelected().getNombreAsignatura());
+                
+>>>>>>> 7b06f616a1c316223d23ef39ed0b8399c0e936db
                 requisitos.remove(requi);
                 break;
             }
@@ -215,6 +230,7 @@ public class AsignaturaController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
             logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado la asignatura "+ getSelected().getNombreAsignatura());
         }
+        
     }
 
     public List<Asignatura> getItems() {

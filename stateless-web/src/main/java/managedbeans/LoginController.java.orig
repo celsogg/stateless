@@ -42,7 +42,7 @@ public class LoginController {
     
 =======
 
->>>>>>> ad3c88787b56569ddfe5bf85c9c5a3d6e33f27b3
+>>>>>>> 7b06f616a1c316223d23ef39ed0b8399c0e936db
     @PostConstruct
     public void init() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -123,10 +123,11 @@ public class LoginController {
 //            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
             return navto;
         } catch (ServletException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An Error ocurred: login failed", null));
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An Error ocurred: login failed", null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ha ocurrido un error, compruebe sus credenciales o contacte al administrador.", null));
         }
-        return "failure";
->>>>>>> ad3c88787b56569ddfe5bf85c9c5a3d6e33f27b3
+        return "";
+>>>>>>> 7b06f616a1c316223d23ef39ed0b8399c0e936db
     }
 
     public void logout() throws IOException {

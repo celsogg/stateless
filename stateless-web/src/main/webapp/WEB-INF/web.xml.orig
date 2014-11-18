@@ -10,6 +10,10 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>ServletContextListener</servlet-name>
+        <servlet-class>managedbeans.Log4jInitServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
@@ -30,10 +34,12 @@
         <servlet-name>PdfMallaDownloadController</servlet-name>
         <url-pattern>/pdfmallaservlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletContextListener</servlet-name>
+        <url-pattern>/ServletContextListener</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
@@ -43,50 +49,34 @@
         <location>/ldap/403.xhtml</location>
     </error-page>
 <<<<<<< HEAD
-    <security-constraint>
-        <display-name>Alumno</display-name>
 =======
-<!--    <security-constraint>
-        <display-name>ParaTodos</display-name>
->>>>>>> d3d8c2200d05aa538c4d13731678e048c7b7bf25
+    <security-constraint>
+        <display-name>Resources</display-name>
         <web-resource-collection>
-            <web-resource-name>Alumnos</web-resource-name>
+            <web-resource-name>Resource</web-resource-name>
             <description/>
-            <url-pattern>/alumno/*</url-pattern>
+            <url-pattern>/javax.faces.resource/*</url-pattern>
         </web-resource-collection>
-        <auth-constraint>
+        <!--        <auth-constraint>
             <description/>
+            <role-name>Administrador</role-name>
             <role-name>Alumno</role-name>
-        </auth-constraint>
-<<<<<<< HEAD
+        </auth-constraint>-->
     </security-constraint>
     <security-constraint>
-        <display-name>Superadministrador</display-name>
+        <display-name>ParaTodos</display-name>
         <web-resource-collection>
-            <web-resource-name>Superadministrador</web-resource-name>
+            <web-resource-name>Index</web-resource-name>
             <description/>
-            <url-pattern>/superadministrador/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>Superadministrador</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>Administrador</display-name>
-        <web-resource-collection>
-            <web-resource-name>Administrador</web-resource-name>
-            <description/>
-            <url-pattern>/administrador/*</url-pattern>
+            <url-pattern>/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>Administrador</role-name>
+            <role-name>Alumno</role-name>
         </auth-constraint>
     </security-constraint>
-=======
-    </security-constraint>-->
->>>>>>> d3d8c2200d05aa538c4d13731678e048c7b7bf25
+>>>>>>> 7b06f616a1c316223d23ef39ed0b8399c0e936db
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>diinfRealm</realm-name>
@@ -102,9 +92,5 @@
     <security-role>
         <description/>
         <role-name>Alumno</role-name>
-    </security-role>
-    <security-role>
-        <description/>
-        <role-name>Superadministrador</role-name>
     </security-role>
 </web-app>
