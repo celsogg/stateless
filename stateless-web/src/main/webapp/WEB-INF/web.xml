@@ -13,6 +13,15 @@
     <servlet>
         <servlet-name>ServletContextListener</servlet-name>
         <servlet-class>managedbeans.Log4jInitServlet</servlet-class>
+        <init-param>
+            <param-name>log4j-properties-location</param-name>
+            <param-value>WEB-INF/classes/log4j.properties</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>FileServlet</servlet-name>
+        <servlet-class>managedbeans.FileController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
@@ -38,10 +47,12 @@
         <servlet-name>ServletContextListener</servlet-name>
         <url-pattern>/ServletContextListener</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileServlet</servlet-name>
+        <url-pattern>/FileController</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>60</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
@@ -57,11 +68,6 @@
             <description/>
             <url-pattern>/javax.faces.resource/*</url-pattern>
         </web-resource-collection>
-        <!--        <auth-constraint>
-            <description/>
-            <role-name>Administrador</role-name>
-            <role-name>Alumno</role-name>
-        </auth-constraint>-->
     </security-constraint>
     <security-constraint>
         <display-name>ParaTodos</display-name>

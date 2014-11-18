@@ -76,6 +76,18 @@
                             </f:facet>
                             <h:outputText value="#{item.horasLaboratorio}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Pre-requisitos"/>
+                            </f:facet>
+                            <h:outputText value="#{asignaturaController.getNombresAsignaturaString(item)}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Proyeccion"/>
+                            </f:facet>
+                            <h:outputText value="#{asignaturaController.getNombresAsignatura2String(item)}"/>
+                        </p:column>
                         
                         <p:column>
                             <f:facet name="header">

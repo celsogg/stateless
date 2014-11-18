@@ -27,13 +27,14 @@
         <h:outputScript name="Chart.js"></h:outputScript>
         <style>
             .logout{
-                border: 1px solid #64c3c2 !important;
+                border: 1px solid #1b65bd !important;
                 margin-top: 15px!important;
                 margin-right: 15px;
                 padding: 5px 15px;
-                background: #68dff0;
+                background: #1b65bd;
                 border-radius: 4px;
                 -webkit-border-radius: 4px;
+                color: white;
             }
         </style>
     </h:head>
@@ -51,10 +52,10 @@
                 <h:outputLink value="/stateless-web/index.xhtml" class="logo">MI 2.0</h:outputLink>
             </h:form>
             <!--logo end-->
-            <div class="nav notify-row" id="top_menu">
-                <!--  notification start -->
+<!--            <div class="nav notify-row" id="top_menu">
+                  notification start 
                 <ul class="nav top-menu">
-                    <!-- settings start -->
+                     settings start 
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="/index.html#">
                             <i class="fa fa-tasks"></i>
@@ -122,8 +123,8 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- settings end -->
-                    <!-- inbox dropdown start-->
+                     settings end 
+                     inbox dropdown start
                     <li id="header_inbox_bar" class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                             <i class="fa fa-envelope-o"></i>
@@ -187,10 +188,10 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- inbox dropdown end -->
+                     inbox dropdown end 
                 </ul>
-                <!--  notification end -->
-            </div>
+                  notification end 
+            </div>-->
             <div class="top-menu">
                 <ul class="nav pull-right top-menu">
                     <li>
@@ -210,7 +211,7 @@
                 <ul class="sidebar-menu" id="nav-accordion">
 
                     <!--<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>-->
-                    <h5 class="centered">Bienvenido #{loginController.username} (#{loginController.rol})</h5>
+                    <h5 class="centered">Bienvenido #{loginController.username}</h5>
 
                     <c:if test="${loginController.esAdmin()}">
                         <li class="sub-menu">

@@ -108,6 +108,26 @@ public class AsignaturaController implements Serializable {
         return selected;
     }
     
+         public String getNombresAsignaturaString(Asignatura asignatura){
+        
+        String salida = "";
+        
+        for (Asignatura a1 : asignatura.getAsignaturaCollection()) {
+            salida = salida + a1.getNombreAsignatura() + "\n";
+        }
+        
+        return salida;
+    }
+    
+    public String getNombresAsignatura2String(Asignatura a){
+        String salida = "";
+        
+        for (Asignatura a1 : a.getAsignaturaCollection1()) {
+            salida = salida + a1.getNombreAsignatura()+ "\n";
+        }
+        return salida;
+    }
+    
      public void borrarProyeccion(Integer id_requisito){
         ArrayList<Asignatura> proyeccion = new ArrayList<>(selected.getAsignaturaCollection1());
         
