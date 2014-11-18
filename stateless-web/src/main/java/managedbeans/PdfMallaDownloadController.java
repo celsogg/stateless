@@ -11,8 +11,10 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.inject.Inject;
+import static managedbeans.PdfDownloadController.LOGO_USACH_URL;
 
 public class PdfMallaDownloadController extends HttpServlet {
 
@@ -102,17 +105,30 @@ public class PdfMallaDownloadController extends HttpServlet {
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
         PdfWriter docWriter = null;
         try {
+            Font font_asignaturas = FontFactory.getFont(FontFactory.HELVETICA, 7);
             docWriter = PdfWriter.getInstance(doc, baosPDF);
+            doc.setPageSize(PageSize.LETTER.rotate());
+            doc.open();
+
+            Image logo = Image.getInstance(getServletContext().getResource("/resources/images/UDS_HCOLOR.png"));
+            logo.scalePercent(10f);
+            logo.setAlignment(Element.ALIGN_RIGHT);
+            logo.setAbsolutePosition(PageSize.LETTER.rotate().getWidth() - 175, PageSize.LETTER.rotate().getHeight() - 100);
+            doc.add(logo);
+            
+            Phrase nombre_carrera = new Phrase("\n"+plan.getIdCarrera().getNombreCarrera()+"\n", new Font(Font.FontFamily.HELVETICA, 22));
+            Phrase nombre_plan = new Phrase("Plan de Estudios "+plan.getCodigoPlan()+" ("+plan.getAnioPlan()+")");
+            doc.add(nombre_carrera);
+            doc.add(nombre_plan);
+
             //doc.addAuthor(this.getClass().getName());
             //doc.addCreationDate();
             //doc.addProducer();
             //doc.addCreator(this.getClass().getName());
-            //doc.addTitle("This is a title.");
+//            doc.addTitle("This is a title.");
             //doc.addKeywords("pdf, itext, Java, open source, http");
-            doc.setPageSize(PageSize.LETTER.rotate());
             //HeaderFooter footer = new HeaderFooter( new Phrase("This is a footer."), false);
             //doc.setFooter(footer);
-            doc.open();
 
             ArrayList<Asignatura> asignaturas = new ArrayList<>(plan.getAsignaturaCollection());
 
@@ -122,10 +138,6 @@ public class PdfMallaDownloadController extends HttpServlet {
                     maximo_nivel = asignaturas.get(i).getNivelAsignatura();
                 }
             }
-//            FontFactory.register("resources/OpenSans-Regular.ttf","OpenSans");
-//            Font f = FontFactory.getFont("OpenSans", "Cp1253", true);
-//            Font font_asignaturas = FontFactory.getFont(f.getFamilyname(), 7);
-            Font font_asignaturas = FontFactory.getFont(FontFactory.HELVETICA, 7);
 
             PdfPTable table = new PdfPTable(maximo_nivel);
             table.setSplitLate(false); // default value
@@ -148,9 +160,9 @@ public class PdfMallaDownloadController extends HttpServlet {
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 if (i % 2 == 0) {
-                    cell.setBackgroundColor(new BaseColor(255,185,140));
-                }else{
-                    cell.setBackgroundColor(new BaseColor(255,143,71));
+                    cell.setBackgroundColor(new BaseColor(255, 185, 140));
+                } else {
+                    cell.setBackgroundColor(new BaseColor(255, 143, 71));
                 }
                 cell.setColspan(2);
                 table.addCell(cell);

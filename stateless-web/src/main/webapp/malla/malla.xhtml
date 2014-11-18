@@ -65,10 +65,12 @@ and open the template in the editor.
             </div>
         </script>
         <div id="main" style="min-width: 1280px; background: url(images/background.png) 100% 0% no-repeat white;">
-            <div id="header">
+            <div id="header" style="height: 130px;">
                 <div id="college">FACULTAD DE INGENIERIA</div>
                 <div id="program">#{planController.getPlan(param['planId']).getNombrePlan()} (#{planController.getPlan(param['planId']).getCodigoPlan()})</div>
             </div>
+            <a href="/stateless-web/pdfservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-right" style="margin-left: 15px;">Imprimir Plan</button></a>
+            <a href="/stateless-web/pdfmallaservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-right">Imprimir Malla</button></a>
             <div id="contenedor_outercanvas">
                 <div id="outercanvas">
                 </div>
