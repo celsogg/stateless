@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package managedbeans;
 
 import entities.Usuario;
@@ -27,17 +26,17 @@ import sessionbeans.UsuarioFacadeLocal;
  *
  * @author miguel
  */
-
 @ManagedBean
 @SessionScoped
 @Named("loginController")
 public class LoginController {
-    
+
     private String username;
     private String password;
+    private String rol;
     private boolean isLoggedIn;
     private String originalURL;
-    
+
     @PostConstruct
     public void init() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -63,31 +62,32 @@ public class LoginController {
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         String navto = "";
         String message = "";
-        try{
-        request.login(this.username, this.password);
-        setUsername(this.username);
-        //System.out.println(this.username);
-        List<Usuario> results;
-        results = userService.findUsuarioByUid(request.getUserPrincipal().getName());
-        Usuario user;
-        if(!results.isEmpty()){
-            user = results.get(0);
-            String rol = user.getRol();
-            if(rol.equalsIgnoreCase("administrador")){
-                message = "Username: "+ request.getUserPrincipal().getName()+" You are administrator";
-                navto = "admin";
+        try {
+            request.login(this.username, this.password);
+            setUsername(this.username);
+            //System.out.println(this.username);
+            List<Usuario> results;
+            results = userService.findUsuarioByUid(request.getUserPrincipal().getName());
+            Usuario user;
+            if (!results.isEmpty()) {
+                user = results.get(0);
+                this.rol = user.getRol();
+                if (this.rol.equalsIgnoreCase("administrador")) {
+                    message = "Username: " + request.getUserPrincipal().getName() + " You are administrator";
+                    navto = "/index.xhtml";
                 }
-            }else{
-                message = "Username: "+ request.getUserPrincipal().getName()+" You are student";
-                navto = "estudiante";
+            } else {
+                message = "Username: " + request.getUserPrincipal().getName() + " You are student";
+                navto = "/index.xhtml";
             }
-            
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));  
+
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
             return navto;
-            } catch (ServletException e) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An Error ocurred: login failed",null));
-            }
-            return "failure";
+        } catch (ServletException e) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An Error ocurred: login failed", null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ha ocurrido un error, compruebe sus credenciales o contacte al administrador.", null));
+        }
+        return "";
     }
 
     public void logout() throws IOException {
@@ -95,39 +95,52 @@ public class LoginController {
         externalContext.invalidateSession();
         externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
     }
+
     // Getters/setters for username and password.
-    private Principal getLoggedInUser()
-    {
-        HttpServletRequest request =
-                (HttpServletRequest) FacesContext.getCurrentInstance().
-                    getExternalContext().getRequest();
+
+    private Principal getLoggedInUser() {
+        HttpServletRequest request
+                = (HttpServletRequest) FacesContext.getCurrentInstance().
+                getExternalContext().getRequest();
         return request.getUserPrincipal();
     }
-    
-    public void isUserNotLogin()
-    {
+
+    public void isUserNotLogin() {
         Principal loginUser = getLoggedInUser();
-        if (loginUser == null)
-        {
+        if (loginUser == null) {
             setIsLoggedIn(true);
-            
-        }else{
-            
+
+        } else {
+
             setIsLoggedIn(false);
         }
-        
+
     }
-    
-    public void getLoginUserName()
-    {
+
+    public void getLoginUserName() {
         Principal loginUser = getLoggedInUser();
-        if (loginUser != null)
-        {
-             setUsername(loginUser.getName());
+        if (loginUser != null) {
+            setUsername(loginUser.getName());
         }
-        
+
     }
-    
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public Boolean esAdmin() {
+        return "administrador".equals(this.rol);
+    }
+
+    public Boolean noEsAdmin() {
+        return !"administrador".equals(this.rol);
+    }
+
     public String getUsername() {
         return username;
     }
@@ -151,8 +164,5 @@ public class LoginController {
     public void setIsLoggedIn(boolean isloggedIn) {
         this.isLoggedIn = isloggedIn;
     }
-    
-    
-    
-    
+
 }

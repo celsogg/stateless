@@ -1,6 +1,7 @@
 package managedbeans;
 
 import entities.Asignatura;
+import entities.Plan;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.AsignaturaFacadeLocal;
@@ -16,10 +17,14 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
+import org.primefaces.event.TransferEvent;
+import org.primefaces.model.DualListModel;
 
 @Named("asignaturaController")
 @SessionScoped
@@ -28,7 +33,13 @@ public class AsignaturaController implements Serializable {
     @EJB
     private AsignaturaFacadeLocal ejbFacade;
     private List<Asignatura> items = null;
+    private List<Asignatura> itemsPlan = null;
     private Asignatura selected;
+    
+    @Inject
+    private PlanController planController;
+    
+    private DualListModel<Asignatura> DLAsignaturas;
 
     public AsignaturaController() {
     }
@@ -39,8 +50,37 @@ public class AsignaturaController implements Serializable {
 
     public void setSelected(Asignatura selected) {
         this.selected = selected;
+        if (selected != null){
+            List<Asignatura> asignaturasActuales = (List<Asignatura>) selected.getAsignaturaCollection();
+            List<Asignatura> asignaturasPosibles = new ArrayList<>(itemsPlan);
+            asignaturasPosibles.remove(selected);
+            asignaturasPosibles.removeAll(asignaturasActuales);
+            DLAsignaturas = new DualListModel<>(asignaturasPosibles, asignaturasActuales);
+        }
     }
 
+    public DualListModel<Asignatura> getDLAsignaturas() {
+        return DLAsignaturas;
+    }
+
+    public void setDLAsignaturas(DualListModel<Asignatura> DLAsignaturas) {
+        this.DLAsignaturas = DLAsignaturas;
+    }
+
+    public void onTransfer(TransferEvent event) {
+        StringBuilder builder = new StringBuilder();
+        for(Object item : event.getItems()) {
+            builder.append(((Asignatura) item).getNombreAsignatura()).append("<br />");
+        }
+         
+        FacesMessage msg = new FacesMessage();
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);
+        msg.setSummary("Items Transferred");
+        msg.setDetail(builder.toString());
+         
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }  
+    
     protected void setEmbeddableKeys() {
     }
 
@@ -169,6 +209,12 @@ public class AsignaturaController implements Serializable {
         }
         return items;
     }
+    
+    public List<Asignatura> getItemsPlan(){
+        Plan plan = planController.getSelected();
+        itemsPlan = plan.getAsignaturaCollection();
+        return itemsPlan;
+    }
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
@@ -209,8 +255,16 @@ public class AsignaturaController implements Serializable {
     public List<Asignatura> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+    
+    public void saveRequisitos() {
+        System.out.println("Selected: "+selected.getCodigoAsignatura()+" "+selected.getNombreAsignatura());
+        System.out.println("Requisitos");
+        for (Asignatura item : DLAsignaturas.getTarget()) {
+            System.out.println("-"+item.getCodigoAsignatura()+" "+item.getNombreAsignatura());
+        }
+    }
 
-    @FacesConverter(forClass = Asignatura.class)
+    @FacesConverter(forClass = Asignatura.class, value = "asig")
     public static class AsignaturaControllerConverter implements Converter {
 
         @Override
@@ -250,5 +304,4 @@ public class AsignaturaController implements Serializable {
         }
 
     }
-
 }

@@ -6,26 +6,87 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
-<f:view>
-    <h:head>
-        <title>Login Form</title>
-    </h:head>
-    <h:body>
-        <h2>Hello, please log in:</h2>
-        <h:form>
-            <h:outputLabel for="username" value="Username: " />
-            <h:inputText id="username" value="#{loginController.username}" required="true" />
-            <h:message for="username" />
-            <br />
-            <h:outputLabel for="password" value="Password: " />
-            <h:inputSecret id="password" value="#{loginController.password}" required="true" />
-            <h:message for="password" />
-            <br />
-            <h:commandButton value="Login" action="#{loginController.login}" />
-            <h:messages globalOnly="true" />
-        </h:form>
-    </h:body>
-</f:view>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <f:view>
+        <h:head>
+            <title>Login Form</title>
+            <h:outputScript name="jquery-1.8.3.min.js"/>
+            <h:outputStylesheet library="css" name="jsfcrud.css"/>
+            <h:outputScript library="js" name="jsfcrud.js"/>
+            <h:outputStylesheet name="css/stateless.css"/>
+            <h:outputStylesheet name="css/bootstrap.min.css"/>
+
+            <h:outputStylesheet name="css/bootstrap.css" />
+            <!--<h:outputStylesheet name="css/zabuto_calendar.css" />-->
+            <h:outputStylesheet name="jquery.gritter.css" />
+            <h:outputStylesheet name="style_lineicons.css" />    
+
+            <h:outputStylesheet name="css/style_tema.css" />
+            <h:outputStylesheet name="css/style-responsive.css" />
+            <h:outputStylesheet name="css/font-awesome.min.css" />
+
+            <h:outputScript name="Chart.js"></h:outputScript>
+        </h:head>
+        <h:body>
+            <div id="login-page">
+                <div class="container">
+                    <h:form class="form-login">
+
+                        <h2 class="form-login-heading">sign in now</h2>
+                        <div class="login-wrap">
+                            <h:inputText id="username" value="#{loginController.username}" required="true" class="form-control" a:placeholder="User ID" />
+                            <h:message for="username" />
+                            <!--<input type="text" class="form-control" placeholder="User ID" autofocus="true" />-->
+                            <br />
+                            <!--<input type="password" class="form-control" placeholder="Password" />-->
+                            <h:inputSecret id="password" value="#{loginController.password}" required="true" class="form-control" a:placeholder="Password" />
+                            <h:message for="password" />
+                            <label class="checkbox">
+                                <span class="pull-right">
+                                    <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
+
+                                </span>
+                            </label>
+                            <h:commandButton value="Iniciar Sesion" action="#{loginController.login}" class="btn btn-theme btn-block" />
+
+                            <hr />
+
+                            <h:messages globalOnly="true" />
+
+                        </div>
+
+                        <!-- Modal -->
+                        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">___</button>
+                                        <h4 class="modal-title">Forgot Password ?</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Enter your e-mail address below to reset your password.</p>
+                                        <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix" />
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                                        <button class="btn btn-theme" type="button">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- modal -->
+                    </h:form>
+
+                </div>
+            </div>
+            <h:outputScript name="js/jquery.backstretch.min.js"></h:outputScript>
+            <!--<script type="text/javascript" src="assets/js/jquery.backstretch.min.js"></script>-->
+            <script>
+                $.backstretch("http://www.fcm.usach.cl/sites/fcm/files/casacentral_usach.jpg", {speed: 500});
+            </script>
+        </h:body>
+    </f:view>
 </html>
