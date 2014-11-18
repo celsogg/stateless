@@ -9,14 +9,13 @@
 
     <ui:composition template="/template.xhtml">
 
-
         <ui:define name="title">
             <h:outputText value="#{bundle.ListAsignaturaTitle}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="AsignaturaListForm">
-                <p:panel header="#{bundle.ListAsignaturaTitle}">
+                <p:panel header="Asignaturas del Plan: #{planController.selected.nombrePlan} #{planController.selected.codigoPlan} - #{planController.selected.anioPlan}.#{planController.selected.versionPlan}">
                     <p:dataTable id="datalist" value="#{asignaturaController.itemsPlan}" var="item"
                                  selectionMode="single" selection="#{asignaturaController.selected}"
                                  paginator="true"
@@ -25,22 +24,22 @@
                                  rowsPerPageTemplate="10,20,30,40,50,60" 
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton guardarButton editarRequisitosButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton guardarButton editarRequisitosButton"/>
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton editarRequisitosButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton editarRequisitosButton"/>
 
-                        <p:column style="width: 30px;">
+<!--                        <p:column style="width: 30px;">
                             <f:facet name="header">
                                 <h:outputText value="id"/>
                             </f:facet>
-                            <h:outputText value="#{item.idAsignatura}"/>
+                            <h:outputText value="{item.idAsignatura}"/>
                         </p:column>
                         
                         <p:column style="width: 50px">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAsignaturaTitle_idPlan}"/>
+                                <h:outputText value="PId"/>
                             </f:facet>
-                            <h:outputText value="#{item.idPlan}"/>
-                        </p:column>
+                            <h:outputText value="{item.idPlan}"/>
+                        </p:column>-->
                         
                         <p:column style="width: 50px">
                             <f:facet name="header">
@@ -62,6 +61,7 @@
                             </f:facet>
                             <h:outputText value="#{item.nombreAsignatura}"/>
                         </p:column>
+                        
                         <p:column style="width: 45px">
                             <f:facet name="header">
                                 <h:outputText value="SCT"/>
@@ -80,7 +80,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Requisitos" />
                             </f:facet>
-                            <h:outputText value="#{asignaturaController.getStringRequisitos(item)}" />
+                            <h:outputText value="#{asignaturaController.getNombresAsignaturaString(item)}" />
                         </p:column>
                         
                         <p:column>
@@ -95,7 +95,6 @@
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AsignaturaViewForm" oncomplete="PF('AsignaturaViewDialog').show()" disabled="#{empty asignaturaController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AsignaturaEditForm" oncomplete="PF('AsignaturaEditDialog').show()" disabled="#{empty asignaturaController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{asignaturaController.destroy}" update=":growl,datalist" disabled="#{empty asignaturaController.selected}"/>
-                            <p:commandButton id="guardarButton" actionListener="#{asignaturaController.borrarRequisito(items)}" value="Eliminar requisito"/>
                             <p:commandButton id="editarRequisitosButton" value="Editar Requisitos" update=":RequisitosEditForm" oncomplete="PF('RequisitosEditDialog').show()" disabled="#{empty asignaturaController.selected}"/>
                         </f:facet>
                     </p:dataTable> 
@@ -109,5 +108,4 @@
             
         </ui:define>
     </ui:composition>
-
 </html>

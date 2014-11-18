@@ -205,7 +205,7 @@ public class PdfMallaDownloadController extends HttpServlet {
                         cell.setBorderColor(BaseColor.BLACK);
                         cell.setPaddingLeft(4);
                         cell.setPaddingRight(4);
-                        if (asignaturas.get(i).getEsAnual() == 1) {
+                        if (asignaturas.get(i).getEsAnual()) {
                             cell.setColspan(2);
                             celdas_escritas++;
                         }
@@ -215,7 +215,7 @@ public class PdfMallaDownloadController extends HttpServlet {
                         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                         table.addCell(cell);
 
-                        if (asignaturas.get(i).getEsAnual() == 1) {
+                        if (asignaturas.get(i).getEsAnual()) {
                             nivel_actual = (nivel_actual + 1) % maximo_nivel;
                         }
                         asignaturas_impresas++;

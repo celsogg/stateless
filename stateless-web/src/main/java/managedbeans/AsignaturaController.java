@@ -302,11 +302,13 @@ public class AsignaturaController implements Serializable {
     }
     
     public void saveRequisitos() {
-        System.out.println("Selected: "+selected.getCodigoAsignatura()+" "+selected.getNombreAsignatura());
+        /*System.out.println("Selected: "+selected.getCodigoAsignatura()+" "+selected.getNombreAsignatura());
         System.out.println("Requisitos");
         for (Asignatura item : DLAsignaturas.getTarget()) {
             System.out.println("-"+item.getCodigoAsignatura()+" "+item.getNombreAsignatura());
-        }
+        }*/
+        selected.setAsignaturaCollection(DLAsignaturas.getTarget());
+        update();
     }
 
     @FacesConverter(forClass = Asignatura.class, value = "asig")

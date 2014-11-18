@@ -251,7 +251,7 @@ public class PlanController implements Serializable {
             jsonB.append("{ \"nombre\": \"").append(a.getNombreAsignatura());
             jsonB.append("\", \"id\": ").append(a.getCodigoAsignatura());
             jsonB.append(", \"nivel\": ").append(a.getNivelAsignatura());
-            jsonB.append(", \"anual\": ").append(a.getEsAnual() == 1 ? "true" : "false");
+            jsonB.append(", \"anual\": ").append(a.getEsAnual());
             jsonB.append(", \"sct\": ").append(a.getSctAsignatura());
             jsonB.append(", \"t\": ").append(a.getHorasTeoria());
             jsonB.append(", \"e\": ").append(a.getHorasEjercicio());
@@ -361,8 +361,7 @@ public class PlanController implements Serializable {
             asignatura.setHorasEjercicio(Integer.parseInt(strs[3]));
             asignatura.setHorasLaboratorio(Integer.parseInt(strs[4]));
             asignatura.setNivelAsignatura(Integer.parseInt(strs[5]));
-            Short s = 0;
-            asignatura.setEsAnual(s);
+            asignatura.setEsAnual(false);
 
             if (strs[6].compareToIgnoreCase("ingreso") != 0) {
                 String[] requisitosStrs = strs[6].replace("\"", "").split(",");
