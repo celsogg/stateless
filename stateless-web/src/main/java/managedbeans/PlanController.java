@@ -11,6 +11,7 @@ import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.PlanFacadeLocal;
 
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
@@ -54,7 +55,7 @@ public class PlanController implements Serializable {
     private String selection;
     private Asignatura selectedAsignatura;
     final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
-    
+
     private UploadedFile csvFile = null;
     private boolean csvWithHeader = false;
     private boolean csvFileSelected = false;
@@ -65,12 +66,11 @@ public class PlanController implements Serializable {
     public Asignatura getSelectedAsignatura() {
         return selectedAsignatura;
     }
-    
-    private Principal getLoggedInUser()
-    {
-        HttpServletRequest request =
-                (HttpServletRequest) FacesContext.getCurrentInstance().
-                    getExternalContext().getRequest();
+
+    private Principal getLoggedInUser() {
+        HttpServletRequest request
+                = (HttpServletRequest) FacesContext.getCurrentInstance().
+                getExternalContext().getRequest();
         return request.getUserPrincipal();
     }
 
@@ -129,12 +129,12 @@ public class PlanController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
-        logger.info("El usuario "+getLoggedInUser().getName() +" ha creado un plan");
+        logger.info("El usuario " + getLoggedInUser().getName() + " ha creado un plan");
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PlanUpdated"));
-        logger.info("El usuario "+getLoggedInUser().getName()+"ha actualizado el plan "+ getSelected().getNombrePlan()+", codigo:"+ getSelected().getCodigoPlan() + ", version: "+getSelected().getVersionPlan());
+        logger.info("El usuario " + getLoggedInUser().getName() + "ha actualizado el plan " + getSelected().getNombrePlan() + ", codigo:" + getSelected().getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
     }
 
     public void destroy() {
@@ -142,7 +142,7 @@ public class PlanController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
-            logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado el plan "+ getSelected().getNombrePlan()+", codigo:"+ getSelected().getCodigoPlan() + ", version: "+getSelected().getVersionPlan());
+            logger.info("El usuario " + getLoggedInUser().getName() + "ha eliminado el plan " + getSelected().getNombrePlan() + ", codigo:" + getSelected().getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
         }
     }
 
@@ -152,7 +152,7 @@ public class PlanController implements Serializable {
         }
         return items;
     }
-    
+
     public List<Plan> getItemsByVisible() {
         //if (items == null) {
         List<Plan> items = getFacade().findByVisiblePlan();
@@ -305,54 +305,56 @@ public class PlanController implements Serializable {
         asigController.setSelected(selectedAsignatura);
         asigController.update();
     }
-    
-    //
 
+    //
     public void setCsvWithHeader(boolean csvWithHeader) {
         this.csvWithHeader = csvWithHeader;
     }
-    
-    public boolean isCsvWithHeader(){
+
+    public boolean isCsvWithHeader() {
         return csvWithHeader;
     }
-    
+
     public UploadedFile getFile() {
         return csvFile;
     }
- 
+
     public void setFile(UploadedFile file) {
         this.csvFile = file;
     }
-     
+
     public void upload() throws IOException {
-        if(csvFile != null) {
+        if (csvFile != null) {
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             //context.redirect(context.getRequestContextPath() + "/plan/CompleteCsv.xhtml");
             FacesMessage message = new FacesMessage("Succesful", csvFile.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    
+
     public void handleFileUpload(FileUploadEvent event) throws IOException {
-        
+
         UploadedFile uf = event.getFile();
-        
+
         File save;
         save = File.createTempFile("temp", ".csv");
 
         uf.getContents();
-        Files.copy(uf.getInputstream(), save.toPath(),  StandardCopyOption.REPLACE_EXISTING);
-        
-        ArrayList <Asignatura> asignaturas = new ArrayList<>();
-        
+        Files.copy(uf.getInputstream(), save.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        ArrayList<Asignatura> asignaturas = new ArrayList<>();
+
         BufferedReader br = new BufferedReader(new FileReader(save));
         String line = "";
+
         while ((line = br.readLine()) != null) {
+            byte ptext[] = line.getBytes("ISO-8859-1");
+            line = new String(ptext, "UTF-8");
             Asignatura asignatura = new Asignatura();
             String[] strs = getCsvLineCols(line);
-            
+
             asignatura.setIdPlan(selected);
-            
+
             asignatura.setCodigoAsignatura(strs[0]);
             asignatura.setNombreAsignatura(strs[1]);
             asignatura.setHorasTeoria(Integer.parseInt(strs[2]));
@@ -371,32 +373,32 @@ public class PlanController implements Serializable {
                         if (a.getCodigoAsignatura().compareToIgnoreCase(requisito.trim()) == 0) {
                             requisitos.add(a);
                         }
-                    }                  
+                    }
                 }
                 asignatura.setAsignaturaCollection(requisitos);
             }
             asignaturas.add(asignatura);
         }
-        
+
         FacesMessage message = new FacesMessage("Succesful", "El archivo \"" + uf.getFileName() + "\" se ha subido con éxito, guarde los cambios");
         FacesContext.getCurrentInstance().addMessage(null, message);
         RequestContext context = RequestContext.getCurrentInstance();
         csvFileSelected = true;
         selected.setAsignaturaCollection(asignaturas);
     }
-    
-    private String[] getCsvLineCols(String line){
+
+    private String[] getCsvLineCols(String line) {
         String otherThanQuote = " [^\"] ";
         String quotedString = String.format(" \" %s* \" ", otherThanQuote);
-        String regex = String.format("(?x) "+ // enable comments, ignore white spaces
-                ",                         "+ // match a comma
-                "(?=                       "+ // start positive look ahead
-                "  (                       "+ //   start group 1
-                "    %s*                   "+ //     match 'otherThanQuote' zero or more times
-                "    %s                    "+ //     match 'quotedString'
-                "  )*                      "+ //   end group 1 and repeat it zero or more times
-                "  %s*                     "+ //   match 'otherThanQuote'
-                "  $                       "+ // match the end of the string
+        String regex = String.format("(?x) " + // enable comments, ignore white spaces
+                ",                         " + // match a comma
+                "(?=                       " + // start positive look ahead
+                "  (                       " + //   start group 1
+                "    %s*                   " + //     match 'otherThanQuote' zero or more times
+                "    %s                    " + //     match 'quotedString'
+                "  )*                      " + //   end group 1 and repeat it zero or more times
+                "  %s*                     " + //   match 'otherThanQuote'
+                "  $                       " + // match the end of the string
                 ")                         ", // stop positive look ahead
                 otherThanQuote, quotedString, otherThanQuote);
 
@@ -411,6 +413,5 @@ public class PlanController implements Serializable {
     public void setCsvFileSelected(boolean csvFileSelected) {
         this.csvFileSelected = csvFileSelected;
     }
-    
-    
+
 }

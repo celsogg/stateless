@@ -14,11 +14,119 @@
         </ui:define>
 
         <ui:define name="body">
-            <div class="jumbotron">
+            <h:outputStylesheet name="demo.css"/>
+            <h:outputStylesheet name="style_ma.css"/>
+            <h:outputStylesheet name="custom.css"/>
+            <h:outputScript name="modernizr.custom.79639.js"></h:outputScript>
+<!--            <div class="jumbotron">
                 <h1>Bienvenido a Mallas Interactivas 2.0</h1>
                 <p>En Mallas interactivas podras ver los requisitos y aperturas de las asignaturas de tu carreras, podrás realizar simulaciones de to proxima toma de ramos y mucho mas !</p>
-<!--                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>-->
+            </div>-->
+            <!--                <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>-->
+            <div class="container demo-2" style="padding: 0;">
+                <nav id="nav-arrows" class="nav-arrows">
+					<span class="nav-arrow-prev">Previous</span>
+					<span class="nav-arrow-next">Next</span>
+				</nav>
+
+                <div id="slider" class="sl-slider-wrapper">
+
+                    <div class="sl-slider">
+
+                        <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+                            <div class="sl-slide-inner">
+                                <div class="bg-img bg-img-fondo_naranjo_2"></div>
+                                <h2>Mallas Interactivas 2.0</h2>
+                                <blockquote><p>¡ Realiza proyecciones de tu carrera !</p><cite></cite></blockquote>
+                            </div>
+                        </div>
+
+                        <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+                            <div class="sl-slide-inner">
+                                <div class="bg-img bg-img-fondo_naranjo_1"></div>
+                                <h2>Mallas Interactivas 2.0</h2>
+                                <blockquote><p>Ve las aperturas de cada asignatura en tu carrera</p><cite></cite></blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            <h:outputScript name="jquery.ba-cond.min.js"></h:outputScript>
+            <h:outputScript name="jquery.slitslider.js"></h:outputScript>
+            <script type="text/javascript">
+            $(function() {
+                    $('.sl-slider-wrapper').height($(window).height());
+                    $(window).resize(function() {
+                            $('.sl-slider-wrapper').height($(window).height());
+                    });
+
+                    var Page = (function() {
+
+                            var $nav = $('#nav-dots > span'),
+                                    $navArrows = $('#nav-arrows'),
+                                    slitslider = $('#slider').slitslider({
+                                            onBeforeChange: function(slide, pos) {
+
+                                                    $nav.removeClass('nav-dot-current');
+                                                    $nav.eq(pos).addClass('nav-dot-current');
+
+                                            }
+                                    }),
+
+                                    init = function() {
+
+                                            initEvents();
+
+                                    },
+                                    initEvents = function() {
+
+                                            // add navigation events
+                                            $navArrows.children(':last').on('click', function() {
+
+                                                    slitslider.next();
+                                                    return false;
+
+                                            });
+
+                                            $navArrows.children(':first').on('click', function() {
+
+                                                    slitslider.previous();
+                                                    return false;
+
+                                            });
+
+                                            $nav.each(function(i) {
+
+                                                    $(this).on('click', function(event) {
+
+                                                            var $dot = $(this);
+
+                                                            if (!slitslider.isActive()) {
+
+                                                                    $nav.removeClass('nav-dot-current');
+                                                                    $dot.addClass('nav-dot-current');
+
+                                                            }
+
+                                                            slitslider.jump(i + 1);
+                                                            return false;
+
+                                                    });
+
+                                            });
+
+                                    };
+
+                            return {
+                                    init: init
+                            };
+
+                    })();
+
+                    Page.init();
+            });
+            </script>
         </ui:define>
     </ui:composition>
 
