@@ -135,6 +135,15 @@ public class AsignaturaController implements Serializable {
         
         
      }
+     
+    public String getStringRequisitos(Asignatura asignatura){
+        StringBuilder sb = null;
+        for (Asignatura req : asignatura.getAsignaturaCollection()) {
+            sb.append("");
+            sb.append(req.getCodigoAsignatura()).append(" ").append(req.getNombreAsignatura()).append("\n");
+        }
+        return sb.toString();
+    }
     
     public void borrarRequisito(Integer id_requisito){
         ArrayList<Asignatura> requisitos = new ArrayList<>(selected.getAsignaturaCollection());
