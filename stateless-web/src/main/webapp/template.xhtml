@@ -9,19 +9,20 @@
 
     <h:head>
         <title><ui:insert name="title">Título</ui:insert></title>
+        <h:outputScript name="jquery-1.8.3.min.js"/>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
         <h:outputStylesheet name="css/stateless.css"/>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
 
         <h:outputStylesheet name="css/bootstrap.css" />
-        <h:outputStylesheet name="css/font-awesome.css" />
         <!--<h:outputStylesheet name="css/zabuto_calendar.css" />-->
         <h:outputStylesheet name="jquery.gritter.css" />
         <h:outputStylesheet name="style_lineicons.css" />    
 
         <h:outputStylesheet name="css/style_tema.css" />
         <h:outputStylesheet name="css/style-responsive.css" />
+        <h:outputStylesheet name="css/font-awesome.min.css" />
 
         <h:outputScript name="Chart.js"></h:outputScript>
         <style>
@@ -214,7 +215,7 @@
                     <c:if test="${loginController.esAdmin()}">
                         <li class="sub-menu">
                             <h:outputLink value="/stateless-web/usuario/List.xhtml">
-                                <i class="fa fa-dashboard"></i>
+                                <i class="fa fa-users"></i>
                                 <span>Administrar Usuarios</span>
                             </h:outputLink>
                         </li>
