@@ -74,6 +74,9 @@ public class LoginController {
             if (!results.isEmpty()) {
                 user = results.get(0);
                 this.rol = user.getRol();
+                if("".equals(this.rol)){
+                    this.rol = "estudiante";
+                }
                 if (this.rol.equalsIgnoreCase("administrador")) {
                     message = "Username: " + request.getUserPrincipal().getName() + " You are administrator";
                     navto = "/index.xhtml";
