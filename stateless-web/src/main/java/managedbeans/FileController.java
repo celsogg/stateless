@@ -30,6 +30,7 @@ public class FileController {
         this.archivo = new File (path);
         this.fr = new FileReader (archivo);
         this.br = new BufferedReader(fr);
+        lectura();
     }
     
     public void lectura() throws IOException{
