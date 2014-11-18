@@ -35,6 +35,7 @@ public class LoginController {
     
     private String username;
     private String password;
+    private String rol;
     private boolean isLoggedIn;
     private String originalURL;
     
@@ -72,8 +73,8 @@ public class LoginController {
         Usuario user;
         if(!results.isEmpty()){
             user = results.get(0);
-            String rol = user.getRol();
-            if(rol.equalsIgnoreCase("administrador")){
+            this.rol = user.getRol();
+            if(this.rol.equalsIgnoreCase("administrador")){
                 message = "Username: "+ request.getUserPrincipal().getName()+" You are administrator";
                 navto = "admin";
                 }
@@ -126,6 +127,22 @@ public class LoginController {
              setUsername(loginUser.getName());
         }
         
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+    
+    public Boolean esAdmin(){
+        return "administrador".equals(this.rol);
+    }
+    
+    public Boolean noEsAdmin(){
+        return !"administrador".equals(this.rol);
     }
     
     public String getUsername() {
