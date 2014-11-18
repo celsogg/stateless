@@ -19,9 +19,10 @@
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_apellido}" for="apellido" />
                         <p:inputText id="apellido" value="#{usuarioController.selected.apellido}" title="#{bundle.EditUsuarioTitle_apellido}" />
                         <p:outputLabel value="#{bundle.EditUsuarioLabel_rol}" for="rol" />
-                        <p:inputText id="rol" value="#{usuarioController.selected.rol}" title="#{bundle.EditUsuarioTitle_rol}" />
-                        <p:outputLabel value="#{bundle.EditUsuarioLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{usuarioController.selected.id}" title="#{bundle.EditUsuarioTitle_id}" />
+                        <p:selectOneMenu id="rol" value="#{usuarioController.selected.rol}">
+                            <f:selectItem itemLabel="Administrador" itemValue="administrador" />
+                            <f:selectItem itemLabel="Estudiante" itemValue="estudiante" />
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{usuarioController.update}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuarioEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="UsuarioEditDialog.hide()"/>
