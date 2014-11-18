@@ -57,41 +57,91 @@ public class AsignaturaController implements Serializable {
         return selected;
     }
     
-     public String getNombresAsignaturaString(Asignatura asignatura){
+     public void borrarProyeccion(Integer id_requisito){
+        ArrayList<Asignatura> proyeccion = new ArrayList<>(selected.getAsignaturaCollection1());
         
-        String salida = "";
+        List<Asignatura> asig = getFacade().findAsignaturas(3);
+        Asignatura asigna = asig.get(0);
         
-        for (Asignatura a1 : asignatura.getAsignaturaCollection()) {
-            salida = salida + a1.getNombreAsignatura() + "\n";
+        ArrayList<Asignatura> proye = new ArrayList<>(asigna.getAsignaturaCollection1());
+        
+        System.out.println("entre");
+        for (Asignatura pro : proye) {
+            System.out.println("asi "+ pro.getIdAsignatura() + "=" + selected.getIdAsignatura());
+            System.out.println("asi name" + pro.getNombreAsignatura());
+            if(pro.getIdAsignatura() == 9) {
+                System.out.println("nombre proyecion" + asigna.getNombreAsignatura());
+                System.out.println("id proyeccion" + asigna.getIdAsignatura());
+                System.out.println("nombre asig requi: " + pro.getNombreAsignatura());
+                System.out.println(" id asign : " + pro.getIdAsignatura());
+                ArrayList<Asignatura> asdf = new ArrayList<>();
+                
+                List<Asignatura> asig2 = getFacade().findAsignaturas(pro.getIdAsignatura());
+                Asignatura asigna2 = asig2.get(0);
+                System.out.println("asdfasdasd:" +items.get(pro.getIdAsignatura()-3).getNombreAsignatura());
+                items.get(pro.getIdAsignatura()-3).setAsignaturaCollection(null);
+                
+                update();
+          
+                 System.out.println("hago el update proyeccion");
+                break;
+            }
+            
         }
+         for (Asignatura proye1 : proyeccion) {
+             System.out.println("algo" + proye1.getNombreAsignatura());
+         }
         
-        return salida;
-    }
-    
-    public String getNombresAsignatura2String(Collection<Asignatura> a){
-        String salida = "";
         
-        for (Asignatura a1 : a) {
-            salida = salida + a1.getNombreAsignatura()+ "\n";
-        }
-        return salida;
-    }
+        
+     }
     
-    public void borrarRequisito(Asignatura asignatura, Integer id_requisito){
+    public void borrarRequisito(Integer id_requisito){
         ArrayList<Asignatura> requisitos = new ArrayList<>(selected.getAsignaturaCollection());
+        
+        List<Asignatura> asig = getFacade().findAsignaturas(9);
+        Asignatura asigna = asig.get(0);
+        
+        ArrayList<Asignatura> proye = new ArrayList<>(asigna.getAsignaturaCollection1());
+        
         System.out.println("entre");
         for (Asignatura requi : requisitos) {
-            if(requi.getIdAsignatura() == id_requisito) {
-                System.out.println(requi.getNombreAsignatura());
-                System.out.println(requi.getIdAsignatura());
+            if(requi.getIdAsignatura() == 9) {
+                System.out.println("nombre proyecion" + asigna.getNombreAsignatura());
+                System.out.println("id proyeccion" + asigna.getIdAsignatura());
+                System.out.println("nombre asig requi: " + requi.getNombreAsignatura());
+                System.out.println(" id asign : " + requi.getIdAsignatura());
+                
                 requisitos.remove(requi);
                 break;
             }
+            
         }
-        selected.setAsignaturaCollection(requisitos);  
-        update();    
-        System.out.println("hago el update");
         
+        selected.setAsignaturaCollection(requisitos);  
+        update();
+          
+        System.out.println("hago el update requisitos");
+        /*
+        for (Asignatura asi : proye) {
+            System.out.println("asi "+ asi.getIdAsignatura() + "=" + selected.getIdAsignatura());
+            System.out.println("asi name" + asi.getNombreAsignatura());
+            if(asi.getIdAsignatura() == selected.getIdAsignatura()){
+                proye.remove(asi);
+                break;
+            
+            }
+        
+        }
+        for (Asignatura asias : proye) {
+            System.out.println(asias.getNombreAsignatura());
+            
+        }
+       
+        asigna.setAsignaturaCollection1(proye);  
+        update();  
+        System.out.println("hago el update proyeccion");
+        */
     }
 
     public void create() {
