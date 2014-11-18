@@ -4,13 +4,14 @@ jQuery(document).ready(function ($) {
 
     for (var i = context.length - 1; i >= 0; i--) {
         context[i].aperturas = [];
-    };
-    
+    }
+    ;
+
     for (var i = 0, max = context.length; i < max; i++) {
         var aperturas = [];
         for (var j = 0; j < max; j++) {
             for (var k = 0; k < context[ j ].prerequisitos.length; k++) {
-                if(context[ j ].prerequisitos[ k ] == context[ i ].id){
+                if (context[ j ].prerequisitos[ k ] == context[ i ].id) {
                     aperturas.push(context[ j ].id);
                     break;
                 }
@@ -40,6 +41,9 @@ jQuery(document).ready(function ($) {
 
             $('#sct_y_tel').removeClass('label-danger');
             $('#sct_y_tel').removeClass('label-warning');
+            $('#sct_y_tel').mouseleave();
+            $('#sct_y_tel').mouseout();
+            
         } else if (sct < 30) {
             $('#sct_y_tel').removeClass('label-info');
             $('#sct_y_tel').removeClass('label-danger');
@@ -59,6 +63,7 @@ jQuery(document).ready(function ($) {
                     target: $('#sct_y_tel') // my target
                 },
             });
+            $('#sct_y_tel').mouseover();
         } else {
             $('#sct_y_tel').removeClass('label-info');
 
@@ -79,8 +84,8 @@ jQuery(document).ready(function ($) {
                     target: $('#sct_y_tel') // my target
                 },
             });
+            $('#sct_y_tel').mouseover();
         }
-        $('#sct_y_tel').mouseover();
     }
 
     var asignaturas_sin_padres = GetAsignaturasSinPadres();
@@ -92,13 +97,13 @@ jQuery(document).ready(function ($) {
         $('#prerequisitos').hide();
         $('#proyeccion').hide();
         var hay_sct = false;
-        for(var i = 0; i < context.length; i++){
-            if(context[ i ].sct && context[ i ].sct > 0){
+        for (var i = 0; i < context.length; i++) {
+            if (context[ i ].sct && context[ i ].sct > 0) {
                 hay_sct = true;
                 break;
             }
         }
-        if(!hay_sct){
+        if (!hay_sct) {
             $('#sct_y_tel').hide();
         }
     } else {

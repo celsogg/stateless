@@ -10,10 +10,6 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>log4jServlet</servlet-name>
-        <servlet-class>managedbeans.Log4jInitServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
@@ -34,10 +30,6 @@
         <servlet-name>PdfMallaDownloadController</servlet-name>
         <url-pattern>/pdfmallaservlet</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>log4jServlet</servlet-name>
-        <url-pattern>/log4jInitServlet</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -50,8 +42,13 @@
         <error-code>403</error-code>
         <location>/ldap/403.xhtml</location>
     </error-page>
+<<<<<<< HEAD
     <security-constraint>
         <display-name>Alumno</display-name>
+=======
+<!--    <security-constraint>
+        <display-name>ParaTodos</display-name>
+>>>>>>> d3d8c2200d05aa538c4d13731678e048c7b7bf25
         <web-resource-collection>
             <web-resource-name>Alumnos</web-resource-name>
             <description/>
@@ -61,6 +58,7 @@
             <description/>
             <role-name>Alumno</role-name>
         </auth-constraint>
+<<<<<<< HEAD
     </security-constraint>
     <security-constraint>
         <display-name>Superadministrador</display-name>
@@ -69,24 +67,10 @@
             <description/>
             <url-pattern>/superadministrador/*</url-pattern>
         </web-resource-collection>
-        <web-resource-collection>
-            <web-resource-name>Usuarios</web-resource-name>
-            <description/>
-            <url-pattern>/usuario/*</url-pattern>
-        </web-resource-collection>
-        <web-resource-collection>
-            <web-resource-name>Planes</web-resource-name>
-            <description/>
-            <url-pattern>/plan/*</url-pattern>
-        </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>Superadministrador</role-name>
         </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
     </security-constraint>
     <security-constraint>
         <display-name>Administrador</display-name>
@@ -99,11 +83,10 @@
             <description/>
             <role-name>Administrador</role-name>
         </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
     </security-constraint>
+=======
+    </security-constraint>-->
+>>>>>>> d3d8c2200d05aa538c4d13731678e048c7b7bf25
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>diinfRealm</realm-name>

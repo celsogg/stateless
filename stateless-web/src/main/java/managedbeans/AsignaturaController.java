@@ -6,6 +6,7 @@ import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.AsignaturaFacadeLocal;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.http.HttpServletRequest;
 
 @Named("asignaturaController")
 @SessionScoped
@@ -29,10 +31,20 @@ public class AsignaturaController implements Serializable {
     private AsignaturaFacadeLocal ejbFacade;
     private List<Asignatura> items = null;
     private Asignatura selected;
+    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
+    
 
     public AsignaturaController() {
     }
-
+    
+    private Principal getLoggedInUser()
+    {
+        HttpServletRequest request =
+                (HttpServletRequest) FacesContext.getCurrentInstance().
+                    getExternalContext().getRequest();
+        return request.getUserPrincipal();
+    }
+    
     public Asignatura getSelected() {
         return selected;
     }
@@ -80,10 +92,12 @@ public class AsignaturaController implements Serializable {
     public void borrarRequisito(Asignatura asignatura, Integer id_requisito){
         ArrayList<Asignatura> requisitos = new ArrayList<>(selected.getAsignaturaCollection());
         System.out.println("entre");
+        
         for (Asignatura requi : requisitos) {
             if(requi.getIdAsignatura() == id_requisito) {
                 System.out.println(requi.getNombreAsignatura());
                 System.out.println(requi.getIdAsignatura());
+                logger.info("El usuario "+getLoggedInUser().getName() +" ha eliminado el requisito "+requi.getNombreAsignatura()+" de la asignatura "+ getSelected().getNombreAsignatura());
                 requisitos.remove(requi);
                 break;
             }
@@ -99,10 +113,12 @@ public class AsignaturaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        logger.info("El usuario "+getLoggedInUser().getName() +" ha creado una asignatura");
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaUpdated"));
+        logger.info("El usuario "+getLoggedInUser().getName()+"ha actualizado la asignatura "+ getSelected().getNombreAsignatura());
     }
 
     public void destroy() {
@@ -110,7 +126,9 @@ public class AsignaturaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
+            logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado la asignatura "+ getSelected().getNombreAsignatura());
         }
+        
     }
 
     public List<Asignatura> getItems() {

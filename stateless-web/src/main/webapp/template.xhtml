@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <title><ui:insert name="title">Título</ui:insert></title>
@@ -11,41 +13,375 @@
         <h:outputScript library="js" name="jsfcrud.js"/>
         <h:outputStylesheet name="css/stateless.css"/>
         <h:outputStylesheet name="css/bootstrap.min.css"/>
+
+        <h:outputStylesheet name="css/bootstrap.css" />
+        <h:outputStylesheet name="css/font-awesome.css" />
+        <!--<h:outputStylesheet name="css/zabuto_calendar.css" />-->
+        <h:outputStylesheet name="jquery.gritter.css" />
+        <h:outputStylesheet name="style_lineicons.css" />    
+
+        <h:outputStylesheet name="css/style_tema.css" />
+        <h:outputStylesheet name="css/style-responsive.css" />
+
+        <h:outputScript name="Chart.js"></h:outputScript>
+        <style>
+            .logout{
+                border: 1px solid #64c3c2 !important;
+                margin-top: 15px!important;
+                margin-right: 15px;
+                padding: 5px 15px;
+                background: #68dff0;
+                border-radius: 4px;
+                -webkit-border-radius: 4px;
+            }
+        </style>
     </h:head>
 
     <h:body>
 
         <p:growl id="growl" life="3000" />
 
-        <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
-                <h:form id="menuForm">
-                    <p:menubar>
-                        <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
-                        <p:submenu label="#{bundle.Maintenance}">
-                            <p:menuitem value="Admin" outcome="/admin/List.xhtml" />
-                            <p:menuitem value="Asignatura" outcome="/asignatura/List.xhtml" />
-                            <p:menuitem value="Carrera" outcome="/carrera/List.xhtml" />
-                            <p:menuitem value="Habilidad" outcome="/habilidad/List.xhtml" />
-                            <p:menuitem value="Nombres" outcome="/nombres/List.xhtml" />
-                            <p:menuitem value="Plan" outcome="/plan/List.xhtml" />
-                            <p:menuitem value="Profesor" outcome="/profesor/List.xhtml" />
-                            <p:menuitem value="ProgramaAsignatura" outcome="/programaAsignatura/List.xhtml" />
-                        </p:submenu>
-                    </p:menubar>
-                </h:form>
-            </p:layoutUnit>
+        <header class="header black-bg">
+            <div class="sidebar-toggle-box">
+                <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+            </div>
+            <!--logo start-->
+            <h:form>
+                <h:outputLink value="/stateless-web/index.xhtml" class="logo">MI 2.0</h:outputLink>
+            </h:form>
+            <!--logo end-->
+            <div class="nav notify-row" id="top_menu">
+                <!--  notification start -->
+                <ul class="nav top-menu">
+                    <!-- settings start -->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="/index.html#">
+                            <i class="fa fa-tasks"></i>
+                            <span class="badge bg-theme">4</span>
+                        </a>
+                        <ul class="dropdown-menu extended tasks-bar">
+                            <div class="notify-arrow notify-arrow-green"></div>
+                            <li>
+                                <p class="green">You have 4 pending tasks</p>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <div class="task-info">
+                                        <div class="desc">DashGum Admin Panel</div>
+                                        <div class="percent">40%</div>
+                                    </div>
+                                    <div class="progress progress-striped">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                            <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <div class="task-info">
+                                        <div class="desc">Database Update</div>
+                                        <div class="percent">60%</div>
+                                    </div>
+                                    <div class="progress progress-striped">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                            <span class="sr-only">60% Complete (warning)</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <div class="task-info">
+                                        <div class="desc">Product Development</div>
+                                        <div class="percent">80%</div>
+                                    </div>
+                                    <div class="progress progress-striped">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                            <span class="sr-only">80% Complete</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <div class="task-info">
+                                        <div class="desc">Payments Sent</div>
+                                        <div class="percent">70%</div>
+                                    </div>
+                                    <div class="progress progress-striped">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
+                                            <span class="sr-only">70% Complete (Important)</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="external">
+                                <a href="#">See All Tasks</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- settings end -->
+                    <!-- inbox dropdown start-->
+                    <li id="header_inbox_bar" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="badge bg-theme">5</span>
+                        </a>
+                        <ul class="dropdown-menu extended inbox">
+                            <div class="notify-arrow notify-arrow-green"></div>
+                            <li>
+                                <p class="green">You have 5 new messages</p>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <span class="photo"><h:graphicImage library="#{user.prefs.looknfeel}" name="images/ui-zac.jpg" /></span>
+                                    <span class="subject">
+                                        <span class="from">Zac Snider</span>
+                                        <span class="time">Just now</span>
+                                    </span>
+                                    <span class="message">
+                                        Hi mate, how is everything?
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <span class="photo"><h:graphicImage library="#{user.prefs.looknfeel}" name="images/ui-divya.jpg" /></span>
+                                    <span class="subject">
+                                        <span class="from">Divya Manian</span>
+                                        <span class="time">40 mins.</span>
+                                    </span>
+                                    <span class="message">
+                                        Hi, I need your help with this.
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <span class="photo"><h:graphicImage library="#{user.prefs.looknfeel}" name="images/ui-danro.jpg" /></span>
+                                    <span class="subject">
+                                        <span class="from">Dan Rogers</span>
+                                        <span class="time">2 hrs.</span>
+                                    </span>
+                                    <span class="message">
+                                        Love your new Dashboard.
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <span class="photo"><h:graphicImage library="#{user.prefs.looknfeel}" name="images/ui-sherman.jpg" /></span>
+                                    <span class="subject">
+                                        <span class="from">Dj Sherman</span>
+                                        <span class="time">4 hrs.</span>
+                                    </span>
+                                    <span class="message">
+                                        Please, answer asap.
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">See all messages</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- inbox dropdown end -->
+                </ul>
+                <!--  notification end -->
+            </div>
+            <div class="top-menu">
+                <ul class="nav pull-right top-menu">
+                    <li>
+                        <ul class="nav pull-right top-menu" style="padding-top: 15px;">
+                            <h:form>
+                                <h:commandLink action="#{loginController.logout}" value="Cerrar Sesi&oacute;n" class="logout" />
+                            </h:form>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </header>
 
-<!--            <p:layoutUnit position="south" size="60">
-                <ui:insert name="footer"/>
-            </p:layoutUnit>-->
+        <aside>
+            <div id="sidebar"  class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" id="nav-accordion">
 
-            <p:layoutUnit position="center">
-                <ui:insert name="body"/>
-            </p:layoutUnit>
+                    <!--<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>-->
+                    <h5 class="centered">Bienvenido #{loginController.username}</h5>
 
-        </p:layout>
+                    <li class="sub-menu">
+                        <h:outputLink value="/stateless-web/usuario/List.xhtml">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Administrar Usuarios</span>
+                        </h:outputLink>
+                    </li>
+                    <li class="sub-menu">
+                        <h:outputLink value="/stateless-web/plan/List.xhtml">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Administrar Planes</span>
+                        </h:outputLink>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="javascript:;" >
+                            <i class="fa fa-desktop"></i>
+                            <span>Mallas</span>
+                        </a>
+                        <ul class="sub">
+                            <c:forEach var="mallas" items="#{planController.itemsByVisible}">
+                                <li>
+                                    <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}">
+                                        <f:param name="planId" value="#{mallas.idPlan}"></f:param>
+                                    </h:link>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </li>
 
+                    <li class="sub-menu">
+                        <a href="javascript:;" >
+                            <i class="fa fa-desktop"></i>
+                            <span>Planifica tu semestre</span>
+                        </a>
+                        <ul class="sub">
+                            <c:forEach var="mallas" items="#{planController.itemsByVisible}">
+                                <li>
+                                    <h:link outcome="/malla/malla" value="#{mallas.nombrePlan}">
+                                        <f:param name="planId" value="#{mallas.idPlan}"></f:param>
+                                        <f:param name="tomar_ramos" value="true"></f:param>
+                                    </h:link>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </li>
+
+                    <!--                    <li class="sub-menu">
+                                            <a href="javascript:;" >
+                                                <i class="fa fa-cogs"></i>
+                                                <span>Components</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li><a  href="calendar.html">Calendar</a></li>
+                                                <li><a  href="gallery.html">Gallery</a></li>
+                                                <li><a  href="todo_list.html">Todo List</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="sub-menu">
+                                            <a href="javascript:;" >
+                                                <i class="fa fa-book"></i>
+                                                <span>Extra Pages</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li><a  href="blank.html">Blank Page</a></li>
+                                                <li><a  href="login.html">Login</a></li>
+                                                <li><a  href="lock_screen.html">Lock Screen</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="sub-menu">
+                                            <a href="javascript:;" >
+                                                <i class="fa fa-tasks"></i>
+                                                <span>Forms</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li><a  href="form_component.html">Form Components</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="sub-menu">
+                                            <a href="javascript:;" >
+                                                <i class="fa fa-th"></i>
+                                                <span>Data Tables</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li><a  href="basic_table.html">Basic Table</a></li>
+                                                <li><a  href="responsive_table.html">Responsive Table</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="sub-menu">
+                                            <a href="javascript:;" >
+                                                <i class=" fa fa-bar-chart-o"></i>
+                                                <span>Charts</span>
+                                            </a>
+                                            <ul class="sub">
+                                                <li><a  href="morris.html">Morris</a></li>
+                                                <li><a  href="chartjs.html">Chartjs</a></li>
+                                            </ul>
+                                        </li>-->
+
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+
+        <section id="main-content">
+            <section class="wrapper">
+
+                <div class="row">
+                    <ui:insert name="body"/>
+                </div><!--/row -->
+            </section>
+        </section>
+
+        <!--        <ui:insert name="body"/>-->
+        <ui:insert name="footer"/>
+        <!-- js placed at the end of the document so the pages load faster -->
+        <h:outputScript library="js" name="jquery.dcjqaccordion.2.7.js" />
+        <h:outputScript library="js" name="jquery.scrollTo.min.js" />
+        <h:outputScript library="js" name="jquery.nicescroll.js" />
+        <h:outputScript library="js" name="jquery.sparkline.js" />
+
+
+        <!--common script for all pages-->
+        <h:outputScript library="js" name="common-scripts.js" />
+
+        <h:outputScript name="jquery.gritter.js" />
+        <h:outputScript name="js/gritter-conf.js" />
+
+        <!--script for this page-->
+        <h:outputScript library="js" name="sparkline-chart.js" />
+        <h:outputScript library="js" name="zabuto_calendar.js" />
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+//                var unique_id = $.gritter.add({
+//                    // (string | mandatory) the heading of the notification
+//                    title: 'Welcome to Dashgum!',
+//                    // (string | mandatory) the text inside the notification
+//                    text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo. Free version for <a href="http://blacktie.co" target="_blank" style="color:#ffd777">BlackTie.co</a>.',
+//                    // (string | optional) the image to display on the left
+//                    image: 'resources/images/ui-sam.jpg',
+//                    // (bool | optional) if you want it to fade out on its own or just sit there
+//                    sticky: true,
+//                    // (int | optional) the time you want it to be alive for before fading out
+//                    time: '',
+//                    // (string | optional) the class name you want to apply to that specific message
+//                    class_name: 'my-sticky-class'
+//                });
+
+                return false;
+            });
+        </script>
+
+        <script type="application/javascript">
+            //            $(document).ready(function() {
+            //            $("#date-popover").popover({
+            //            html: true,
+            //            trigger: "manual"
+            //            });
+            //            $("#date-popover").hide();
+            //            $("#date-popover").click(function(e) {
+            //            $(this).hide();
+            //            });
+            //            });
+
+
+            function myNavFunction(id) {
+            $("#date-popover").hide();
+            var nav = $("#" + id).data("navigation");
+            var to = $("#" + id).data("to");
+            console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
+            }
+        </script>
     </h:body>
 
 </html>

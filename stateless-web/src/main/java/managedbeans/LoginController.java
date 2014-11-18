@@ -22,6 +22,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import sessionbeans.UsuarioFacadeLocal;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -37,6 +38,7 @@ public class LoginController {
     private String password;
     private boolean isLoggedIn;
     private String originalURL;
+    final static Logger logger = Logger.getLogger(LoginController.class);
     
     @PostConstruct
     public void init() {
@@ -62,7 +64,6 @@ public class LoginController {
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         String navto = "";
-        String message = "";
         try{
         request.login(this.username, this.password);
         setUsername(this.username);
@@ -74,21 +75,24 @@ public class LoginController {
             user = results.get(0);
             String rol = user.getRol();
             if(rol.equalsIgnoreCase("superadministrador")){
-                message = "Username: "+ request.getUserPrincipal().getName()+" You are superadmin";
+                //message = "Username: "+ request.getUserPrincipal().getName()+" You are superadmin";
+                logger.info("Ha iniciado sesión el superadministrador: "+ request.getUserPrincipal().getName());
                 navto = "superadmin";
             }else if(rol.equalsIgnoreCase("administrador")){
-                message = "Username: "+ request.getUserPrincipal().getName()+" You are admin";
+                //message = "Username: "+ request.getUserPrincipal().getName()+" You are admin";
+                logger.info("Ha iniciado sesión el administrador: "+ request.getUserPrincipal().getName());
                 navto = "administrador";
             }else{
-                message = "Username: "+ request.getUserPrincipal().getName()+" You are student";
+                //message = "Username: "+ request.getUserPrincipal().getName()+" You are student";
                 navto = "estudiante";
             }
         }
             
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));  
+            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));  
             return navto;
             } catch (ServletException e) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An Error ocurred: login failed",null));
+                logger.error("Ha ocurrido un error, el inicio de sesión falló");
             }
             return "failure";
     }
@@ -96,6 +100,7 @@ public class LoginController {
     public void logout() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();
+        logger.info("El usuario "+ getUsername()+" ha cerrado sesión");
         externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
     }
     // Getters/setters for username and password.
