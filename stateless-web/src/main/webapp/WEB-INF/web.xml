@@ -19,6 +19,10 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>FileServlet</servlet-name>
+        <servlet-class>managedbeans.FileController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
@@ -42,6 +46,10 @@
     <servlet-mapping>
         <servlet-name>ServletContextListener</servlet-name>
         <url-pattern>/ServletContextListener</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileServlet</servlet-name>
+        <url-pattern>/FileController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>60</session-timeout>
