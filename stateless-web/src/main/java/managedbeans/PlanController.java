@@ -348,8 +348,9 @@ public class PlanController implements Serializable {
         String line = "";
 
         while ((line = br.readLine()) != null) {
-            byte ptext[] = line.getBytes("ISO-8859-1");
+            byte ptext[] = line.getBytes("ISO-8859-3");
             line = new String(ptext, "UTF-8");
+            System.out.println(line);
             Asignatura asignatura = new Asignatura();
             String[] strs = getCsvLineCols(line);
 

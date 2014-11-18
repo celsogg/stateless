@@ -741,6 +741,7 @@ jQuery(document).ready(function ($) {
     });
 
     $('#boton_tutorial').on('click', function () {
+        ProyectarNivel(0);
         tour.start();
     })
 
