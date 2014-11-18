@@ -2,6 +2,7 @@ package managedbeans;
 
 import entities.Usuario;
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -14,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.UsuarioFacadeLocal;
@@ -26,11 +28,20 @@ public class UsuarioController implements Serializable {
     private UsuarioFacadeLocal ejbFacade;
     private List<Usuario> items = null;
     private Usuario selected;
+    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UsuarioController.class);
 
     
     public UsuarioController() {
     }
-
+    
+    private Principal getLoggedInUser()
+    {
+        HttpServletRequest request =
+                (HttpServletRequest) FacesContext.getCurrentInstance().
+                    getExternalContext().getRequest();
+        return request.getUserPrincipal();
+    }
+    
     public Usuario getSelected() {
         return selected;
     }
@@ -60,10 +71,12 @@ public class UsuarioController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        logger.info("El usuario "+getLoggedInUser().getName()+"ha creado un usuario");
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioUpdated"));
+        logger.info("El usuario "+getLoggedInUser().getName()+"ha modificado a el usuario "+ getSelected().getUid());
     }
 
     public void destroy() {
@@ -71,7 +84,9 @@ public class UsuarioController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
+            logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado a un usuario "+ getSelected().getUid());
         }
+        
     }
 
     public List<Usuario> getItems() {
