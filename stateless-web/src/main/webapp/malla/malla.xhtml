@@ -69,12 +69,13 @@ and open the template in the editor.
                 <div id="college">FACULTAD DE INGENIERIA</div>
                 <div id="program">#{planController.getPlan(param['planId']).getNombrePlan()} (#{planController.getPlan(param['planId']).getCodigoPlan()})</div>
             </div>
+            <button id="boton_resumen_simulacion" type="button" class="btn btn-success pull-right" style="margin-left: 15px;">Resumen Simulacion</button>
             <a target="_blank" href="/stateless-web/pdfservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-right" style="margin-left: 15px;">Imprimir Plan</button></a>
-            <a target="_blank" href="/stateless-web/pdfmallaservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-right">Imprimir Malla</button></a>
+            <a target="_blank" href="/stateless-web/pdfmallaservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-right" style="margin-left: 15px;">Imprimir Malla</button></a>
+            <button id="boton_tutorial" type="button" class="btn btn-success pull-right">Tutorial</button>
             <div id="contenedor_outercanvas">
                 <div id="outercanvas">
                 </div>
-                <button id="boton_tutorial" type="button" class="btn btn-success pull-right">Tutorial</button>
                 <div id="control">
                     <div id="radio">
                         <div id="apertura"><input type="radio" name="rg" id="fw" checked="checked"/>APERTURA</div>
@@ -97,8 +98,27 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
+
         <div id="footer" style="min-width: 1300px;">
             www.usach.cl
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="resumen_modal" tabindex="-1" role="dialog" aria-labelledby="resumen_modal_Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">X</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="resumen_modal_Label">Resumen SimulaciÃ³n</h4>
+                    </div>
+                    <div class="modal-body" id="contenido_modal_simulacion">
+                        ...a
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Entiendo</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Modal -->

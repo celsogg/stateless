@@ -43,7 +43,7 @@ jQuery(document).ready(function ($) {
             $('#sct_y_tel').removeClass('label-warning');
             $('#sct_y_tel').mouseleave();
             $('#sct_y_tel').mouseout();
-            
+
         } else if (sct < 30) {
             $('#sct_y_tel').removeClass('label-info');
             $('#sct_y_tel').removeClass('label-danger');
@@ -93,6 +93,7 @@ jQuery(document).ready(function ($) {
     var se_esta_realizando_toma_de_ramos = false;
 
     if (tomar_ramos) {
+        $('#boton_resumen_simulacion').attr('disabled', 'disabled');
         $('#apertura').hide();
         $('#prerequisitos').hide();
         $('#proyeccion').hide();
@@ -109,6 +110,7 @@ jQuery(document).ready(function ($) {
     } else {
         $('#tomar_ramos_div').hide();
         $('#boton_tutorial').hide();
+        $('#boton_resumen_simulacion').hide();
     }
 
     var ESTADO_INICIAL = 0;
@@ -527,15 +529,21 @@ jQuery(document).ready(function ($) {
                 }
                 var sct_totales = 0;
                 var tiene_sct = false;
+                var selecciono_algun_ramo = false;
                 for (var i = context.length - 1; i >= 0; i--) {
                     if (GetEstadoById(context[i].id) == ESTADO_SIMULANDO_TOMA) {
+                        selecciono_algun_ramo = true;
                         if (context[i].sct) {
                             tiene_sct = true;
                             sct_totales += context[i].sct;
                         }
                     }
                 }
-                ;
+                if (selecciono_algun_ramo) {
+                    $('#boton_resumen_simulacion').removeAttr('disabled');
+                } else {
+                    $('#boton_resumen_simulacion').attr('disabled', 'enabled');
+                }
 
                 CambiarValorSCT(sct_totales);
             }
@@ -735,4 +743,36 @@ jQuery(document).ready(function ($) {
     $('#boton_tutorial').on('click', function () {
         tour.start();
     })
+
+    $('#boton_resumen_simulacion').on('click', function () {
+        var content = "<table>";
+        var length = context.length;
+        var total_sct = 0;
+        var tomo_algun_ramo = false;
+        for (i = 0; i < length; i++) {
+            if (GetEstadoById(context[ i ].id) == ESTADO_SIMULANDO_TOMA) {
+                tomo_algun_ramo = true;
+//                content += '<tr><td>' + context[ i ].nombre + '</td></tr>';
+                content += toTitleCase(context[ i ].nombre) + '(Nivel: ' + context[ i ].nivel;
+                if (context[ i ].sct && context[ i ].sct > 0) {
+                    content += ', SCT: ' + context[ i ].sct;
+                    total_sct += context[ i ].sct;
+                }
+                content += ')<br />';
+            }
+        }
+        if (total_sct > 0) {
+            content += "Total SCT: " + total_sct;
+        }
+        content += "</table>";
+//        $('#modal_resumen_simulacion').hide();
+//boton_resumen
+        if (!tomo_algun_ramo) {
+            content = 'Debe simular que toma alguna asignatura para obtener un resumen';
+        }
+        $('#contenido_modal_simulacion').html(content);
+        $('#resumen_modal').modal({
+            keyboard: true
+        });
+    });
 });

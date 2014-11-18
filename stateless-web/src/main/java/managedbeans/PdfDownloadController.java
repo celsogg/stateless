@@ -240,7 +240,8 @@ public class PdfDownloadController extends HttpServlet {
         for (Asignatura asig : asignaturasNivel) {
             contentSB.append("\nAsignatura: ").append(blankIfNull(asig.getCodigoAsignatura()));
             contentSB.append(" - ").append(blankIfNull(asig.getNombreAsignatura())).append("\n");
-            contentSB.append("Resultados de aprendizaje: ").append(blankIfNull(asig.getResumenAsignatura()));
+//            contentSB.append("Resultados de aprendizaje: ").append(blankIfNull(asig.getResumenAsignatura()));
+            contentSB.append(blankIfNull(asig.getResumenAsignatura()));
             contentSB.append("\nRequisitos: ");
             List<Asignatura> requisitos =  (List<Asignatura>) asig.getAsignaturaCollection();
             if (requisitos.isEmpty()){
