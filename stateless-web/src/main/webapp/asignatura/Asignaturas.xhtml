@@ -87,7 +87,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Proyección" />
                             </f:facet>
-                            <h:outputText value="#{asignaturaController.getNombresAsignatura2String(item.asignaturaCollection1)}" />
+                            <h:outputText value="#{asignaturaController.getNombresAsignatura2String(item)}" />
                         </p:column>
                                                                      
                         <f:facet name="footer">
@@ -95,7 +95,7 @@
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AsignaturaViewForm" oncomplete="PF('AsignaturaViewDialog').show()" disabled="#{empty asignaturaController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AsignaturaEditForm" oncomplete="PF('AsignaturaEditDialog').show()" disabled="#{empty asignaturaController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{asignaturaController.destroy}" update=":growl,datalist" disabled="#{empty asignaturaController.selected}"/>
-                            <p:commandButton id="guardarButton" actionListener="#{asignaturaController.borrarRequisito(null, 9)}" value="Eliminar requisito"/>
+                            <p:commandButton id="guardarButton" actionListener="#{asignaturaController.borrarRequisito(items)}" value="Eliminar requisito"/>
                             <p:commandButton id="editarRequisitosButton" value="Editar Requisitos" update=":RequisitosEditForm" oncomplete="PF('RequisitosEditDialog').show()" disabled="#{empty asignaturaController.selected}"/>
                         </f:facet>
                     </p:dataTable> 
