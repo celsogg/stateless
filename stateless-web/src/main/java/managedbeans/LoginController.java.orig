@@ -37,8 +37,12 @@ public class LoginController {
     private String rol;
     private boolean isLoggedIn;
     private String originalURL;
+<<<<<<< HEAD
     final static Logger logger = Logger.getLogger(LoginController.class);
     
+=======
+
+>>>>>>> 7b06f616a1c316223d23ef39ed0b8399c0e936db
     @PostConstruct
     public void init() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -63,6 +67,39 @@ public class LoginController {
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         String navto = "";
+<<<<<<< HEAD
+        try{
+        request.login(this.username, this.password);
+        setUsername(this.username);
+        //System.out.println(this.username);
+        List<Usuario> results;
+        results = userService.findUsuarioByUid(request.getUserPrincipal().getName());
+        Usuario user;
+        if(!results.isEmpty()){
+            user = results.get(0);
+            String rol = user.getRol();
+            if(rol.equalsIgnoreCase("superadministrador")){
+                //message = "Username: "+ request.getUserPrincipal().getName()+" You are superadmin";
+                logger.info("Ha iniciado sesión el superadministrador: "+ request.getUserPrincipal().getName());
+                navto = "superadmin";
+            }else if(rol.equalsIgnoreCase("administrador")){
+                //message = "Username: "+ request.getUserPrincipal().getName()+" You are admin";
+                logger.info("Ha iniciado sesión el administrador: "+ request.getUserPrincipal().getName());
+                navto = "administrador";
+            }else{
+                //message = "Username: "+ request.getUserPrincipal().getName()+" You are student";
+                navto = "estudiante";
+            }
+        }
+            
+            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));  
+            return navto;
+            } catch (ServletException e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An Error ocurred: login failed",null));
+                logger.error("Ha ocurrido un error, el inicio de sesión falló");
+            }
+            return "failure";
+=======
         String message = "";
         try {
             request.login(this.username, this.password);
@@ -90,6 +127,7 @@ public class LoginController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ha ocurrido un error, compruebe sus credenciales o contacte al administrador.", null));
         }
         return "";
+>>>>>>> 7b06f616a1c316223d23ef39ed0b8399c0e936db
     }
 
     public void logout() throws IOException {
@@ -100,6 +138,7 @@ public class LoginController {
     }
 
     // Getters/setters for username and password.
+
     private Principal getLoggedInUser() {
         HttpServletRequest request
                 = (HttpServletRequest) FacesContext.getCurrentInstance().

@@ -39,9 +39,7 @@
         <url-pattern>/ServletContextListener</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
@@ -50,6 +48,8 @@
         <error-code>403</error-code>
         <location>/ldap/403.xhtml</location>
     </error-page>
+<<<<<<< HEAD
+=======
     <security-constraint>
         <display-name>Resources</display-name>
         <web-resource-collection>
@@ -76,6 +76,7 @@
             <role-name>Alumno</role-name>
         </auth-constraint>
     </security-constraint>
+>>>>>>> 7b06f616a1c316223d23ef39ed0b8399c0e936db
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>diinfRealm</realm-name>

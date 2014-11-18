@@ -6,6 +6,7 @@ import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.CarreraFacadeLocal;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.http.HttpServletRequest;
 
 @Named("carreraController")
 @SessionScoped
@@ -27,6 +29,7 @@ public class CarreraController implements Serializable {
     private CarreraFacadeLocal ejbFacade;
     private List<Carrera> items = null;
     private Carrera selected;
+    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(CarreraController.class);
 
     public CarreraController() {
     }
@@ -34,7 +37,15 @@ public class CarreraController implements Serializable {
     public Carrera getSelected() {
         return selected;
     }
-
+    
+    private Principal getLoggedInUser()
+    {
+        HttpServletRequest request =
+                (HttpServletRequest) FacesContext.getCurrentInstance().
+                    getExternalContext().getRequest();
+        return request.getUserPrincipal();
+    }
+    
     public void setSelected(Carrera selected) {
         this.selected = selected;
     }
@@ -60,10 +71,12 @@ public class CarreraController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        logger.info("El usuario "+getLoggedInUser().getName() +" ha creado una asignatura");
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CarreraUpdated"));
+        logger.info("El usuario "+getLoggedInUser().getName()+"ha actualizado la asignatura "+ getSelected().getNombreCarrera());
     }
 
     public void destroy() {
@@ -71,6 +84,7 @@ public class CarreraController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
+            logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado la asignatura "+ getSelected().getNombreCarrera());
         }
     }
 

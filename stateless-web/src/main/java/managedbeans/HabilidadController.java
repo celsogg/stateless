@@ -6,6 +6,7 @@ import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.HabilidadFacadeLocal;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.http.HttpServletRequest;
 
 @Named("habilidadController")
 @SessionScoped
@@ -27,8 +29,17 @@ public class HabilidadController implements Serializable {
     private HabilidadFacadeLocal ejbFacade;
     private List<Habilidad> items = null;
     private Habilidad selected;
+    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(HabilidadController.class);
 
     public HabilidadController() {
+    }
+    
+    private Principal getLoggedInUser()
+    {
+        HttpServletRequest request =
+                (HttpServletRequest) FacesContext.getCurrentInstance().
+                    getExternalContext().getRequest();
+        return request.getUserPrincipal();
     }
 
     public Habilidad getSelected() {
@@ -60,10 +71,12 @@ public class HabilidadController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        logger.info("El usuario "+getLoggedInUser().getName() +" ha creado una habilidad");
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("HabilidadUpdated"));
+        logger.info("El usuario "+getLoggedInUser().getName()+"ha actualizado la habilidad "+ getSelected().getDescripcionHabilidad());
     }
 
     public void destroy() {
@@ -71,6 +84,7 @@ public class HabilidadController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
+            logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado la habilidad "+ getSelected().getDescripcionHabilidad());
         }
     }
 

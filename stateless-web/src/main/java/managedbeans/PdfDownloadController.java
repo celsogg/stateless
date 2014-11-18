@@ -34,6 +34,7 @@ public class PdfDownloadController extends HttpServlet {
     public static final String FILE_SEPARATOR = System.getProperty("file.separator");
     public static final String LOGO_USACH_URL = "/resources/images/UDS_HCOLOR.png";
     
+    
     @Inject
     private PlanController planController;
 

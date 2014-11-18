@@ -9,9 +9,14 @@
   </jsp-config>
   <security-role-mapping>
     <role-name>Administrador</role-name>
-    <principal-name>lceledon</principal-name>
-    <principal-name>nflores</principal-name>
-    <principal-name>paguirre</principal-name>
-    <group-name>personas</group-name>
+    <group-name>Administradores</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>Alumno</role-name>
+    <group-name>Alumnos</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>Superadministrador</role-name>
+    <group-name>Superadministradores</group-name>
   </security-role-mapping>
 </glassfish-application>
