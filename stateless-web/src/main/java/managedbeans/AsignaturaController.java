@@ -215,6 +215,8 @@ public class AsignaturaController implements Serializable {
         itemsPlan = plan.getAsignaturaCollection();
         return itemsPlan;
     }
+    
+   
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
