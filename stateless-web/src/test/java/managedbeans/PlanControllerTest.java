@@ -235,8 +235,7 @@ public class PlanControllerTest {
         asignatura.setCodigoAsignatura("10000");
         asignatura.setNombreAsignatura("Asignatura");
         asignatura.setNivelAsignatura(1);
-        Short s = 1;
-        asignatura.setEsAnual(s);
+        asignatura.setEsAnual(true);
         asignatura.setSctAsignatura(2);
         asignatura.setHorasTeoria(3);
         asignatura.setHorasEjercicio(4);

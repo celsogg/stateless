@@ -25,8 +25,8 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton guardarButton guardar2Button"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton guardarButton guardar2Button"/>
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
                         <p:column>
                             <f:facet name="header">
@@ -101,8 +101,6 @@
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AsignaturaViewForm" oncomplete="PF('AsignaturaViewDialog').show()" disabled="#{empty asignaturaController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":AsignaturaEditForm" oncomplete="PF('AsignaturaEditDialog').show()" disabled="#{empty asignaturaController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{asignaturaController.destroy}" update=":growl,datalist" disabled="#{empty asignaturaController.selected}"/>
-                            <p:commandButton id="guardarButton" icon="ui-icon-trash" actionListener="#{asignaturaController.borrarRequisito(items)}" update="datalist" value="Eliminar requisito"/>
-                            <p:commandButton id="guardar2Button" icon="ui-icon-trash" actionListener="#{asignaturaController.borrarProyeccion(items)}" update="datalist" value="Eliminar proyeccion"/>
                         </f:facet>
                     </p:dataTable> 
                 </p:panel>

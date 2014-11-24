@@ -12,26 +12,29 @@
             <h:form id="AsignaturaViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{asignaturaController.selected != null}">
-                        <h:outputText value="#{bundle.ViewAsignaturaLabel_idAsignatura}"/>
-                        <h:outputText value="#{asignaturaController.selected.idAsignatura}" title="#{bundle.ViewAsignaturaTitle_idAsignatura}"/>
-                        <h:outputText value="#{bundle.ViewAsignaturaLabel_nombreAsignatura}"/>
-                        <h:outputText value="#{asignaturaController.selected.nombreAsignatura}" title="#{bundle.ViewAsignaturaTitle_nombreAsignatura}"/>
-                        <h:outputText value="#{bundle.ViewAsignaturaLabel_sctAsignatura}"/>
-                        <h:outputText value="#{asignaturaController.selected.sctAsignatura}" title="#{bundle.ViewAsignaturaTitle_sctAsignatura}"/>
-                        <h:outputText value="#{bundle.ViewAsignaturaLabel_nivelAsignatura}"/>
-                        <h:outputText value="#{asignaturaController.selected.nivelAsignatura}" title="#{bundle.ViewAsignaturaTitle_nivelAsignatura}"/>
-                        <h:outputText value="#{bundle.ViewAsignaturaLabel_codigoAsignatura}"/>
+                        <h:outputText value="Plan"/>
+                        <h:outputText value="#{asignaturaController.selected.idPlan.idCarrera.nombreCarrera} #{asignaturaController.selected.idPlan.codigoPlan} #{asignaturaController.selected.idPlan.anioPlan}.#{asignaturaController.selected.idPlan.versionPlan}" title="#{bundle.ViewAsignaturaTitle_idPlan}"/>
+                        
+                        <h:outputText value="Código"/>
                         <h:outputText value="#{asignaturaController.selected.codigoAsignatura}" title="#{bundle.ViewAsignaturaTitle_codigoAsignatura}"/>
-                        <h:outputText value="#{bundle.ViewAsignaturaLabel_horasTeoria}"/>
-                        <h:outputText value="#{asignaturaController.selected.horasTeoria}" title="#{bundle.ViewAsignaturaTitle_horasTeoria}"/>
-                        <h:outputText value="#{bundle.ViewAsignaturaLabel_horasEjercicio}"/>
-                        <h:outputText value="#{asignaturaController.selected.horasEjercicio}" title="#{bundle.ViewAsignaturaTitle_horasEjercicio}"/>
-                        <h:outputText value="#{bundle.ViewAsignaturaLabel_horasLaboratorio}"/>
-                        <h:outputText value="#{asignaturaController.selected.horasLaboratorio}" title="#{bundle.ViewAsignaturaTitle_horasLaboratorio}"/>
-                        <h:outputText value="#{bundle.ViewAsignaturaLabel_resumenAsignatura}"/>
-                        <h:outputText value="#{asignaturaController.selected.resumenAsignatura}" title="#{bundle.ViewAsignaturaTitle_resumenAsignatura}"/>
-                        <h:outputText value="#{bundle.ViewAsignaturaLabel_idPlan}"/>
-                        <h:outputText value="#{asignaturaController.selected.idPlan}" title="#{bundle.ViewAsignaturaTitle_idPlan}"/>
+                        
+                        <h:outputText value="Nombre"/>
+                        <h:outputText value="#{asignaturaController.selected.nombreAsignatura}" title="#{bundle.ViewAsignaturaTitle_nombreAsignatura}"/>
+                        
+                        <h:outputText value="Nivel"/>
+                        <h:outputText value="#{asignaturaController.selected.nivelAsignatura}" title="#{bundle.ViewAsignaturaTitle_nivelAsignatura}"/>
+                        
+                        <h:outputText value="SCT"/>
+                        <h:outputText value="#{asignaturaController.selected.sctAsignatura}" title="#{bundle.ViewAsignaturaTitle_sctAsignatura}"/>
+                        
+                        <h:outputText value="T-E-L"/>
+                        <h:outputText value="#{asignaturaController.selected.horasTeoria}-#{asignaturaController.selected.horasEjercicio}-#{asignaturaController.selected.horasLaboratorio}" title="#{bundle.ViewAsignaturaTitle_horasTeoria}"/>
+                        
+                        <h:outputText value="Resumen"/>
+                        <h:outputText value="#{asignaturaController.selected.resumenAsignatura}" title="#{bundle.ViewAsignaturaTitle_resumenAsignatura}"/>         
+                       
+                        <h:outputText value="Anual"/>
+                        <h:outputText value="#{asignaturaController.selected.esAnual}" title="#{bundle.ViewAsignaturaTitle_resumenAsignatura}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="AsignaturaViewDialog.hide()"/>
                 </h:panelGroup>

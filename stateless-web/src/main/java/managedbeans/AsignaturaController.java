@@ -165,6 +165,15 @@ public class AsignaturaController implements Serializable {
         
         
      }
+     
+    public String getStringRequisitos(Asignatura asignatura){
+        StringBuilder sb = null;
+        for (Asignatura req : asignatura.getAsignaturaCollection()) {
+            sb.append("");
+            sb.append(req.getCodigoAsignatura()).append(" ").append(req.getNombreAsignatura()).append("\n");
+        }
+        return sb.toString();
+    }
     
     public void borrarRequisito(Integer id_requisito){
         ArrayList<Asignatura> requisitos = new ArrayList<>(selected.getAsignaturaCollection());
@@ -293,11 +302,13 @@ public class AsignaturaController implements Serializable {
     }
     
     public void saveRequisitos() {
-        System.out.println("Selected: "+selected.getCodigoAsignatura()+" "+selected.getNombreAsignatura());
+        /*System.out.println("Selected: "+selected.getCodigoAsignatura()+" "+selected.getNombreAsignatura());
         System.out.println("Requisitos");
         for (Asignatura item : DLAsignaturas.getTarget()) {
             System.out.println("-"+item.getCodigoAsignatura()+" "+item.getNombreAsignatura());
-        }
+        }*/
+        selected.setAsignaturaCollection(DLAsignaturas.getTarget());
+        update();
     }
 
     @FacesConverter(forClass = Asignatura.class, value = "asig")
