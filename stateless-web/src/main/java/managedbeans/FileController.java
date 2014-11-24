@@ -44,7 +44,11 @@ public class FileController extends HttpServlet implements Serializable   {
             Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.br = new BufferedReader(fr);
-        lectura();
+        try {
+            lectura();
+        } catch (IOException ex) {
+            Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void lectura() throws IOException {
@@ -54,7 +58,7 @@ public class FileController extends HttpServlet implements Serializable   {
                 System.out.println(linea);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //Captura excepcion
         }
     }
 
