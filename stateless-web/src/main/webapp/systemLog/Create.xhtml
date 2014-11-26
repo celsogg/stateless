@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SystemLogCreateDlg" widgetVar="SystemLogCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSystemLogTitle}">
+            <h:form id="SystemLogCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{systemLogController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSystemLogLabel_logsId}" for="logsId" />
+                        <p:inputText id="logsId" value="#{systemLogController.selected.logsId}" title="#{bundle.CreateSystemLogTitle_logsId}" required="true" requiredMessage="#{bundle.CreateSystemLogRequiredMessage_logsId}"/>
+                        <p:outputLabel value="#{bundle.CreateSystemLogLabel_userId}" for="userId" />
+                        <p:inputText id="userId" value="#{systemLogController.selected.userId}" title="#{bundle.CreateSystemLogTitle_userId}" required="true" requiredMessage="#{bundle.CreateSystemLogRequiredMessage_userId}"/>
+                        <p:outputLabel value="#{bundle.CreateSystemLogLabel_dated}" for="dated" />
+                        <p:calendar id="dated" pattern="MM/dd/yyyy" value="#{systemLogController.selected.dated}" title="#{bundle.EditSystemLogTitle_dated}" required="true" requiredMessage="#{bundle.EditSystemLogRequiredMessage_dated}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSystemLogLabel_logger}" for="logger" />
+                        <p:inputText id="logger" value="#{systemLogController.selected.logger}" title="#{bundle.CreateSystemLogTitle_logger}" required="true" requiredMessage="#{bundle.CreateSystemLogRequiredMessage_logger}"/>
+                        <p:outputLabel value="#{bundle.CreateSystemLogLabel_level}" for="level" />
+                        <p:inputText id="level" value="#{systemLogController.selected.level}" title="#{bundle.CreateSystemLogTitle_level}" required="true" requiredMessage="#{bundle.CreateSystemLogRequiredMessage_level}"/>
+                        <p:outputLabel value="#{bundle.CreateSystemLogLabel_message}" for="message" />
+                        <p:inputText id="message" value="#{systemLogController.selected.message}" title="#{bundle.CreateSystemLogTitle_message}" required="true" requiredMessage="#{bundle.CreateSystemLogRequiredMessage_message}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{systemLogController.create}" value="#{bundle.Save}" update="display,:SystemLogListForm:datalist,:growl" oncomplete="handleSubmit(args,'SystemLogCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SystemLogCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
