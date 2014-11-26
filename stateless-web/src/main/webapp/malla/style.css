@@ -1,48 +1,49 @@
 #contenedor_outercanvas{
-	padding-top: 50px;
-	height: 540px;
-	padding-left: 25px;
-	padding-right: 25px;
+    margin-bottom: 10px;
+    padding-top: 50px;
+    /*height: 540px;*/
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 .contenedor_asignatura{
-	padding-left: 3px;
-	padding-right: 3px;
-	font-size: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 10px;
 }
 .alto_asignatura{
-        /*height: 50px;*/
-	margin-bottom: 5px;
-	/*display: table-cell;*/
-	/*vertical-align: middle;*/
+    /*height: 50px;*/
+    margin-bottom: 5px;
+    /*display: table-cell;*/
+    /*vertical-align: middle;*/
 }
 
 .asignatura{
-	font-family: sans-serif;
-	border: 1px solid black;
-	/*border: 1px solid #ff7319;*/
-	text-align: center;
+    font-family: sans-serif;
+    border: 1px solid black;
+    /*border: 1px solid #ff7319;*/
+    text-align: center;
 }
 
 .centrar_vertical{
-	padding-top: 5px;
+    padding-top: 5px;
 }
 
 .texto_nivel{
-	font-weight: bold;
-	font-size: 10px;
-	text-align: center;
-        height: 15px;
+    font-weight: bold;
+    font-size: 10px;
+    text-align: center;
+    height: 15px;
 }
 #control{
-	font-size: 10px;
+    font-size: 10px;
 }
 
 #spinme{
-	margin-right: 10px!important;
+    margin-right: 10px!important;
 }
 #outline{
-	display: none;
+    display: none;
 }
 #footer{
     text-align: center;

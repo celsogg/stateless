@@ -1,7 +1,6 @@
 var accion = 'aperturas';
 
 jQuery(document).ready(function ($) {
-
     $('#tomar_ramos_div').hide();
     $('#boton_tutorial').hide();
     $('#boton_resumen_simulacion').hide();
@@ -803,4 +802,9 @@ jQuery(document).ready(function ($) {
             keyboard: true
         });
     });
+    
+    $( window ).resize(function(){
+//       $('#contenedor_outercanvas').css('margin-bottom', '50px');
+    });
+    $( window ).resize();
 });
