@@ -11,7 +11,7 @@ and open the template in the editor.
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <f:view>
         <h:head>
-            <title>Login Form</title>
+            <title>MI 2.0</title>
             <h:outputScript name="jquery-1.8.3.min.js"/>
             <h:outputStylesheet library="css" name="jsfcrud.css"/>
             <h:outputScript library="js" name="jsfcrud.js"/>
@@ -55,24 +55,18 @@ and open the template in the editor.
                         <h2 class="form-login-heading">Bienvenido a MI 2.0</h2>
                         <div class="login-wrap">
                             <h:inputText id="username" value="#{loginController.username}" required="true" class="form-control" a:placeholder="User ID" />
-                            <h:message for="username" />
+                            <h:message class="error_div" for="username" />
                             <!--<input type="text" class="form-control" placeholder="User ID" autofocus="true" />-->
                             <br />
                             <!--<input type="password" class="form-control" placeholder="Password" />-->
                             <h:inputSecret id="password" value="#{loginController.password}" required="true" class="form-control" a:placeholder="Password" />
-                            <h:message for="password" />
-                            <label class="checkbox">
-                                <span class="pull-right">
-                                    <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
-
-                                </span>
-                            </label>
-                            <h:commandButton value="Iniciar Sesion" action="#{loginController.login}" class="btn btn-theme btn-block" />
+                            <h:message class="error_div" for="password" />
+                            <h:commandButton style="margin-top: 10px;" value="Iniciar Sesion" action="#{loginController.login}" class="btn btn-theme btn-block" />
                             <button id="cancelar_login" class="btn btn-theme btn-block">Cancelar</button>
 
                             <hr />
 
-                            <h:messages globalOnly="true" />
+                            <h:messages class="error_div" globalOnly="true" />
 
                         </div>
 
@@ -245,6 +239,9 @@ and open the template in the editor.
                     });
 //                    var container = $("#login-page");
 //                    $('#cancelar_login').click();
+                    if ($('.error_div').text() !== '') {
+                        $('.boton_iniciar_secion').click();
+                    }
                 });
             </script>
             <h:outputScript name="js/jquery.backstretch.min.js"></h:outputScript>
