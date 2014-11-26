@@ -22,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import sessionbeans.UsuarioFacadeLocal;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 
 /**
  *
@@ -71,6 +72,10 @@ public class LoginController {
             List<Usuario> results;
             results = userService.findUsuarioByUid(request.getUserPrincipal().getName());
             Usuario user;
+            //MDC.getContext().clear();
+            //MDC.put("user", request.getUserPrincipal().getName());
+            
+            
             if (!results.isEmpty()) {
                 user = results.get(0);
                 this.rol = user.getRol();
@@ -87,6 +92,7 @@ public class LoginController {
             }
 
 //            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
+            logger.info("El usuario "+ request.getUserPrincipal().getName()+" ha iniciado sesión");
             return navto;
         } catch (ServletException e) {
 //            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An Error ocurred: login failed", null));
@@ -98,7 +104,8 @@ public class LoginController {
     public void logout() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();
-        logger.info("El usuario "+ getUsername()+" ha cerrado sesión");
+        logger.info("El usuario ha cerrado sesión");
+        //MDC.remove("user");
         externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
     }
 
