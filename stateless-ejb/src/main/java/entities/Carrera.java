@@ -33,6 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Carrera.findByIdCarrera", query = "SELECT c FROM Carrera c WHERE c.idCarrera = :idCarrera"),
     @NamedQuery(name = "Carrera.findByNombreCarrera", query = "SELECT c FROM Carrera c WHERE c.nombreCarrera = :nombreCarrera")})
 public class Carrera implements Serializable {
+    @OneToMany(mappedBy = "idCarrera")
+    private Collection<Perfil> perfilCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,6 +102,15 @@ public class Carrera implements Serializable {
     @Override
     public String toString() {
         return "entities.Carrera[ idCarrera=" + idCarrera + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Perfil> getPerfilCollection() {
+        return perfilCollection;
+    }
+
+    public void setPerfilCollection(Collection<Perfil> perfilCollection) {
+        this.perfilCollection = perfilCollection;
     }
     
 }
