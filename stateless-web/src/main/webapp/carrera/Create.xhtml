@@ -12,6 +12,8 @@
             <h:form id="CarreraCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{carreraController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCarreraLabel_idCarrera}" for="idCarrera" />
+                        <p:inputText id="idCarrera" value="#{carreraController.selected.idCarrera}" title="#{bundle.CreateCarreraTitle_idCarrera}" required="true" requiredMessage="#{bundle.CreateCarreraRequiredMessage_idCarrera}"/>
                         <p:outputLabel value="#{bundle.CreateCarreraLabel_nombreCarrera}" for="nombreCarrera" />
                         <p:inputText id="nombreCarrera" value="#{carreraController.selected.nombreCarrera}" title="#{bundle.CreateCarreraTitle_nombreCarrera}" />
                     </p:panelGrid>

@@ -18,30 +18,105 @@ USE `stateless`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `programa_asignatura`
+-- Table structure for table `LOGS`
 --
 
-DROP TABLE IF EXISTS `programa_asignatura`;
+DROP TABLE IF EXISTS `LOGS`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `programa_asignatura` (
-  `ID_PROGRAMA` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_ASIGNATURA` int(11) DEFAULT NULL,
-  `ANIO_PROGRAMA` int(11) DEFAULT NULL,
-  `SEMESTRE_PROGRAMA` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ID_PROGRAMA`),
-  KEY `FK_RELATIONSHIP_16` (`ID_ASIGNATURA`),
-  CONSTRAINT `FK_RELATIONSHIP_16` FOREIGN KEY (`ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`)
+CREATE TABLE `LOGS` (
+  `LOGS_ID` int(11) NOT NULL,
+  `USER_ID` varchar(20) NOT NULL,
+  `DATED` date NOT NULL,
+  `LOGGER` varchar(50) NOT NULL,
+  `LEVEL` varchar(10) NOT NULL,
+  `MESSAGE` varchar(1000) NOT NULL,
+  PRIMARY KEY (`LOGS_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LOGS`
+--
+
+LOCK TABLES `LOGS` WRITE;
+/*!40000 ALTER TABLE `LOGS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `LOGS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `SEQUENCE`
+--
+
+DROP TABLE IF EXISTS `SEQUENCE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SEQUENCE` (
+  `SEQ_NAME` varchar(50) NOT NULL,
+  `SEQ_COUNT` decimal(38,0) DEFAULT NULL,
+  PRIMARY KEY (`SEQ_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SEQUENCE`
+--
+
+LOCK TABLES `SEQUENCE` WRITE;
+/*!40000 ALTER TABLE `SEQUENCE` DISABLE KEYS */;
+INSERT INTO `SEQUENCE` VALUES ('SEQ_GEN',950);
+/*!40000 ALTER TABLE `SEQUENCE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `USUARIO`
+--
+
+DROP TABLE IF EXISTS `USUARIO`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `USUARIO` (
+  `ID` int(11) NOT NULL,
+  `APELLIDO` varchar(255) DEFAULT NULL,
+  `NOMBRE` varchar(255) DEFAULT NULL,
+  `ROL` varchar(255) DEFAULT NULL,
+  `UID` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `USUARIO`
+--
+
+LOCK TABLES `USUARIO` WRITE;
+/*!40000 ALTER TABLE `USUARIO` DISABLE KEYS */;
+INSERT INTO `USUARIO` VALUES (2,'Aguirre','Pamela','administrador','paguirre'),(801,'Flores','Matías','administrador','nflores'),(901,'Ruiz-Tagle','Benjamín','administrador','bruiztagle');
+/*!40000 ALTER TABLE `USUARIO` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `admin` (
+  `ID_ADMIN` int(11) NOT NULL AUTO_INCREMENT,
+  `USER_ADMIN` varchar(32) DEFAULT NULL,
+  `PASSWORD_ADMIN` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`ID_ADMIN`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `programa_asignatura`
+-- Dumping data for table `admin`
 --
 
-LOCK TABLES `programa_asignatura` WRITE;
-/*!40000 ALTER TABLE `programa_asignatura` DISABLE KEYS */;
-/*!40000 ALTER TABLE `programa_asignatura` ENABLE KEYS */;
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -80,54 +155,104 @@ INSERT INTO `asignatura` VALUES (3,2,'CÁLCULO I PARA INGENIERÍA',7,1,'10101',6
 UNLOCK TABLES;
 
 --
--- Table structure for table `USUARIO`
+-- Table structure for table `asignatura_habilidad`
 --
 
-DROP TABLE IF EXISTS `USUARIO`;
+DROP TABLE IF EXISTS `asignatura_habilidad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `USUARIO` (
-  `ID` int(11) NOT NULL,
-  `APELLIDO` varchar(255) DEFAULT NULL,
-  `NOMBRE` varchar(255) DEFAULT NULL,
-  `ROL` varchar(255) DEFAULT NULL,
-  `UID` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `USUARIO`
---
-
-LOCK TABLES `USUARIO` WRITE;
-/*!40000 ALTER TABLE `USUARIO` DISABLE KEYS */;
-INSERT INTO `USUARIO` VALUES (1,'Cárcamo','Miguel','administrador','mcarcamo'),(2,'Aguirre','Pamela','administrador','paguirre');
-/*!40000 ALTER TABLE `USUARIO` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `admin`
---
-
-DROP TABLE IF EXISTS `admin`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `admin` (
-  `ID_ADMIN` int(11) NOT NULL AUTO_INCREMENT,
-  `USER_ADMIN` varchar(32) DEFAULT NULL,
-  `PASSWORD_ADMIN` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`ID_ADMIN`)
+CREATE TABLE `asignatura_habilidad` (
+  `ID_ASIGNATURA` int(11) DEFAULT NULL,
+  `ID_HABILIDAD` int(11) DEFAULT NULL,
+  KEY `FK_RELATIONSHIP_10` (`ID_HABILIDAD`),
+  KEY `FK_RELATIONSHIP_11` (`ID_ASIGNATURA`),
+  CONSTRAINT `FK_RELATIONSHIP_10` FOREIGN KEY (`ID_HABILIDAD`) REFERENCES `habilidad` (`ID_HABILIDAD`),
+  CONSTRAINT `FK_RELATIONSHIP_11` FOREIGN KEY (`ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `admin`
+-- Dumping data for table `asignatura_habilidad`
 --
 
-LOCK TABLES `admin` WRITE;
-/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+LOCK TABLES `asignatura_habilidad` WRITE;
+/*!40000 ALTER TABLE `asignatura_habilidad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asignatura_habilidad` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `asignatura_intermedia`
+--
+
+DROP TABLE IF EXISTS `asignatura_intermedia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asignatura_intermedia` (
+  `ID_ASIGNATURA` int(11) DEFAULT NULL,
+  `ASI_ID_ASIGNATURA` int(11) DEFAULT NULL,
+  KEY `FK_RELATIONSHIP_6` (`ID_ASIGNATURA`),
+  KEY `FK_RELATIONSHIP_7` (`ASI_ID_ASIGNATURA`),
+  CONSTRAINT `FK_RELATIONSHIP_6` FOREIGN KEY (`ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_RELATIONSHIP_7` FOREIGN KEY (`ASI_ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asignatura_intermedia`
+--
+
+LOCK TABLES `asignatura_intermedia` WRITE;
+/*!40000 ALTER TABLE `asignatura_intermedia` DISABLE KEYS */;
+INSERT INTO `asignatura_intermedia` VALUES (3,NULL),(4,NULL),(5,NULL),(6,NULL),(7,NULL),(8,NULL),(9,3),(10,4),(11,5),(12,4),(13,NULL),(14,11),(14,9),(15,6),(16,8),(17,9),(17,10),(18,12),(19,3),(20,9),(21,9),(22,10),(22,14),(23,18),(24,18),(25,16),(26,7),(26,21),(27,23),(28,22),(29,23),(30,23),(30,24),(31,25),(32,17),(32,20),(33,28),(34,24),(35,26),(35,15),(36,27),(36,29),(37,31),(38,21),(39,28),(40,34),(41,19),(41,35),(42,29),(43,20),(43,30),(44,38),(45,39),(46,19),(47,42),(48,41),(49,32),(50,45),(51,46),(52,36),(52,47),(53,50),(53,51),(53,52),(54,48),(54,49),(54,51),(55,50),(55,51),(55,52),(56,45),(57,51),(57,52),(58,53),(58,56),(59,54),(59,55),(60,54),(60,55),(61,46),(61,48),(62,57),(63,62),(64,NULL),(65,NULL),(66,NULL),(67,NULL),(68,NULL),(69,64),(70,64),(70,65),(71,64),(71,66),(72,68),(73,64),(74,64),(75,70),(75,68),(76,72),(77,70),(78,74),(79,72),(80,67),(80,71),(81,76),(82,71),(82,77),(83,78),(84,79),(85,79),(86,73),(86,82),(87,81),(87,82),(88,81),(89,81),(89,82),(90,78),(90,80),(91,86),(92,84),(93,84),(93,85),(93,86),(93,87),(94,90),(94,92),(95,90),(96,87),(96,91),(97,92),(98,83),(99,94),(99,97),(100,93),(101,93),(101,94),(102,94),(102,95),(102,96),(102,97),(103,83),(104,98),(104,99),(104,101),(105,102),(106,102),(107,102),(108,103),(109,89),(109,96),(110,89),(110,96),(111,102),(112,111),(113,NULL),(114,NULL),(115,NULL),(116,NULL),(117,NULL),(118,113),(119,117),(120,113),(121,117),(122,113),(122,114),(122,115),(122,116),(122,117),(123,120),(124,120),(124,117),(125,121),(126,114),(127,126),(128,125),(129,121),(130,125),(131,120),(132,118),(132,119),(132,120),(132,121),(133,128),(134,127),(135,127),(136,128),(137,133),(137,135),(138,133),(139,124),(139,135),(140,127),(140,128),(140,129),(140,130),(141,122),(142,140),(143,NULL),(144,NULL),(145,NULL),(146,NULL),(147,NULL),(148,NULL),(149,143),(150,144),(151,145),(152,144),(153,NULL),(154,149),(154,151),(155,146),(156,148),(157,149),(157,152),(158,152),(159,149),(160,147),(160,159),(161,143),(162,150),(162,154),(163,158),(164,158),(165,156),(166,161),(167,163),(168,162),(169,163),(170,155),(171,160),(172,165),(173,168),(174,167),(174,169),(175,166),(176,169),(177,168),(178,172),(179,175),(179,174),(179,176),(180,173),(180,174),(180,175),(180,176),(180,177),(180,178),(181,173),(181,174),(181,175),(181,176),(181,177),(181,178),(182,173),(182,174),(182,175),(182,176),(182,177),(182,178),(183,173),(183,174),(184,183);
+/*!40000 ALTER TABLE `asignatura_intermedia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `carrera`
+--
+
+DROP TABLE IF EXISTS `carrera`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `carrera` (
+  `ID_CARRERA` int(11) NOT NULL AUTO_INCREMENT,
+  `NOMBRE_CARRERA` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`ID_CARRERA`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `carrera`
+--
+
+LOCK TABLES `carrera` WRITE;
+/*!40000 ALTER TABLE `carrera` DISABLE KEYS */;
+INSERT INTO `carrera` VALUES (1,'Ingeniería civil informática'),(2,'Ingeniería de ejecución en computación e informática');
+/*!40000 ALTER TABLE `carrera` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `habilidad`
+--
+
+DROP TABLE IF EXISTS `habilidad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `habilidad` (
+  `ID_HABILIDAD` int(11) NOT NULL AUTO_INCREMENT,
+  `DESCRIPCION_HABILIDAD` varchar(1024) DEFAULT NULL,
+  `GRADO_HABILIDAD` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_HABILIDAD`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `habilidad`
+--
+
+LOCK TABLES `habilidad` WRITE;
+/*!40000 ALTER TABLE `habilidad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `habilidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -153,51 +278,30 @@ LOCK TABLES `nombres` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `SEQUENCE`
+-- Table structure for table `perfil`
 --
 
-DROP TABLE IF EXISTS `SEQUENCE`;
+DROP TABLE IF EXISTS `perfil`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SEQUENCE` (
-  `SEQ_NAME` varchar(50) NOT NULL,
-  `SEQ_COUNT` decimal(38,0) DEFAULT NULL,
-  PRIMARY KEY (`SEQ_NAME`)
+CREATE TABLE `perfil` (
+  `ID_PERFIL` int(11) NOT NULL AUTO_INCREMENT,
+  `NOMBRE_PERFIL` varchar(255) DEFAULT NULL,
+  `VERSION_PERFIL` varchar(255) DEFAULT NULL,
+  `ID_CARRERA` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_PERFIL`),
+  KEY `FK_perfil_ID_CARRERA` (`ID_CARRERA`),
+  CONSTRAINT `FK_perfil_ID_CARRERA` FOREIGN KEY (`ID_CARRERA`) REFERENCES `carrera` (`ID_CARRERA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `SEQUENCE`
+-- Dumping data for table `perfil`
 --
 
-LOCK TABLES `SEQUENCE` WRITE;
-/*!40000 ALTER TABLE `SEQUENCE` DISABLE KEYS */;
-INSERT INTO `SEQUENCE` VALUES ('SEQ_GEN',50);
-/*!40000 ALTER TABLE `SEQUENCE` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `sequence`
---
-
-DROP TABLE IF EXISTS `sequence`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sequence` (
-  `SEQ_NAME` varchar(50) NOT NULL,
-  `SEQ_COUNT` decimal(38,0) DEFAULT NULL,
-  PRIMARY KEY (`SEQ_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sequence`
---
-
-LOCK TABLES `sequence` WRITE;
-/*!40000 ALTER TABLE `sequence` DISABLE KEYS */;
-INSERT INTO `sequence` VALUES ('SEQ_GEN',0);
-/*!40000 ALTER TABLE `sequence` ENABLE KEYS */;
+LOCK TABLES `perfil` WRITE;
+/*!40000 ALTER TABLE `perfil` DISABLE KEYS */;
+/*!40000 ALTER TABLE `perfil` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -232,29 +336,168 @@ INSERT INTO `plan` VALUES (1,1,'Civil plan 2001',2001,'1863',1,NULL),(2,1,'Civil
 UNLOCK TABLES;
 
 --
--- Table structure for table `asignatura_habilidad`
+-- Table structure for table `profesor`
 --
 
-DROP TABLE IF EXISTS `asignatura_habilidad`;
+-- 
+-- Table structure for table `perfil`
+-- 
+DROP TABLE IF EXISTS `perfil`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `perfil` (
+`ID_PERFIL` int(11) NOT NULL AUTO_INCREMENT,
+`ID_CARRERA` int(11) DEFAULT NULL,
+`NOMBRE_PERFIL` varchar(128) DEFAULT NULL,
+`VERSION_PERFIL` varchar(32) DEFAULT NULL,
+PRIMARY KEY (`ID_PERFIL`),
+KEY `FK_RELATIONSHIP_20` (`ID_CARRERA`),
+CONSTRAINT `FK_RELATIONSHIP_20` FOREIGN KEY (`ID_CARRERA`) REFERENCES `carrera` (`ID_CARRERA`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+-- 
+-- Dumping data for table `plan`
+-- 
+LOCK TABLES `perfil` WRITE;
+/*!40000 ALTER TABLE `perfil` DISABLE KEYS */;
+INSERT INTO `perfil` VALUES (1,1,'Perfil carrera Ingeniería Civil en Informática','31 de julio de 2009'),(2,2,'Perfil Carrera Ingeniería de Ejecución en Computación e Informática','4 de septiembre de 2009');
+/*!40000 ALTER TABLE `perfil` ENABLE KEYS */;
+UNLOCK TABLES;
+-- 
+-- Table structure for table `seccion`
+-- 
+DROP TABLE IF EXISTS `seccion`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seccion` (
+`ID_SECCION` int(11) NOT NULL AUTO_INCREMENT,
+`ID_PERFIL` int(11) DEFAULT NULL,
+`NOMBRE_SECCION` varchar(128) DEFAULT NULL,
+`DESCRIPCION_SECCION` varchar(4096) DEFAULT NULL,
+PRIMARY KEY (`ID_SECCION`),
+KEY `FK_RELATIONSHIP_21` (`ID_PERFIL`),
+CONSTRAINT `FK_RELATIONSHIP_21` FOREIGN KEY (`ID_PERFIL`) REFERENCES `perfil` (`ID_PERFIL`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+-- 
+-- Dumping data for table `seccion`
+-- 
+LOCK TABLES `seccion` WRITE;
+/*!40000 ALTER TABLE `seccion` DISABLE KEYS */;
+INSERT INTO `seccion` VALUES (1,1,'ÁREAS PRINCIPALES DE CONOCIMIENTO','El profesional egresado o egresada de la carrera Ingeniería Civil en Informática
+de la Universidad de Santiago de Chile posee conocimientos en ciencias básicas
+(matemática y física), ciencias de la ingeniería (matemática aplicada y estadística,
+gestión de proyectos, teoría de sistemas), ingeniería informática (ciencia de la
+computación, tecnología de la computación, ingeniería de software, base de datos y
+sistemas de información, redes de comunicación) y ciencias humanas y sociales
+(ciencias económicas y financieras, teoría y gestión de la organización, ciencias del
+comportamiento humano, ética del profesional, lenguaje oral y escrito (español e
+inglés)).'),(2,1,'HABILIDADES-DESTREZAS PROFESIONALES','El profesional egresado o egresada de la carrera Ingeniería Civil en Informática
+de la Universidad de Santiago de Chile posee las siguientes habilidades y destrezas
+profesionales al momento de egreso:
+HABILIDADES GENERALES:
+1. Capacidad de aprendizaje autónomo
+2. Capacidad de trabajo en equipo
+3. Capacidad de liderazgo
+4. Capacidad para comunicarse efectivamente en español de forma oral, escrita y
+simbólica
+5. Capacidad de pensamiento crítico
+6. Capacidad de comunicarse en forma oral y escrita a nivel intermedio en inglés
+técnico
+HABILIDADES ESPECIALIZADAS GENÉRICAS:
+7. Capacidad para aplicar conocimiento de ciencias básicas, de la Ingeniería y de la
+especialidad en los ámbitos de su profesión
+8. Capacidad para abordar y resolver problemas de ingeniería en una perspectiva
+sistémica
+9. Capacidad para diagnosticar, modelar, diseñar y mejorar continuamente sistemas
+o procesos en el ámbito de su especialidad
+10. Capacidad para formular proyectos de la especialidad y evaluar su factibilidad
+técnica y económica
+11. Capacidad para gestionar y administrar proyectos o empresas relacionadas con
+su profesión
+12. Capacidad para utilizar TICs y software de la especialidad, así como técnicas y
+herramientas modernas de la ingeniería
+13. Entender el impacto de las soluciones de ingeniería en un contexto global,
+económico, medioambiental y social
+HABILIDADES ESPECIALIZADAS ESPECÍFICAS:
+14. Identificar oportunidades de uso de la información y TICs
+15. Recolectar y analizar datos con métodos y herramientas computacionales para
+transformarlos en información
+16. Analizar, modelar y desarrollar sistemas, procesos y productos basados en TIC
+(ofrecidos y en operación)
+17. Adecuar las TIC vigentes a los cambios organizacionales
+18. Generar y construir abstracciones de fenómenos del mundo real usando la
+formación técnica de su especialidad'),(3,1,'ACTITUDES Y VALORES','El profesional egresado o egresada de la carrera Ingeniería Civil en Informática
+de la Universidad de Santiago de Chile posee las actitudes y valores que a continuación
+se señalan:
+1. Comprensión de la responsabilidad profesional, social y ética en todo contexto
+2. Disposición hacia el emprendimiento y la innovación
+3. Adaptabilidad a cambios y contextos diversos
+4. Compromiso con el trabajo bien realizado (Calidad)
+5. Disposición para buscar soluciones con recursos escasos'),(4,2,'ÁREAS PRINCIPALES DE CONOCIMIENTO','El profesional egresado o egresada de la carrera Ingeniería de Ejecución en
+Computación e Informática de la Universidad de Santiago de Chile posee
+conocimientos en ciencias básicas (matemática y física), ciencias de la ingeniería (teoría
+de sistemas, programación), ingeniería informática (tecnología de la computación,
+ciencia de la computación, ingeniería de software, bases de datos y sistemas de
+información, redes de comunicación) y ciencias humanas y sociales (ciencias de la
+administración, lenguaje oral y escrito (español e inglés)).'),(5,2,'HABILIDADES-DESTREZAS PROFESIONALES','El profesional egresado o egresada de la carrera Ingeniería de Ejecución en
+Computación e Informática de la Universidad de Santiago de Chile posee las siguientes
+habilidades y destrezas profesionales al momento de egreso:
+HABILIDADES GENERALES
+1. Capacidad de aprendizaje autónomo
+2. Capacidad de trabajo en equipo
+3. Capacidad para comunicarse efectivamente en español de forma oral y escrita
+4. Capacidad de pensamiento crítico
+5. Capacidad de comunicarse en forma oral y escrita a nivel básico en inglés
+técnico
+HABILIDADES ESPECIALIZADAS GENÉRICAS
+6. Capacidad para diagnosticar y resolver problemas de ingeniería en una
+perspectiva sistémica a nivel operativo
+7. Capacidad para aplicar conocimiento de ciencias básicas, de la ingeniería y de la
+especialidad en los ámbitos de su profesión
+8. Capacidad para ejecutar y controlar proyectos de la especialidad
+9. Capacidad para utilizar herramientas de las TIC
+10. Manejo de lenguajes simbólicos de la especialidad
+HABILIDADES ESPECIALIZADAS ESPECÍFICAS
+11. Capacidad para administrar sistemas de software
+12. Capacidad para adecuar las TICs vigentes a los cambios organizacionales
+13. Capacidad para analizar, modelar y desarrollar sistemas, procesos y
+productos basados en TIC (ofrecidos y en operación)
+14. Capacidad para comprender abstracciones de fenómenos del mundo real
+representadas con lenguajes propios de la especialidad
+15. Capacidad de entender los impactos de las soluciones de ingeniería en un
+contexto económico y social'),(6,2,'ACTITUDES Y VALORES','El profesional egresado o egresada de la carrera Ingeniería de Ejecución en
+Computación e Informática de la Universidad de Santiago de Chile posee las actitudes y
+valores que a continuación se señalan:
+1. Comprensión de la responsabilidad profesional, social y ética en todo
+contexto en que se desenvuelve
+2. Adaptabilidad a cambios y contextos diversos
+3. Disposición hacia el emprendimiento y la innovación
+4. Compromiso con el trabajo bien realizado (Calidad)');
+/*!40000 ALTER TABLE `seccion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `profesor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `asignatura_habilidad` (
-  `ID_ASIGNATURA` int(11) DEFAULT NULL,
-  `ID_HABILIDAD` int(11) DEFAULT NULL,
-  KEY `FK_RELATIONSHIP_10` (`ID_HABILIDAD`),
-  KEY `FK_RELATIONSHIP_11` (`ID_ASIGNATURA`),
-  CONSTRAINT `FK_RELATIONSHIP_10` FOREIGN KEY (`ID_HABILIDAD`) REFERENCES `habilidad` (`ID_HABILIDAD`),
-  CONSTRAINT `FK_RELATIONSHIP_11` FOREIGN KEY (`ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `profesor` (
+  `ID_PROFESOR` int(11) NOT NULL AUTO_INCREMENT,
+  `USUARIO_PROFESOR` varchar(32) DEFAULT NULL,
+  `NOMBRE_PROFESOR` varchar(32) DEFAULT NULL,
+  `APELLIDO_PROFESOR` varchar(32) DEFAULT NULL,
+  `CONTRASENA_PROFESOR` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`ID_PROFESOR`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `asignatura_habilidad`
+-- Dumping data for table `profesor`
 --
 
-LOCK TABLES `asignatura_habilidad` WRITE;
-/*!40000 ALTER TABLE `asignatura_habilidad` DISABLE KEYS */;
-/*!40000 ALTER TABLE `asignatura_habilidad` ENABLE KEYS */;
+LOCK TABLES `profesor` WRITE;
+/*!40000 ALTER TABLE `profesor` DISABLE KEYS */;
+INSERT INTO `profesor` VALUES (1,'Consuelo.Ramirez','Consuelo','Ramírez Santibáñez','123'),(2,'Maria.Parodi','María Carolina','Parodi Davila','123'),(3,'Monica.Villanueva','Mónica','Villanueva Ilufi','123'),(4,'Erika.Rosas','Erika','Rosas Olivo','123'),(5,'Rodrigo.Pizarro','Rodrigo','Pizarro Guzmán','123'),(6,'Jacqueline.Kohler','Jacqueline','Kohler Casasempere','123'),(7,'Max.Chacon','Max','Chacón Pacheco','123'),(8,'Miguel.Fuentes','Miguel','Fuente Villalobos','123'),(9,'Fernando.Rannou','Fernando','Rannou Fuentes','123'),(10,'Mauricio.Marin','Mauricio','Marín Caihuan','123'),(11,'Manuel.Manriquez','Manuel','Manriquez López','123'),(12,'Bruno.Jerardino','Bruno','Jerardino Wiesenborn','123'),(13,'Rosa.Muñoz','Rosa','Muñoz Calanchie','123');
+/*!40000 ALTER TABLE `profesor` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -284,105 +527,108 @@ LOCK TABLES `profesor_asignatura` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `carrera`
+-- Table structure for table `programa_asignatura`
 --
 
-DROP TABLE IF EXISTS `carrera`;
+DROP TABLE IF EXISTS `programa_asignatura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `carrera` (
-  `ID_CARRERA` int(11) NOT NULL AUTO_INCREMENT,
-  `NOMBRE_CARRERA` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`ID_CARRERA`)
+CREATE TABLE `programa_asignatura` (
+  `ID_PROGRAMA` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_ASIGNATURA` int(11) DEFAULT NULL,
+  `ANIO_PROGRAMA` int(11) DEFAULT NULL,
+  `SEMESTRE_PROGRAMA` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_PROGRAMA`),
+  KEY `FK_RELATIONSHIP_16` (`ID_ASIGNATURA`),
+  CONSTRAINT `FK_RELATIONSHIP_16` FOREIGN KEY (`ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `programa_asignatura`
+--
+
+LOCK TABLES `programa_asignatura` WRITE;
+/*!40000 ALTER TABLE `programa_asignatura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `programa_asignatura` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seccion`
+--
+
+DROP TABLE IF EXISTS `seccion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seccion` (
+  `ID_SECCION` int(11) NOT NULL AUTO_INCREMENT,
+  `DESCRIPCION_SECCION` varchar(255) DEFAULT NULL,
+  `NOMBRE_SECCION` varchar(255) DEFAULT NULL,
+  `ID_PERFIL` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_SECCION`),
+  KEY `FK_seccion_ID_PERFIL` (`ID_PERFIL`),
+  CONSTRAINT `FK_seccion_ID_PERFIL` FOREIGN KEY (`ID_PERFIL`) REFERENCES `perfil` (`ID_PERFIL`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seccion`
+--
+
+LOCK TABLES `seccion` WRITE;
+/*!40000 ALTER TABLE `seccion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `seccion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sequence`
+--
+
+DROP TABLE IF EXISTS `sequence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sequence` (
+  `SEQ_NAME` varchar(50) NOT NULL,
+  `SEQ_COUNT` decimal(38,0) DEFAULT NULL,
+  PRIMARY KEY (`SEQ_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sequence`
+--
+
+LOCK TABLES `sequence` WRITE;
+/*!40000 ALTER TABLE `sequence` DISABLE KEYS */;
+INSERT INTO `sequence` VALUES ('SEQ_GEN',0);
+/*!40000 ALTER TABLE `sequence` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuario` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `APELLIDO` varchar(128) DEFAULT NULL,
+  `NOMBRE` varchar(128) DEFAULT NULL,
+  `ROL` varchar(20) DEFAULT NULL,
+  `UID` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `carrera`
+-- Dumping data for table `usuario`
 --
 
-LOCK TABLES `carrera` WRITE;
-/*!40000 ALTER TABLE `carrera` DISABLE KEYS */;
-INSERT INTO `carrera` VALUES (1,'Ingeniería civil informática'),(2,'Ingeniería de ejecución en computación e informática');
-/*!40000 ALTER TABLE `carrera` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `profesor`
---
-
-DROP TABLE IF EXISTS `profesor`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `profesor` (
-  `ID_PROFESOR` int(11) NOT NULL AUTO_INCREMENT,
-  `USUARIO_PROFESOR` varchar(32) DEFAULT NULL,
-  `NOMBRE_PROFESOR` varchar(32) DEFAULT NULL,
-  `APELLIDO_PROFESOR` varchar(32) DEFAULT NULL,
-  `CONTRASENA_PROFESOR` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`ID_PROFESOR`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `profesor`
---
-
-LOCK TABLES `profesor` WRITE;
-/*!40000 ALTER TABLE `profesor` DISABLE KEYS */;
-INSERT INTO `profesor` VALUES (1,'Consuelo.Ramirez','Consuelo','Ramírez Santibáñez','123'),(2,'Maria.Parodi','María Carolina','Parodi Davila','123'),(3,'Monica.Villanueva','Mónica','Villanueva Ilufi','123'),(4,'Erika.Rosas','Erika','Rosas Olivo','123'),(5,'Rodrigo.Pizarro','Rodrigo','Pizarro Guzmán','123'),(6,'Jacqueline.Kohler','Jacqueline','Kohler Casasempere','123'),(7,'Max.Chacon','Max','Chacón Pacheco','123'),(8,'Miguel.Fuentes','Miguel','Fuente Villalobos','123'),(9,'Fernando.Rannou','Fernando','Rannou Fuentes','123'),(10,'Mauricio.Marin','Mauricio','Marín Caihuan','123'),(11,'Manuel.Manriquez','Manuel','Manriquez López','123'),(12,'Bruno.Jerardino','Bruno','Jerardino Wiesenborn','123'),(13,'Rosa.Muñoz','Rosa','Muñoz Calanchie','123');
-/*!40000 ALTER TABLE `profesor` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `habilidad`
---
-
-DROP TABLE IF EXISTS `habilidad`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `habilidad` (
-  `ID_HABILIDAD` int(11) NOT NULL AUTO_INCREMENT,
-  `DESCRIPCION_HABILIDAD` varchar(1024) DEFAULT NULL,
-  `GRADO_HABILIDAD` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ID_HABILIDAD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `habilidad`
---
-
-LOCK TABLES `habilidad` WRITE;
-/*!40000 ALTER TABLE `habilidad` DISABLE KEYS */;
-/*!40000 ALTER TABLE `habilidad` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `asignatura_intermedia`
---
-
-DROP TABLE IF EXISTS `asignatura_intermedia`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `asignatura_intermedia` (
-  `ID_ASIGNATURA` int(11) DEFAULT NULL,
-  `ASI_ID_ASIGNATURA` int(11) DEFAULT NULL,
-  KEY `FK_RELATIONSHIP_6` (`ID_ASIGNATURA`),
-  KEY `FK_RELATIONSHIP_7` (`ASI_ID_ASIGNATURA`),
-  CONSTRAINT `FK_RELATIONSHIP_6` FOREIGN KEY (`ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_RELATIONSHIP_7` FOREIGN KEY (`ASI_ID_ASIGNATURA`) REFERENCES `asignatura` (`ID_ASIGNATURA`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `asignatura_intermedia`
---
-
-LOCK TABLES `asignatura_intermedia` WRITE;
-/*!40000 ALTER TABLE `asignatura_intermedia` DISABLE KEYS */;
-INSERT INTO `asignatura_intermedia` VALUES (3,NULL),(4,NULL),(5,NULL),(6,NULL),(7,NULL),(8,NULL),(9,3),(10,4),(11,5),(12,4),(13,NULL),(14,11),(14,9),(15,6),(16,8),(17,9),(17,10),(18,12),(19,3),(20,9),(21,9),(22,10),(22,14),(23,18),(24,18),(25,16),(26,7),(26,21),(27,23),(28,22),(29,23),(30,23),(30,24),(31,25),(32,17),(32,20),(33,28),(34,24),(35,26),(35,15),(36,27),(36,29),(37,31),(38,21),(39,28),(40,34),(41,19),(41,35),(42,29),(43,20),(43,30),(44,38),(45,39),(46,19),(47,42),(48,41),(49,32),(50,45),(51,46),(52,36),(52,47),(53,50),(53,51),(53,52),(54,48),(54,49),(54,51),(55,50),(55,51),(55,52),(56,45),(57,51),(57,52),(58,53),(58,56),(59,54),(59,55),(60,54),(60,55),(61,46),(61,48),(62,57),(63,62),(64,NULL),(65,NULL),(66,NULL),(67,NULL),(68,NULL),(69,64),(70,64),(70,65),(71,64),(71,66),(72,68),(73,64),(74,64),(75,70),(75,68),(76,72),(77,70),(78,74),(79,72),(80,67),(80,71),(81,76),(82,71),(82,77),(83,78),(84,79),(85,79),(86,73),(86,82),(87,81),(87,82),(88,81),(89,81),(89,82),(90,78),(90,80),(91,86),(92,84),(93,84),(93,85),(93,86),(93,87),(94,90),(94,92),(95,90),(96,87),(96,91),(97,92),(98,83),(99,94),(99,97),(100,93),(101,93),(101,94),(102,94),(102,95),(102,96),(102,97),(103,83),(104,98),(104,99),(104,101),(105,102),(106,102),(107,102),(108,103),(109,89),(109,96),(110,89),(110,96),(111,102),(112,111),(113,NULL),(114,NULL),(115,NULL),(116,NULL),(117,NULL),(118,113),(119,117),(120,113),(121,117),(122,113),(122,114),(122,115),(122,116),(122,117),(123,120),(124,120),(124,117),(125,121),(126,114),(127,126),(128,125),(129,121),(130,125),(131,120),(132,118),(132,119),(132,120),(132,121),(133,128),(134,127),(135,127),(136,128),(137,133),(137,135),(138,133),(139,124),(139,135),(140,127),(140,128),(140,129),(140,130),(141,122),(142,140),(143,NULL),(144,NULL),(145,NULL),(146,NULL),(147,NULL),(148,NULL),(149,143),(150,144),(151,145),(152,144),(153,NULL),(154,149),(154,151),(155,146),(156,148),(157,149),(157,152),(158,152),(159,149),(160,147),(160,159),(161,143),(162,150),(162,154),(163,158),(164,158),(165,156),(166,161),(167,163),(168,162),(169,163),(170,155),(171,160),(172,165),(173,168),(174,167),(174,169),(175,166),(176,169),(177,168),(178,172),(179,175),(179,174),(179,176),(180,173),(180,174),(180,175),(180,176),(180,177),(180,178),(181,173),(181,174),(181,175),(181,176),(181,177),(181,178),(182,173),(182,174),(182,175),(182,176),(182,177),(182,178),(183,173),(183,174),(184,183);
-/*!40000 ALTER TABLE `asignatura_intermedia` ENABLE KEYS */;
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'Aguirre','Pamela','administrador','paguirre'),(2,'Carcamo','Miguel','administrador','mcarcamo');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -394,4 +640,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-18  4:24:55
+-- Dump completed on 2014-11-26 20:13:40
