@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.log4j.MDC;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
@@ -29,7 +30,7 @@ public class UsuarioController implements Serializable {
     private List<Usuario> items = null;
     private Usuario selected;
     final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UsuarioController.class);
-
+    private String deletedUser;
     
     public UsuarioController() {
     }
@@ -71,12 +72,13 @@ public class UsuarioController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
-        logger.info("El usuario "+getLoggedInUser().getName()+"ha creado un usuario");
+        
+        logger.info("Se ha creado un usuario: "+ getSelected().getUid());
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioUpdated"));
-        logger.info("El usuario "+getLoggedInUser().getName()+"ha modificado a el usuario "+ getSelected().getUid());
+        logger.info("Se ha modificado a el usuario "+ getSelected().getUid());
     }
 
     public void destroy() {
@@ -84,8 +86,9 @@ public class UsuarioController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
-            logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado a un usuario "+ getSelected().getUid());
+            
         }
+        logger.info("Se ha eliminado a el usuario: "+ deletedUser);
         
     }
 
@@ -103,6 +106,7 @@ public class UsuarioController implements Serializable {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
+                    deletedUser=selected.getUid();
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);

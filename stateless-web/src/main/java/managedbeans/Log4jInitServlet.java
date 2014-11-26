@@ -44,7 +44,7 @@ public class Log4jInitServlet extends HttpServlet {
             if (file.exists()) {
                 System.out.println("Initializing log4j with: " + log4jProp);
 		PropertyConfigurator.configure(log4jProp);
-                System.out.println("Path to log: "+webAppPath);
+                //System.out.println("Path to log: "+webAppPath);
                 System.setProperty("rootPath", webAppPath);
                 
             }else{
