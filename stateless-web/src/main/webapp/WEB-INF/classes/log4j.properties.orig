@@ -1,0 +1,46 @@
+# Define the root logger with appender file
+<<<<<<< HEAD
+log4j.rootLogger = INFO, DB
+
+# Define the file appender
+log4j.appender.DB=org.apache.log4j.jdbc.JDBCAppender
+# Set the name of the file
+log4j.appender.DB.URL=jdbc:mysql://localhost:3306/stateless
+
+log4j.appender.DB.driver=com.mysql.jdbc.Driver
+# Set the immediate flush to true (default)
+#log4j.appender.FILE.ImmediateFlush=true
+
+# Set the threshold to debug mode
+#log4j.appender.FILE.Threshold=debug
+log4j.appender.DB.user=stateless
+log4j.appender.DB.password=stateless
+# Set the append to false, overwrite
+#log4j.appender.FILE.Append=true
+log4j.appender.DB.sql = INSERT INTO LOGS VALUES('%X{user}',now(),'%C','%p','%m')
+# Define the layout for file appender
+log4j.appender.DB.layout=org.apache.log4j.PatternLayout
+#log4j.appender.FILE.layout.conversionPattern=%d{dd-MM-yyyy HH:mm:ss} %-5p %c{1}:%L - %m%n
+=======
+log4j.rootLogger = DEBUG, DB
+
+# Define the DB appender
+log4j.appender.DB=org.apache.log4j.jdbc.JDBCAppender
+
+# Set JDBC URL
+log4j.appender.DB.URL=jdbc:mysql://localhost/stateless
+
+# Set Database Driver
+log4j.appender.DB.driver=com.mysql.jdbc.Driver
+
+# Set database user name and password
+log4j.appender.DB.user=stateless
+log4j.appender.DB.password=stateless
+
+# Set the SQL statement to be executed.
+log4j.appender.DB.sql=INSERT INTO LOGS 
+                      VALUES("%x","%d","%C","%p","%m")
+
+# Define the layout for file appender
+log4j.appender.DB.layout=org.apache.log4j.PatternLayout
+>>>>>>> 44c1b24566965c25bef481ed59c4bd13a9625107

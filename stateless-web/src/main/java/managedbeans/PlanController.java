@@ -344,12 +344,11 @@ public class PlanController implements Serializable {
 
         ArrayList<Asignatura> asignaturas = new ArrayList<>();
 
-        BufferedReader br = new BufferedReader(new FileReader(save));
-        String line = "";
+        BufferedReader br = Files.newBufferedReader(save.toPath(), Charset.forName("Windows-1252"));
+        String line;
 
         while ((line = br.readLine()) != null) {
-            byte ptext[] = line.getBytes("ISO-8859-1");
-            line = new String(ptext, "UTF-8");
+
             Asignatura asignatura = new Asignatura();
             String[] strs = getCsvLineCols(line);
 

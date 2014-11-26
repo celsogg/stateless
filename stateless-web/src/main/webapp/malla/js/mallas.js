@@ -2,6 +2,10 @@ var accion = 'aperturas';
 
 jQuery(document).ready(function ($) {
 
+    $('#tomar_ramos_div').hide();
+    $('#boton_tutorial').hide();
+    $('#boton_resumen_simulacion').hide();
+
     for (var i = context.length - 1; i >= 0; i--) {
         context[i].aperturas = [];
     }
@@ -92,26 +96,27 @@ jQuery(document).ready(function ($) {
 
     var se_esta_realizando_toma_de_ramos = false;
 
-    if (tomar_ramos) {
-        $('#boton_resumen_simulacion').attr('disabled', 'disabled');
-        $('#apertura').hide();
-        $('#prerequisitos').hide();
-        $('#proyeccion').hide();
-        var hay_sct = false;
-        for (var i = 0; i < context.length; i++) {
-            if (context[ i ].sct && context[ i ].sct > 0) {
-                hay_sct = true;
-                break;
-            }
+//    if (tomar_ramos) {
+//    $('#boton_resumen_simulacion').attr('disabled', 'disabled');
+//    $('#apertura').hide();
+//    $('#prerequisitos').hide();
+//    $('#proyeccion').hide();
+    var hay_sct = false;
+    for (var i = 0; i < context.length; i++) {
+        if (context[ i ].sct && context[ i ].sct > 0) {
+            hay_sct = true;
+            break;
         }
-        if (!hay_sct) {
-            $('#sct_y_tel').hide();
-        }
-    } else {
-        $('#tomar_ramos_div').hide();
-        $('#boton_tutorial').hide();
-        $('#boton_resumen_simulacion').hide();
     }
+    $('#sct_y_tel').show();
+    if (!hay_sct) {
+        $('#sct_y_tel').hide();
+    }
+//    } else {
+//        $('#tomar_ramos_div').hide();
+//        $('#boton_tutorial').hide();
+//        $('#boton_resumen_simulacion').hide();
+//    }
 
     var ESTADO_INICIAL = 0;
     var ESTADO_TOMADO = 1;
@@ -245,10 +250,10 @@ jQuery(document).ready(function ($) {
         });
 
         // TIENEN QUE ESTAR EN MAYUSCULA
-        var COLOR_NARANJO = '#FF7319';
-        var COLOR_NARANJO_NO_TOMABLE = '#F39C12';
-        var COLOR_AZUL = '#0052CC';
-        var COLOR_ROJO = '#E74C3C';
+        var COLOR_NARANJO = '#FF8800';
+        var COLOR_NARANJO_NO_TOMABLE = '#FFC641';
+        var COLOR_AZUL = '#669900';
+        var COLOR_ROJO = '#0099CC';
         var COLOR_BLANCO = 'white';
 
         function ProyectarNivel(nivel) {
@@ -550,23 +555,42 @@ jQuery(document).ready(function ($) {
         });
 
         $('#fw').on('click', function () {
+            $('#boton_resumen_simulacion').hide();
             accion = 'aperturas';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
             $('#outline').hide();
             // LimpiarAsignaturas();
+            $('#tomar_ramos_div').hide();
+            $('#outline').hide();
+            $('#boton_tutorial').hide();
+        });
+        $('#simulacion_radio').on('click', function () {
+            $('#boton_resumen_simulacion').show();
+            $('#boton_resumen_simulacion').attr('disabled', 'enabled');
+            $('#tomar_ramos_div').show();
+            $('#outline').hide();
+            $('#boton_tutorial').show();
+            $('#spinme, #spinme_tomar_ramos').val(0);
+            $('#spinme, #spinme_tomar_ramos').change();
         });
         $('#bw').on('click', function () {
+            $('#boton_resumen_simulacion').hide();
             accion = 'prerequisitos';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
             // LimpiarAsignaturas();
             $('#outline').hide();
+            $('#tomar_ramos_div').hide();
+            $('#boton_tutorial').hide();
         });
         $('#fwbw').on('click', function () {
+            $('#boton_resumen_simulacion').hide();
             accion = 'proyeccion';
             $('#spinme, #spinme_tomar_ramos').val(0);
             $('#spinme, #spinme_tomar_ramos').change();
+            $('#tomar_ramos_div').hide();
             $('#outline').show();
             // $('#outline').slideToggle();
+            $('#boton_tutorial').hide();
         });
 
         $('#spinme, #spinme_tomar_ramos').spin({
@@ -577,7 +601,7 @@ jQuery(document).ready(function ($) {
         $('#spinme, #spinme_tomar_ramos').on('change', function () {
             accion = 'proyeccion';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_TOMADO);
-            $('#fwbw').attr('checked', 'checked');
+//            $('#fwbw').attr('checked', 'checked');
             if (accion == 'proyeccion' || accion == 'tomar_ramos') {
                 var nivel_proyeccion = parseInt($(this).val());
                 for (var i = context.length - 1; i >= 0; i--) {
@@ -636,11 +660,14 @@ jQuery(document).ready(function ($) {
             var id = GetIdByJqueryElement(esto);
             elemento = GetNodeById(id);
 
-            var text = '<p style="font-size: 14px; font-weight: bold;">' + toTitleCase(elemento.nombre) + '</p>'
+            var text = "";
+            // Titulo
+//            text = '<p style="font-size: 14px; font-weight: bold;">' + toTitleCase(elemento.nombre) + '</p>'
             if (elemento.resumen && elemento.resumen != 'null' && elemento.resumen != null) {
-                text += elemento.resumen;
+                // Resumen
+//                text += elemento.resumen;
             }
-            text += "<br/>";
+//            text += "<br/>";
             if (elemento.sct) {
                 text += '<span style="color: #1abc9c;">SCT: ' + elemento.sct + '</span>';
             }
@@ -741,6 +768,7 @@ jQuery(document).ready(function ($) {
     });
 
     $('#boton_tutorial').on('click', function () {
+        ProyectarNivel(0);
         tour.start();
     })
 
