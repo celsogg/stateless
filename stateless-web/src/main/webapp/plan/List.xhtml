@@ -10,9 +10,7 @@
     <ui:composition template="/template.xhtml">
 
 
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ListPlanTitle}"></h:outputText>
-        </ui:define>
+        <ui:define name="title">Administrar Planes</ui:define>
 
         <ui:define name="body">
             <c:if test="${loginController.esAdmin()}">
