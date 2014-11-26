@@ -307,6 +307,160 @@ INSERT INTO `carrera` VALUES (1,'Ingeniería civil informática'),(2,'Ingenierí
 /*!40000 ALTER TABLE `carrera` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+--
+-- Table structure for table `perfil`
+--
+
+DROP TABLE IF EXISTS `perfil`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `perfil` (
+  `ID_PERFIL` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_CARRERA` int(11) DEFAULT NULL,
+  `NOMBRE_PERFIL` varchar(128) DEFAULT NULL,
+  `VERSION_PERFIL` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`ID_PERFIL`),
+  KEY `FK_RELATIONSHIP_20` (`ID_CARRERA`),
+  CONSTRAINT `FK_RELATIONSHIP_20` FOREIGN KEY (`ID_CARRERA`) REFERENCES `carrera` (`ID_CARRERA`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `plan`
+--
+
+LOCK TABLES `perfil` WRITE;
+/*!40000 ALTER TABLE `perfil` DISABLE KEYS */;
+INSERT INTO `perfil` VALUES (1,1,'Perfil carrera Ingeniería Civil en Informática','31 de julio de 2009'),(2,2,'Perfil Carrera Ingeniería de Ejecución en Computación e Informática','4 de septiembre de 2009');
+/*!40000 ALTER TABLE `perfil` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+--
+-- Table structure for table `seccion`
+--
+
+DROP TABLE IF EXISTS `seccion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seccion` (
+  `ID_SECCION` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_PERFIL` int(11) DEFAULT NULL,
+  `NOMBRE_SECCION` varchar(128) DEFAULT NULL,
+  `DESCRIPCION_SECCION` varchar(4096) DEFAULT NULL,
+  PRIMARY KEY (`ID_SECCION`),
+  KEY `FK_RELATIONSHIP_21` (`ID_PERFIL`),
+  CONSTRAINT `FK_RELATIONSHIP_21` FOREIGN KEY (`ID_PERFIL`) REFERENCES `perfil` (`ID_PERFIL`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seccion`
+--
+
+LOCK TABLES `seccion` WRITE;
+/*!40000 ALTER TABLE `seccion` DISABLE KEYS */;
+INSERT INTO `seccion` VALUES (1,1,'ÁREAS PRINCIPALES DE CONOCIMIENTO','El profesional egresado o egresada de la carrera Ingeniería Civil en Informática
+de la Universidad de Santiago de Chile posee conocimientos en ciencias básicas
+(matemática y física), ciencias de la ingeniería (matemática aplicada y estadística,
+gestión de proyectos, teoría de sistemas), ingeniería informática (ciencia de la
+computación, tecnología de la computación, ingeniería de software, base de datos y
+sistemas de información, redes de comunicación) y ciencias humanas y sociales
+(ciencias económicas y financieras, teoría y gestión de la organización, ciencias del
+comportamiento humano, ética del profesional, lenguaje oral y escrito (español e
+inglés)).'),(2,1,'HABILIDADES-DESTREZAS PROFESIONALES','El profesional egresado o egresada de la carrera Ingeniería Civil en Informática
+de la Universidad de Santiago de Chile posee las siguientes habilidades y destrezas
+profesionales al momento de egreso:
+
+HABILIDADES GENERALES:
+1. Capacidad de aprendizaje autónomo 
+2. Capacidad de trabajo en equipo 
+3. Capacidad de liderazgo 
+4. Capacidad para comunicarse efectivamente en español de forma oral, escrita y
+simbólica 
+5. Capacidad de pensamiento crítico 
+6. Capacidad de comunicarse en forma oral y escrita a nivel intermedio en inglés
+técnico
+
+HABILIDADES ESPECIALIZADAS GENÉRICAS:
+7. Capacidad para aplicar conocimiento de ciencias básicas, de la Ingeniería y de la
+especialidad en los ámbitos de su profesión 
+8. Capacidad para abordar y resolver problemas de ingeniería en una perspectiva
+sistémica 
+9. Capacidad para diagnosticar, modelar, diseñar y mejorar continuamente sistemas
+o procesos en el ámbito de su especialidad 
+10. Capacidad para formular proyectos de la especialidad y evaluar su factibilidad
+técnica y económica 
+11. Capacidad para gestionar y administrar proyectos o empresas relacionadas con
+su profesión 
+12. Capacidad para utilizar TICs y software de la especialidad, así como técnicas y
+herramientas modernas de la ingeniería 
+13. Entender el impacto de las soluciones de ingeniería en un contexto global,
+económico, medioambiental y social
+
+HABILIDADES ESPECIALIZADAS ESPECÍFICAS:
+14. Identificar oportunidades de uso de la información y TICs 
+15. Recolectar y analizar datos con métodos y herramientas computacionales para
+transformarlos en información 
+16. Analizar, modelar y desarrollar sistemas, procesos y productos basados en TIC
+(ofrecidos y en operación) 
+17. Adecuar las TIC vigentes a los cambios organizacionales 
+18. Generar y construir abstracciones de fenómenos del mundo real usando la
+formación técnica de su especialidad'),(3,1,'ACTITUDES Y VALORES','El profesional egresado o egresada de la carrera Ingeniería Civil en Informática 
+de la Universidad de Santiago de Chile posee las actitudes y valores que a continuación 
+se señalan:
+1. Comprensión de la responsabilidad profesional, social y ética en todo contexto 
+2. Disposición hacia el emprendimiento y la innovación 
+3. Adaptabilidad a cambios y contextos diversos 
+4. Compromiso con el trabajo bien realizado (Calidad) 
+5. Disposición para buscar soluciones con recursos escasos'),(4,2,'ÁREAS PRINCIPALES DE CONOCIMIENTO','El profesional egresado o egresada de la carrera Ingeniería de Ejecución en
+Computación e Informática de la Universidad de Santiago de Chile posee
+conocimientos en ciencias básicas (matemática y física), ciencias de la ingeniería (teoría
+de sistemas, programación), ingeniería informática (tecnología de la computación,
+ciencia de la computación, ingeniería de software, bases de datos y sistemas de
+información, redes de comunicación) y ciencias humanas y sociales (ciencias de la
+administración, lenguaje oral y escrito (español e inglés)).'),(5,2,'HABILIDADES-DESTREZAS PROFESIONALES','El profesional egresado o egresada de la carrera Ingeniería de Ejecución en
+Computación e Informática de la Universidad de Santiago de Chile posee las siguientes
+habilidades y destrezas profesionales al momento de egreso:
+
+HABILIDADES GENERALES
+1. Capacidad de aprendizaje autónomo 
+2. Capacidad de trabajo en equipo
+3. Capacidad para comunicarse efectivamente en español de forma oral y escrita
+4. Capacidad de pensamiento crítico
+5. Capacidad de comunicarse en forma oral y escrita a nivel básico en inglés 
+técnico
+
+HABILIDADES ESPECIALIZADAS GENÉRICAS
+6. Capacidad para diagnosticar y resolver problemas de ingeniería en una 
+perspectiva sistémica a nivel operativo 
+7. Capacidad para aplicar conocimiento de ciencias básicas, de la ingeniería y de la
+especialidad en los ámbitos de su profesión
+8. Capacidad para ejecutar y controlar proyectos de la especialidad
+9. Capacidad para utilizar herramientas de las TIC
+10. Manejo de lenguajes simbólicos de la especialidad
+
+HABILIDADES ESPECIALIZADAS ESPECÍFICAS
+11. Capacidad para administrar sistemas de software
+12. Capacidad para adecuar las TICs vigentes a los cambios organizacionales 
+13. Capacidad para analizar, modelar y desarrollar sistemas, procesos y 
+productos basados en TIC (ofrecidos y en operación) 
+14. Capacidad para comprender abstracciones de fenómenos del mundo real 
+representadas con lenguajes propios de la especialidad
+15. Capacidad de entender los impactos de las soluciones de ingeniería en un 
+contexto económico y social'),(6,2,'ACTITUDES Y VALORES','El profesional egresado o egresada de la carrera Ingeniería de Ejecución en 
+Computación e Informática de la Universidad de Santiago de Chile posee las actitudes y
+valores que a continuación se señalan:
+1. Comprensión de la responsabilidad profesional, social y ética en todo 
+contexto en que se desenvuelve
+2. Adaptabilidad a cambios y contextos diversos
+3. Disposición hacia el emprendimiento y la innovación
+4. Compromiso con el trabajo bien realizado (Calidad)');
+/*!40000 ALTER TABLE `seccion` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `profesor`
 --

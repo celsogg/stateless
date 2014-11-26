@@ -1,12 +1,11 @@
 package managedbeans;
 
-import entities.Carrera;
+import entities.Seccion;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
-import sessionbeans.CarreraFacadeLocal;
+import sessionbeans.SeccionFacadeLocal;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,34 +18,24 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.servlet.http.HttpServletRequest;
 
-@Named("carreraController")
+@Named("seccionController")
 @SessionScoped
-public class CarreraController implements Serializable {
+public class SeccionController implements Serializable {
 
     @EJB
-    private CarreraFacadeLocal ejbFacade;
-    private List<Carrera> items = null;
-    private Carrera selected;
-    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(CarreraController.class);
+    private SeccionFacadeLocal ejbFacade;
+    private List<Seccion> items = null;
+    private Seccion selected;
 
-    public CarreraController() {
+    public SeccionController() {
     }
 
-    public Carrera getSelected() {
+    public Seccion getSelected() {
         return selected;
     }
-    
-    private Principal getLoggedInUser()
-    {
-        HttpServletRequest request =
-                (HttpServletRequest) FacesContext.getCurrentInstance().
-                    getExternalContext().getRequest();
-        return request.getUserPrincipal();
-    }
 
-    public void setSelected(Carrera selected) {
+    public void setSelected(Seccion selected) {
         this.selected = selected;
     }
 
@@ -56,39 +45,36 @@ public class CarreraController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private CarreraFacadeLocal getFacade() {
+    private SeccionFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public Carrera prepareCreate() {
-        selected = new Carrera();
+    public Seccion prepareCreate() {
+        selected = new Seccion();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CarreraCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SeccionCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
-        logger.info("El usuario "+getLoggedInUser().getName() +" ha creado una asignatura");
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CarreraUpdated"));
-        logger.info("El usuario "+getLoggedInUser().getName()+"ha actualizado la asignatura "+ getSelected().getNombreCarrera());
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SeccionUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("CarreraDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SeccionDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
-            logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado la asignatura "+ getSelected().getNombreCarrera());
         }
     }
 
-    public List<Carrera> getItems() {
+    public List<Seccion> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -123,29 +109,29 @@ public class CarreraController implements Serializable {
         }
     }
 
-    public Carrera getCarrera(java.lang.Integer id) {
+    public Seccion getSeccion(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<Carrera> getItemsAvailableSelectMany() {
+    public List<Seccion> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Carrera> getItemsAvailableSelectOne() {
+    public List<Seccion> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Carrera.class)
-    public static class CarreraControllerConverter implements Converter {
+    @FacesConverter(forClass = Seccion.class)
+    public static class SeccionControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CarreraController controller = (CarreraController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "carreraController");
-            return controller.getCarrera(getKey(value));
+            SeccionController controller = (SeccionController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "seccionController");
+            return controller.getSeccion(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -165,11 +151,11 @@ public class CarreraController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Carrera) {
-                Carrera o = (Carrera) object;
-                return getStringKey(o.getIdCarrera());
+            if (object instanceof Seccion) {
+                Seccion o = (Seccion) object;
+                return getStringKey(o.getIdSeccion());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Carrera.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Seccion.class.getName()});
                 return null;
             }
         }
@@ -177,4 +163,3 @@ public class CarreraController implements Serializable {
     }
 
 }
-
