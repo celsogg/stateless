@@ -9,7 +9,6 @@ import sessionbeans.AsignaturaFacadeLocal;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -38,6 +37,7 @@ public class AsignaturaController implements Serializable {
     private List<Asignatura> itemsPlan = null;
     private Asignatura selected;
     final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
+    private String deletedAsignatura;
     
     @Inject
     private PlanController planController;
@@ -145,12 +145,12 @@ public class AsignaturaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
-        logger.info("El usuario "+getLoggedInUser().getName() +" ha creado una asignatura");
+        logger.info("Ha creado la asignatura: "+ getSelected().getNombreAsignatura());
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaUpdated"));
-        logger.info("El usuario "+getLoggedInUser().getName()+"ha actualizado la asignatura "+ getSelected().getNombreAsignatura());
+        logger.info("Ha actualizado la asignatura: "+ getSelected().getNombreAsignatura());
     }
 
     public void destroy() {
@@ -158,8 +158,9 @@ public class AsignaturaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
-            logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado la asignatura "+ getSelected().getNombreAsignatura());
+            
         }
+        logger.info("Ha eliminado la asignatura "+ deletedAsignatura);
     }
 
     public List<Asignatura> getItems() {
@@ -184,6 +185,7 @@ public class AsignaturaController implements Serializable {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
+                    deletedAsignatura=selected.getNombreAsignatura();
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);

@@ -2,7 +2,6 @@ package managedbeans;
 
 import entities.Usuario;
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
