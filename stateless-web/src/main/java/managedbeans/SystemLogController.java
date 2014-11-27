@@ -3,7 +3,7 @@ package managedbeans;
 import entities.SystemLog;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
-import sb.SystemLogFacade;
+import sessionbeans.SystemLogFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +24,7 @@ import javax.faces.convert.FacesConverter;
 public class SystemLogController implements Serializable {
 
     @EJB
-    private sb.SystemLogFacade ejbFacade;
+    private SystemLogFacadeLocal ejbFacade;
     private List<SystemLog> items = null;
     private SystemLog selected;
 
@@ -45,7 +45,7 @@ public class SystemLogController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SystemLogFacade getFacade() {
+    private SystemLogFacadeLocal getFacade() {
         return ejbFacade;
     }
 
