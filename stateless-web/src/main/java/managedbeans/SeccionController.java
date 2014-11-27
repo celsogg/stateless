@@ -27,6 +27,8 @@ public class SeccionController implements Serializable {
     private SeccionFacadeLocal ejbFacade;
     private List<Seccion> items = null;
     private Seccion selected;
+    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SeccionController.class);
+    private Seccion deletedSeccion;
 
     public SeccionController() {
     }
@@ -60,10 +62,13 @@ public class SeccionController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        logger.info("Se ha creado una sección: "+getSelected().getNombreSeccion());
+        
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SeccionUpdated"));
+        logger.info("Se ha actualizado una sección: "+getSelected().getNombreSeccion());
     }
 
     public void destroy() {
@@ -72,6 +77,7 @@ public class SeccionController implements Serializable {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        logger.info("Se ha eliminado la sección: " + deletedSeccion.getNombreSeccion());
     }
 
     public List<Seccion> getItems() {
@@ -88,6 +94,7 @@ public class SeccionController implements Serializable {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
+                    deletedSeccion = selected;
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);

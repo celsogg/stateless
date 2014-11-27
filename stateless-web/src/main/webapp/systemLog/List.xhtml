@@ -20,26 +20,25 @@
                                  selectionMode="single" selection="#{systemLogController.selected}"
                                  paginator="true"
                                  rowKey="#{item.logsId}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+
+                        <p:column sortBy="#{item.logsId}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSystemLogTitle_logsId}"/>
                             </f:facet>
                             <h:outputText value="#{item.logsId}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.userId}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSystemLogTitle_userId}"/>
                             </f:facet>
                             <h:outputText value="#{item.userId}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.dated}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSystemLogTitle_dated}"/>
                             </f:facet>
@@ -47,13 +46,7 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSystemLogTitle_logger}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.logger}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column sortBy = "#{item.level}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSystemLogTitle_level}"/>
                             </f:facet>
@@ -66,18 +59,11 @@
                             <h:outputText value="#{item.message}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{systemLogController.prepareCreate}" update=":SystemLogCreateForm" oncomplete="PF('SystemLogCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":SystemLogViewForm" oncomplete="PF('SystemLogViewDialog').show()" disabled="#{empty systemLogController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":SystemLogEditForm" oncomplete="PF('SystemLogEditDialog').show()" disabled="#{empty systemLogController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{systemLogController.destroy}" update=":growl,datalist" disabled="#{empty systemLogController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
         </ui:define>
     </ui:composition>
 

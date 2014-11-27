@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.log4j.MDC;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
@@ -16,7 +15,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.UsuarioFacadeLocal;
@@ -35,13 +33,6 @@ public class UsuarioController implements Serializable {
     public UsuarioController() {
     }
     
-    private Principal getLoggedInUser()
-    {
-        HttpServletRequest request =
-                (HttpServletRequest) FacesContext.getCurrentInstance().
-                    getExternalContext().getRequest();
-        return request.getUserPrincipal();
-    }
     
     public Usuario getSelected() {
         return selected;
