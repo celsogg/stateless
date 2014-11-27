@@ -128,43 +128,6 @@ public class AsignaturaController implements Serializable {
         return salida;
     }
     
-     public void borrarProyeccion(Integer id_requisito){
-        ArrayList<Asignatura> proyeccion = new ArrayList<>(selected.getAsignaturaCollection1());
-        
-        List<Asignatura> asig = getFacade().findAsignaturas(3);
-        Asignatura asigna = asig.get(0);
-        
-        ArrayList<Asignatura> proye = new ArrayList<>(asigna.getAsignaturaCollection1());
-        
-        System.out.println("entre");
-        for (Asignatura pro : proye) {
-            System.out.println("asi "+ pro.getIdAsignatura() + "=" + selected.getIdAsignatura());
-            System.out.println("asi name" + pro.getNombreAsignatura());
-            if(pro.getIdAsignatura() == 9) {
-                System.out.println("nombre proyecion" + asigna.getNombreAsignatura());
-                System.out.println("id proyeccion" + asigna.getIdAsignatura());
-                System.out.println("nombre asig requi: " + pro.getNombreAsignatura());
-                System.out.println(" id asign : " + pro.getIdAsignatura());
-                ArrayList<Asignatura> asdf = new ArrayList<>();
-                
-                List<Asignatura> asig2 = getFacade().findAsignaturas(pro.getIdAsignatura());
-                Asignatura asigna2 = asig2.get(0);
-                System.out.println("asdfasdasd:" +items.get(pro.getIdAsignatura()-3).getNombreAsignatura());
-                items.get(pro.getIdAsignatura()-3).setAsignaturaCollection(null);
-                
-                update();
-          
-                 System.out.println("hago el update proyeccion");
-                break;
-            }
-            
-        }
-         for (Asignatura proye1 : proyeccion) {
-             System.out.println("algo" + proye1.getNombreAsignatura());
-         }      
-        
-        
-     }
      
     public String getStringRequisitos(Asignatura asignatura){
         StringBuilder sb = null;
@@ -175,54 +138,7 @@ public class AsignaturaController implements Serializable {
         return sb.toString();
     }
     
-    public void borrarRequisito(Integer id_requisito){
-        ArrayList<Asignatura> requisitos = new ArrayList<>(selected.getAsignaturaCollection());
-        
-        List<Asignatura> asig = getFacade().findAsignaturas(9);
-        Asignatura asigna = asig.get(0);
-        
-        ArrayList<Asignatura> proye = new ArrayList<>(asigna.getAsignaturaCollection1());
-        
-        System.out.println("entre");
-        
-        for (Asignatura requi : requisitos) {
-            if(requi.getIdAsignatura() == 9) {
-                System.out.println("nombre proyecion" + asigna.getNombreAsignatura());
-                System.out.println("id proyeccion" + asigna.getIdAsignatura());
-                System.out.println("nombre asig requi: " + requi.getNombreAsignatura());
-                System.out.println(" id asign : " + requi.getIdAsignatura());
-                logger.info("El usuario "+getLoggedInUser().getName() +" ha eliminado el requisito "+requi.getNombreAsignatura()+" de la asignatura "+ getSelected().getNombreAsignatura());
-                requisitos.remove(requi);
-                break;
-            }
-            
-        }
-        
-        selected.setAsignaturaCollection(requisitos);  
-        update();
-          
-        System.out.println("hago el update requisitos");
-        /*
-        for (Asignatura asi : proye) {
-            System.out.println("asi "+ asi.getIdAsignatura() + "=" + selected.getIdAsignatura());
-            System.out.println("asi name" + asi.getNombreAsignatura());
-            if(asi.getIdAsignatura() == selected.getIdAsignatura()){
-                proye.remove(asi);
-                break;
-            
-            }
-        
-        }
-        for (Asignatura asias : proye) {
-            System.out.println(asias.getNombreAsignatura());
-            
-        }
-       
-        asigna.setAsignaturaCollection1(proye);  
-        update();  
-        System.out.println("hago el update proyeccion");
-        */
-    }
+  
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaCreated"));
