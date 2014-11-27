@@ -13,17 +13,23 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{planController.selected != null}">
 
-                        <p:outputLabel value="#{bundle.EditPlanLabel_nombrePlan}" for="nombrePlan" />
-                        <p:inputText id="nombrePlan" value="#{planController.selected.nombrePlan}" title="#{bundle.EditPlanTitle_nombrePlan}" />
-
                         <p:outputLabel value="#{bundle.EditPlanLabel_codigoPlan}" for="codigoPlan" />
                         <p:inputText id="codigoPlan" value="#{planController.selected.codigoPlan}" title="#{bundle.EditPlanTitle_codigoPlan}" />
                         
+                        <p:outputLabel value="#{bundle.EditPlanLabel_idCarrera}" for="idCarrera" />
+                        <p:selectOneMenu id="idCarrera" value="#{planController.selected.idCarrera}" >
+                            <f:selectItems value="#{carreraController.itemsAvailableSelectOne}" var="idCarreraItem"
+                                           itemLabel="#{idCarreraItem.nombreCarrera}" itemValue="#{idCarreraItem}"/>
+                        </p:selectOneMenu>
+                                                
                         <p:outputLabel value="#{bundle.EditPlanLabel_anioPlan}" for="anioPlan" />
                         <p:inputText id="anioPlan" value="#{planController.selected.anioPlan}" title="#{bundle.EditPlanTitle_anioPlan}" />
-                            
-                        <p:outputLabel value="Versión" for="versionPlan" />
-                        <p:inputText id="versionPlan" value="#{planController.selected.versionPlan}" title="#{bundle.EditPlanTitle_codigoPlan}" />
+                        
+                        <p:outputLabel value="#{bundle.EditPlanLabel_version}" for="versionPlan" />
+                        <p:inputText id="versionPlan" value="#{planController.selected.versionPlan}" title="#{bundle.EditPlanTitle_version}" />
+                        
+                        <p:outputLabel value="#{bundle.EditPlanLabel_nombrePlan}" for="nombrePlan" />
+                        <p:inputText id="nombrePlan" value="#{planController.selected.nombrePlan}" title="#{bundle.EditPlanTitle_nombrePlan}" />
                         
                         <h:outputLabel value="#{bundle.EditPlanLabel_visiblePlan}" for="visiblePlan"/>
                         <p:selectBooleanCheckbox id="visiblePlan" value="#{planController.selected.visiblePlan}" />

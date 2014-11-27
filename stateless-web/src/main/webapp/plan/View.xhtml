@@ -11,13 +11,22 @@
         <p:dialog id="PlanViewDlg" widgetVar="PlanViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPlanTitle}">
             <h:form id="PlanViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{planController.selected != null}">
-                        <h:outputText value="#{bundle.ViewPlanLabel_nombrePlan}"/>
-                        <h:outputText value="#{planController.selected.nombrePlan}" title="#{bundle.ViewPlanTitle_nombrePlan}"/>
-                        <h:outputText value="#{bundle.ViewPlanLabel_anioPlan}"/>
-                        <h:outputText value="#{planController.selected.anioPlan}" title="#{bundle.ViewPlanTitle_anioPlan}"/>
+                    <p:panelGrid columns="2" rendered="#{planController.selected != null}">         
                         <h:outputText value="#{bundle.ViewPlanLabel_codigoPlan}"/>
                         <h:outputText value="#{planController.selected.codigoPlan}" title="#{bundle.ViewPlanTitle_codigoPlan}"/>
+                        
+                        <h:outputText value="#{bundle.ViewPlanLabel_idCarrera}"/>
+                        <h:outputText value="#{planController.selected.idCarrera.nombreCarrera}" title="#{bundle.ViewPlanTitle_idCarrera}"/>
+                        
+                        <h:outputText value="#{bundle.ViewPlanLabel_anioPlan}"/>
+                        <h:outputText value="#{planController.selected.anioPlan}" title="#{bundle.ViewPlanTitle_anioPlan}"/>
+                        
+                        <h:outputText value="#{bundle.ViewPlanLabel_version}"/>
+                        <h:outputText value="#{planController.selected.versionPlan}" title="#{bundle.ViewPlanTitle_version}"/>
+                        
+                        <h:outputText value="#{bundle.ViewPlanLabel_nombrePlan}"/>
+                        <h:outputText value="#{planController.selected.nombrePlan}" title="#{bundle.ViewPlanTitle_nombrePlan}"/>
+                        
                         <h:outputText value="#{bundle.ViewPlanLabel_visiblePlan}"/>
                         <h:outputText value="#{planController.selected.visiblePlanString}" title="#{bundle.ViewPlanTitle_visiblePlan}"/>
                     </p:panelGrid>

@@ -12,18 +12,30 @@
             <h:form id="PlanCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{planController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePlanLabel_nombrePlan}" for="nombrePlan" />
-                        <p:inputText id="nombrePlan" value="#{planController.selected.nombrePlan}" title="#{bundle.CreatePlanTitle_nombrePlan}" />
-                        <p:outputLabel value="#{bundle.CreatePlanLabel_anioPlan}" for="anioPlan" />
-                        <p:inputText id="anioPlan" value="#{planController.selected.anioPlan}" title="#{bundle.CreatePlanTitle_anioPlan}" />
-                        <p:outputLabel value="#{bundle.CreatePlanLabel_codigoPlan}" for="codigoPlan" />
+                        
+                        <p:outputLabel value="#{bundle.CreatePlanLabel_codigoPlan}" for="codigoPlan"/>
                         <p:inputText id="codigoPlan" value="#{planController.selected.codigoPlan}" title="#{bundle.CreatePlanTitle_codigoPlan}" />
+                        
                         <p:outputLabel value="#{bundle.CreatePlanLabel_idCarrera}" for="idCarrera" />
                         <p:selectOneMenu id="idCarrera" value="#{planController.selected.idCarrera}" >
                             <f:selectItems value="#{carreraController.itemsAvailableSelectOne}"
                                            itemLabel="#{idCarreraItem.nombreCarrera}" var="idCarreraItem"
                                            itemValue="#{idCarreraItem}"/>
                         </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{bundle.CreatePlanLabel_anioPlan}" for="anioPlan" />
+                        <p:inputText id="anioPlan" value="#{planController.selected.anioPlan}" title="#{bundle.CreatePlanTitle_anioPlan}" />
+                        
+                        <p:outputLabel value="#{bundle.CreatePlanLabel_version}" for="versionPlan" />
+                        <p:inputText id="versionPlan" value="#{planController.selected.versionPlan}" title="#{bundle.CreatePlanTitle_version}" />
+                        
+                        <p:outputLabel value="#{bundle.CreatePlanLabel_nombrePlan}" for="nombrePlan" />
+                        <p:inputText id="nombrePlan" value="#{planController.selected.nombrePlan}" title="#{bundle.CreatePlanTitle_nombrePlan}" />
+                        
+                        
+                        <p:outputLabel value="#{bundle.CreatePlanLabel_visiblePlan}" for="visiblePlan" />
+                        <p:selectBooleanCheckbox id="visiblePlan" value="#{planController.selected.visiblePlan}" />
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{planController.create}" value="#{bundle.Save}" update="display,:PlanListForm:datalist,:growl" oncomplete="handleSubmit(args,'PlanCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PlanCreateDialog.hide()"/>
