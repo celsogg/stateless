@@ -63,7 +63,6 @@ public class PlanController implements Serializable {
         return selectedAsignatura;
     }
 
-
     public void setSelectedAsignatura(Asignatura selectedAsignatura) {
         this.selectedAsignatura = selectedAsignatura;
     }
@@ -119,7 +118,7 @@ public class PlanController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
-        logger.info("Se ha creado un plan "+getSelected().getNombrePlan());
+        logger.info("Se ha creado un plan " + getSelected().getNombrePlan());
     }
 
     public void update() {
@@ -130,11 +129,11 @@ public class PlanController implements Serializable {
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PlanDeleted"));
         if (!JsfUtil.isValidationFailed()) {
+            logger.info("Se ha eliminado el plan " + deletedPlan.getNombrePlan() + ", codigo:" + deletedPlan.getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
-    
+
         }
-        logger.info("Se ha eliminado el plan " + deletedPlan.getNombrePlan() + ", codigo:" + deletedPlan.getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
     }
 
     public List<Plan> getItems() {
@@ -307,74 +306,72 @@ public class PlanController implements Serializable {
         return csvWithHeader;
     }
 
-    public UploadedFile getFile() {
+    public UploadedFile getCsvFile() {
         return csvFile;
     }
 
-    public void setFile(UploadedFile file) {
-        this.csvFile = file;
+    public void setCsvFile(UploadedFile csvFile) {
+        this.csvFile = csvFile;
     }
 
     public void upload() throws IOException {
-        if (csvFile != null) {
-            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-            //context.redirect(context.getRequestContextPath() + "/plan/CompleteCsv.xhtml");
-            FacesMessage message = new FacesMessage("Succesful", csvFile.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        }
-    }
+        //System.out.println("upload");
+        if (   csvFile != null  && csvFile.getFileName().compareToIgnoreCase("") != 0 ){
+            UploadedFile uf = csvFile;
 
-    public void handleFileUpload(FileUploadEvent event) throws IOException {
+            File save;
+            save = File.createTempFile("temp", ".csv");
 
-        UploadedFile uf = event.getFile();
+            uf.getContents();
+            Files.copy(uf.getInputstream(), save.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        File save;
-        save = File.createTempFile("temp", ".csv");
+            ArrayList<Asignatura> asignaturas = new ArrayList<>();
 
-        uf.getContents();
-        Files.copy(uf.getInputstream(), save.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            BufferedReader br = Files.newBufferedReader(save.toPath(), Charset.forName("Windows-1252"));
+            String line;
 
-        ArrayList<Asignatura> asignaturas = new ArrayList<>();
+            while ((line = br.readLine()) != null) {
 
-        BufferedReader br = Files.newBufferedReader(save.toPath(), Charset.forName("Windows-1252"));
-        String line;
+                Asignatura asignatura = new Asignatura();
+                String[] strs = getCsvLineCols(line);
 
-        while ((line = br.readLine()) != null) {
+                asignatura.setIdPlan(selected);
 
-            Asignatura asignatura = new Asignatura();
-            String[] strs = getCsvLineCols(line);
+                asignatura.setCodigoAsignatura(strs[0]);
+                asignatura.setNombreAsignatura(strs[1]);
+                asignatura.setHorasTeoria(Integer.parseInt(strs[2]));
+                asignatura.setHorasEjercicio(Integer.parseInt(strs[3]));
+                asignatura.setHorasLaboratorio(Integer.parseInt(strs[4]));
+                asignatura.setNivelAsignatura(Integer.parseInt(strs[5]));
+                asignatura.setEsAnual(false);
 
-            asignatura.setIdPlan(selected);
+                if (strs[6].compareToIgnoreCase("ingreso") != 0) {
+                    String[] requisitosStrs = strs[6].replace("\"", "").split(",");
+                    ArrayList<Asignatura> requisitos = new ArrayList<>();
+                    for (String requisito : requisitosStrs) {
 
-            asignatura.setCodigoAsignatura(strs[0]);
-            asignatura.setNombreAsignatura(strs[1]);
-            asignatura.setHorasTeoria(Integer.parseInt(strs[2]));
-            asignatura.setHorasEjercicio(Integer.parseInt(strs[3]));
-            asignatura.setHorasLaboratorio(Integer.parseInt(strs[4]));
-            asignatura.setNivelAsignatura(Integer.parseInt(strs[5]));
-            asignatura.setEsAnual(false);
-
-            if (strs[6].compareToIgnoreCase("ingreso") != 0) {
-                String[] requisitosStrs = strs[6].replace("\"", "").split(",");
-                ArrayList<Asignatura> requisitos = new ArrayList<>();
-                for (String requisito : requisitosStrs) {
-
-                    for (Asignatura a : asignaturas) {
-                        if (a.getCodigoAsignatura().compareToIgnoreCase(requisito.trim()) == 0) {
-                            requisitos.add(a);
+                        for (Asignatura a : asignaturas) {
+                            if (a.getCodigoAsignatura().compareToIgnoreCase(requisito.trim()) == 0) {
+                                requisitos.add(a);
+                            }
                         }
                     }
+                    asignatura.setAsignaturaCollection(requisitos);
                 }
-                asignatura.setAsignaturaCollection(requisitos);
+                asignaturas.add(asignatura);
             }
-            asignaturas.add(asignatura);
-        }
 
-        FacesMessage message = new FacesMessage("Succesful", "El archivo \"" + uf.getFileName() + "\" se ha subido con éxito, guarde los cambios");
-        FacesContext.getCurrentInstance().addMessage(null, message);
-        RequestContext context = RequestContext.getCurrentInstance();
-        csvFileSelected = true;
-        selected.setAsignaturaCollection(asignaturas);
+           // FacesMessage message = new FacesMessage( "Asignaturas agregadas exitosamente desde el archivo \"" + uf.getFileName() + "\"");
+            //FacesContext.getCurrentInstance().addMessage(null, message);
+            
+            selected.setAsignaturaCollection(asignaturas);
+            csvFile = null;
+            update();
+            
+        } else {
+            FacesMessage message = new FacesMessage("No se ha seleccionado un archivo.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
     }
 
     private String[] getCsvLineCols(String line) {
