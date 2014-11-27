@@ -83,13 +83,10 @@ public class Asignatura implements Serializable {
     private Collection<Asignatura> asignaturaCollection1;
     @ManyToMany(mappedBy = "asignaturaCollection")
     private Collection<Profesor> profesorCollection;
-    @ManyToMany(mappedBy = "asignaturaCollection")
-    private Collection<Habilidad> habilidadCollection;
     @JoinColumn(name = "ID_PLAN", referencedColumnName = "ID_PLAN")
     @ManyToOne
     private Plan idPlan;
-    @OneToMany(mappedBy = "idAsignatura")
-    private Collection<ProgramaAsignatura> programaAsignaturaCollection;
+    
 
 
     
@@ -199,15 +196,6 @@ public class Asignatura implements Serializable {
         this.profesorCollection = profesorCollection;
     }
 
-    @XmlTransient
-    public Collection<Habilidad> getHabilidadCollection() {
-        return habilidadCollection;
-    }
-
-    public void setHabilidadCollection(Collection<Habilidad> habilidadCollection) {
-        this.habilidadCollection = habilidadCollection;
-    }
-
     public Plan getIdPlan() {
         return idPlan;
     }
@@ -216,14 +204,7 @@ public class Asignatura implements Serializable {
         this.idPlan = idPlan;
     }
 
-    @XmlTransient
-    public Collection<ProgramaAsignatura> getProgramaAsignaturaCollection() {
-        return programaAsignaturaCollection;
-    }
 
-    public void setProgramaAsignaturaCollection(Collection<ProgramaAsignatura> programaAsignaturaCollection) {
-        this.programaAsignaturaCollection = programaAsignaturaCollection;
-    }
 
     @Override
     public int hashCode() {
