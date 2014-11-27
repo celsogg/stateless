@@ -1,156 +1,151 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
-        <title>#{planController.getPlan(param['planId']).getNombrePlan()} (#{planController.getPlan(param['planId']).getCodigoPlan()}) - Malla Curricular Interactiva</title>
-        <meta charset="utf-8"/>
-        <meta name="description" content="Malla curricular interactiva"/>
-        <meta http-equiv="Content-Script-Type" content="text/javascript"/>
-        <meta http-equiv="Content-Style-Type" content="text/css"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <script language="javascript" type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="bootstrap.min.css"/>
 
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="bootstrap-theme.min.css" />
+    <ui:composition template="/template.xhtml">
 
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
+        <ui:define name="body" id="body_malla">
+            <script language="javascript" type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 
-        <script language="javascript" type="text/javascript" src="js/handlebars-v2.0.0.js"></script>
-        <script language="javascript" type="text/javascript" src="js/jquery-spin.js" charset="utf-8"></script>
-        <script language="javascript" type="text/javascript" src="js/underscore-min.js" charset="utf-8"></script>
-        <script language="javascript" type="text/javascript" src="js/jquery.qtip.min.js"></script>
-        <script language="javascript" type="text/javascript" src="js/mallas.js" charset="utf-8"></script>
-        <script language="javascript" type="text/javascript" src="js/prototype.js"></script>
-        <script language="javascript" type="text/javascript" src="js/SpinnerControl.js"></script>
-        <script language="javascript" type="text/javascript" src="js/mci.js"></script>
-        <script src="../bootstrap.min.js"></script>
-        <link href="../bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="style.css"></link>
-        <link rel="stylesheet" type="text/css" href="mci.css"></link>
-        <link rel="stylesheet" type="text/css" href="jquery.qtip.min.css"></link>
-        <link rel="stylesheet" href="shepherd-theme-arrows.css" />
-        <script src="shepherd.js"></script>
-        <style>
-            .tooltip{
-                font-size: 14px;
-                background-color: #2980b9;
-                border-color: #34495e;
-                color: white;
-            }
-            .shepherd-content{
-                width: 400px;
-            }
-            #tomar_ramos_div{
-                width: 300px;
-            }
-            #sct_y_tel{
-                margin-left: 10px;
-            }
-            #spinme_tomar_ramos{
-                margin-left: 5px;
-            }
-        </style>
-        <link rel="shortcut icon" href="images/favicon.ico" type="image/vnd.microsoft.icon"></link>
-        <script>
-            //jQuery.noConflict();
-            //jQuery(document).ready(init);
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="bootstrap.min.css"/>
 
-        </script>
-    </head>
-    <body>
-        <script id="asignaturas" type="text/x-handlebars-template">
-            <div class="row">
-            {{{imprimir this}}}
-            </div>
-        </script>
-        <div id="main" style="min-width: 1280px; background: url(images/background.png) 100% 0% no-repeat white;">
-            <div id="header" style="height: 130px;">
-                <div id="college">FACULTAD DE INGENIERIA</div>
-                <div id="program">#{planController.getPlan(param['planId']).getNombrePlan()} (#{planController.getPlan(param['planId']).getCodigoPlan()})</div>
-            </div>
-            <a target="_blank" href="/stateless-web/pdfservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-right" style="margin-left: 15px;">Imprimir Plan</button></a>
-            <a target="_blank" href="/stateless-web/pdfmallaservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-right" style="margin-left: 15px;">Imprimir Malla</button></a>
-            <button id="boton_resumen_simulacion" type="button" class="btn btn-success pull-right" style="margin-left: 15px;">Resumen Simulacion</button>
-            <button id="boton_tutorial" type="button" class="btn btn-success pull-right">Tutorial</button>
-            <div id="contenedor_outercanvas">
-                <div id="outercanvas">
+            <!-- Optional theme -->
+            <link rel="stylesheet" href="bootstrap-theme.min.css" />
+
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="js/bootstrap.min.js"></script>
+
+            <script language="javascript" type="text/javascript" src="js/handlebars-v2.0.0.js"></script>
+            <script language="javascript" type="text/javascript" src="js/jquery-spin.js" charset="utf-8"></script>
+            <script language="javascript" type="text/javascript" src="js/underscore-min.js" charset="utf-8"></script>
+            <script language="javascript" type="text/javascript" src="js/jquery.qtip.min.js"></script>
+            <script language="javascript" type="text/javascript" src="js/mallas.js" charset="utf-8"></script>
+            <!--<script language="javascript" type="text/javascript" src="js/prototype.js"></script>-->
+            <!--<script language="javascript" type="text/javascript" src="js/SpinnerControl.js"></script>-->
+            <!--<script language="javascript" type="text/javascript" src="js/mci.js"></script>-->
+            <script src="../bootstrap.min.js"></script>
+            <link href="../bootstrap.min.css" rel="stylesheet" />
+            <link rel="stylesheet" type="text/css" href="style.css"></link>
+            <link rel="stylesheet" type="text/css" href="mci.css"></link>
+            <link rel="stylesheet" type="text/css" href="jquery.qtip.min.css"></link>
+            <link rel="stylesheet" href="shepherd-theme-arrows.css" />
+            <script src="shepherd.js"></script>
+            <style>
+                .tooltip{
+                    font-size: 14px;
+                    background-color: #2980b9;
+                    border-color: #34495e;
+                    color: white;
+                }
+                .shepherd-content{
+                    width: 400px;
+                }
+                #tomar_ramos_div{
+                    width: 300px;
+                }
+                #sct_y_tel{
+                    margin-left: 10px;
+                }
+                #spinme_tomar_ramos{
+                    margin-left: 5px;
+                }
+            </style>
+            <link rel="shortcut icon" href="images/favicon.ico" type="image/vnd.microsoft.icon"></link>
+            <script>
+                //jQuery.noConflict();
+                //jQuery(document).ready(init);
+            </script>
+            <script id="asignaturas" type="text/x-handlebars-template">
+                <div class="row">
+                {{{imprimir this}}}
                 </div>
-                <div id="control">
-                    <div id="radio">
-                        <div id="apertura"><input type="radio" name="rg" id="fw" checked="checked"/>APERTURA</div>
-                        <div id="prerequisitos"><input type="radio" name="rg" id="bw"/>PRERREQUISITOS</div>
-                        <div id="proyeccion">
-                            <input type="radio" name="rg" id="fwbw"/>PROYECCION
-                            <div id="outline" class="outline">
-                                Nivel
-                                <input class="spin-decimal" id="spinme" value="0" type="text"/>
+            </script>
+            <div id="main" style="width: 1000px;">
+                <div id="header" style="">
+                    <div id="college">FACULTAD DE INGENIERIA</div>
+                    <div id="program">#{planController.getPlan(param['planId']).getNombrePlan()} (#{planController.getPlan(param['planId']).getCodigoPlan()})</div>
+                </div>
+                    <a target="_blank" href="/stateless-web/pdfservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Plan</button></a>
+                    <a target="_blank" href="/stateless-web/pdfmallaservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Malla</button></a>
+                    <button id="boton_resumen_simulacion" type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Resumen Simulacion</button>
+                    <button id="boton_tutorial" type="button" class="btn btn-success pull-left" style="margin-left: 10px;">Tutorial</button>
+                <div id="contenedor_outercanvas" style="width: 1100px;">
+                    <div id="outercanvas">
+                    </div>
+                    <div id="control">
+                        <div id="radio">
+                            <div id="apertura"><input type="radio" name="rg" id="fw" checked="checked"/>APERTURA</div>
+                            <div id="prerequisitos"><input type="radio" name="rg" id="bw"/>PRERREQUISITOS</div>
+                            <div id="proyeccion">
+                                <input type="radio" name="rg" id="fwbw"/>PROYECCION
+                                <div id="outline" class="outline">
+                                    Nivel
+                                    <input class="spin-decimal" id="spinme" value="0" type="text"/>
+                                </div>
+                            </div>
+                            <input type="radio" name="rg" id="simulacion_radio"/>Simulacion
+                            <div id="tomar_ramos_div">
+                                Proyectar Nivel:
+                                <input class="spin-decimal" id="spinme_tomar_ramos" value="0" type="text"/>
+                                <button id="boton_fijar" type="button" class="btn btn-success">Fijar</button><span id="sct_y_tel" class="label label-info" style="font-size: 10px; padding: 12px 20px;">SCT: 0</span>
                             </div>
                         </div>
-                        <input type="radio" name="rg" id="simulacion_radio"/>Simulacion
-                        <div id="tomar_ramos_div">
-                            Proyectar Nivel:
-                            <input class="spin-decimal" id="spinme_tomar_ramos" value="0" type="text"/>
-                            <button id="boton_fijar" type="button" class="btn btn-success">Fijar</button><span id="sct_y_tel" class="label label-info" style="font-size: 14px; padding: 12px 20px;">SCT: 0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--            <div id="footer">
+                            www.usach.cl
+                        </div>-->
+
+            <!-- Modal -->
+            <div class="modal fade" id="resumen_modal" tabindex="-1" role="dialog" aria-labelledby="resumen_modal_Label" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">X</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="resumen_modal_Label">Resumen Simulacion</h4>
+                        </div>
+                        <div class="modal-body" id="contenido_modal_simulacion">
+                            ...a
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Entiendo</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="footer" style="min-width: 1300px;">
-            www.usach.cl
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="resumen_modal" tabindex="-1" role="dialog" aria-labelledby="resumen_modal_Label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">X</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="resumen_modal_Label">Resumen Simulacion</h4>
-                    </div>
-                    <div class="modal-body" id="contenido_modal_simulacion">
-                        ...a
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Entiendo</button>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Cerrar</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Accion no permitida</h4>
+                        </div>
+                        <div class="modal-body">
+                            Lo sentimos, no puede seleccionar esta asignatura.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Entiendo</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Cerrar</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Accion no permitida</h4>
-                    </div>
-                    <div class="modal-body">
-                        Lo sentimos, no puede seleccionar esta asignatura.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Entiendo</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script language="javascript" type="text/javascript">
-            var tomar_ramos = #{ planController.getAccion( param['tomar_ramos'] ) };
-            #{planController.toJSON(planController.getPlan(param['planId']))}
-        </script>
-        <script language="javascript" type="text/javascript">var pruebas = false;</script>
-    </body>
+            <script language="javascript" type="text/javascript">
+                    var tomar_ramos = #{ planController.getAccion( param['tomar_ramos'] ) };
+                #{planController.toJSON(planController.getPlan(param['planId']))}
+            </script>
+            <script language="javascript" type="text/javascript">var pruebas = false;</script>
+        </ui:define>
+    </ui:composition>
 </html>

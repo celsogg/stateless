@@ -1,3 +1,6 @@
+#body_malla{
+    background: red;
+}
 #contenedor_outercanvas{
     margin-bottom: 10px;
     padding-top: 50px;
@@ -9,7 +12,7 @@
 .contenedor_asignatura{
     padding-left: 3px;
     padding-right: 3px;
-    font-size: 10px;
+    font-size: 8px;
 }
 .alto_asignatura{
     /*height: 50px;*/
