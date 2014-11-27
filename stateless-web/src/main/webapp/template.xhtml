@@ -229,6 +229,14 @@
                             </h:outputLink>
                         </li>
                     </c:if>
+                     <c:if test="${loginController.esAdmin()}">
+                        <li class="sub-menu">
+                            <h:outputLink value="/stateless-web/systemLog/List.xhtml">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Ver Log de Auditoría</span>
+                            </h:outputLink>
+                        </li>
+                    </c:if>
                     <li class="sub-menu">
                         <a href="javascript:;" >
                             <i class="fa fa-desktop"></i>
