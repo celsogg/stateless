@@ -34,8 +34,6 @@ import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import static managedbeans.AsignaturaController.logger;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.primefaces.context.RequestContext;
 import sessionbeans.PlanFacade;
@@ -54,7 +52,8 @@ public class PlanController implements Serializable {
     private List<SelectItem> listaPlanes;
     private String selection;
     private Asignatura selectedAsignatura;
-    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
+    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PlanController.class);
+    private Plan deletedPlan;
 
     private UploadedFile csvFile = null;
     private boolean csvWithHeader = false;
@@ -67,12 +66,6 @@ public class PlanController implements Serializable {
         return selectedAsignatura;
     }
 
-    private Principal getLoggedInUser() {
-        HttpServletRequest request
-                = (HttpServletRequest) FacesContext.getCurrentInstance().
-                getExternalContext().getRequest();
-        return request.getUserPrincipal();
-    }
 
     public void setSelectedAsignatura(Asignatura selectedAsignatura) {
         this.selectedAsignatura = selectedAsignatura;
@@ -129,12 +122,12 @@ public class PlanController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
-        logger.info("El usuario " + getLoggedInUser().getName() + " ha creado un plan");
+        logger.info("Se ha creado un plan "+getSelected().getNombrePlan());
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PlanUpdated"));
-        logger.info("El usuario " + getLoggedInUser().getName() + "ha actualizado el plan " + getSelected().getNombrePlan() + ", codigo:" + getSelected().getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
+        logger.info("Se ha actualizado el plan " + getSelected().getNombrePlan() + ", codigo:" + getSelected().getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
     }
 
     public void destroy() {
@@ -142,8 +135,9 @@ public class PlanController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
-            logger.info("El usuario " + getLoggedInUser().getName() + "ha eliminado el plan " + getSelected().getNombrePlan() + ", codigo:" + getSelected().getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
+    
         }
+        logger.info("Se ha eliminado el plan " + deletedPlan.getNombrePlan() + ", codigo:" + deletedPlan.getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
     }
 
     public List<Plan> getItems() {
@@ -167,6 +161,7 @@ public class PlanController implements Serializable {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
+                    deletedPlan = selected;
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);

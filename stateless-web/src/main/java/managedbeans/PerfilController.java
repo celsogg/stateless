@@ -27,6 +27,8 @@ public class PerfilController implements Serializable {
     private PerfilFacadeLocal ejbFacade;
     private List<Perfil> items = null;
     private Perfil selected;
+    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PerfilController.class);
+    private String deletedProfile;
 
     public PerfilController() {
     }
@@ -60,10 +62,12 @@ public class PerfilController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        logger.info("Se ha creado un perfil: "+ getSelected().getNombrePerfil());
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PerfilUpdated"));
+        logger.info("Se ha modificado el perfil"+ getSelected().getNombrePerfil());
     }
 
     public void destroy() {
@@ -72,6 +76,7 @@ public class PerfilController implements Serializable {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
+        logger.info("Se ha eliminado a el perfil: "+ deletedProfile);
     }
 
     public List<Perfil> getItems() {
@@ -88,6 +93,7 @@ public class PerfilController implements Serializable {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
+                    deletedProfile=selected.getNombrePerfil();
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
