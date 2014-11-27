@@ -22,7 +22,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import sessionbeans.UsuarioFacadeLocal;
 import org.apache.log4j.Logger;
-import org.apache.log4j.MDC;
 
 /**
  *
@@ -68,7 +67,6 @@ public class LoginController {
         try {
             request.login(this.username, this.password);
             setUsername(this.username);
-            //System.out.println(this.username);
             List<Usuario> results;
             results = userService.findUsuarioByUid(request.getUserPrincipal().getName());
             Usuario user;
@@ -105,7 +103,6 @@ public class LoginController {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();
         logger.info("El usuario ha cerrado sesión");
-        //MDC.remove("user");
         externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
     }
 

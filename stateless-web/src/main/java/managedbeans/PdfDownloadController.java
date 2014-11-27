@@ -88,7 +88,6 @@ public class PdfDownloadController extends HttpServlet {
             PrintWriter writer = response.getWriter();
             writer.println( this.getClass().getName()+" caught an exception: "+dex.getClass().getName()+"<br>");
             writer.println("<pre>");
-            dex.printStackTrace(writer);
             writer.println("</pre>");
         } finally {
             if (baosPDF != null) {

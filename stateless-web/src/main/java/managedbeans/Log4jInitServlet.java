@@ -29,22 +29,18 @@ public class Log4jInitServlet extends HttpServlet {
      */
     @Override 
     public void init(ServletConfig config) throws ServletException {
-        System.out.println("Log4JInitServlet is initializing log4j");
         String log4jLocation = config.getInitParameter("log4j-properties-location");
         
         ServletContext sc = config.getServletContext();
         
         if (log4jLocation == null) {
-            System.err.println("*** No log4j-properties-location init param, so initializing log4j with BasicConfigurator");
             BasicConfigurator.configure();
         }else{
             String webAppPath = sc.getRealPath("/");
             String log4jProp = webAppPath + log4jLocation;
             File file = new File(log4jProp);
             if (file.exists()) {
-                System.out.println("Initializing log4j with: " + log4jProp);
 		PropertyConfigurator.configure(log4jProp);
-                //System.out.println("Path to log: "+webAppPath);
                 System.setProperty("rootPath", webAppPath);
                 
             }else{

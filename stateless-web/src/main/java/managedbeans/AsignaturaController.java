@@ -9,7 +9,6 @@ import sessionbeans.AsignaturaFacadeLocal;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -38,6 +37,7 @@ public class AsignaturaController implements Serializable {
     private List<Asignatura> itemsPlan = null;
     private Asignatura selected;
     final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
+    private String deletedAsignatura;
     
     @Inject
     private PlanController planController;
@@ -136,16 +136,9 @@ public class AsignaturaController implements Serializable {
         
         ArrayList<Asignatura> proye = new ArrayList<>(asigna.getAsignaturaCollection1());
         
-        System.out.println("entre");
+        
         for (Asignatura pro : proye) {
-            System.out.println("asi "+ pro.getIdAsignatura() + "=" + selected.getIdAsignatura());
-            System.out.println("asi name" + pro.getNombreAsignatura());
             if(pro.getIdAsignatura() == 9) {
-                System.out.println("nombre proyecion" + asigna.getNombreAsignatura());
-                System.out.println("id proyeccion" + asigna.getIdAsignatura());
-                System.out.println("nombre asig requi: " + pro.getNombreAsignatura());
-                System.out.println(" id asign : " + pro.getIdAsignatura());
-                ArrayList<Asignatura> asdf = new ArrayList<>();
                 
                 List<Asignatura> asig2 = getFacade().findAsignaturas(pro.getIdAsignatura());
                 Asignatura asigna2 = asig2.get(0);
@@ -154,14 +147,12 @@ public class AsignaturaController implements Serializable {
                 
                 update();
           
-                 System.out.println("hago el update proyeccion");
+                 
                 break;
             }
             
         }
-         for (Asignatura proye1 : proyeccion) {
-             System.out.println("algo" + proye1.getNombreAsignatura());
-         }      
+         
         
         
      }
@@ -183,14 +174,9 @@ public class AsignaturaController implements Serializable {
         
         ArrayList<Asignatura> proye = new ArrayList<>(asigna.getAsignaturaCollection1());
         
-        System.out.println("entre");
         
         for (Asignatura requi : requisitos) {
             if(requi.getIdAsignatura() == 9) {
-                System.out.println("nombre proyecion" + asigna.getNombreAsignatura());
-                System.out.println("id proyeccion" + asigna.getIdAsignatura());
-                System.out.println("nombre asig requi: " + requi.getNombreAsignatura());
-                System.out.println(" id asign : " + requi.getIdAsignatura());
                 logger.info("El usuario "+getLoggedInUser().getName() +" ha eliminado el requisito "+requi.getNombreAsignatura()+" de la asignatura "+ getSelected().getNombreAsignatura());
                 requisitos.remove(requi);
                 break;
@@ -229,12 +215,12 @@ public class AsignaturaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
-        logger.info("El usuario "+getLoggedInUser().getName() +" ha creado una asignatura");
+        logger.info("Ha creado la asignatura: "+ getSelected().getNombreAsignatura());
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaUpdated"));
-        logger.info("El usuario "+getLoggedInUser().getName()+"ha actualizado la asignatura "+ getSelected().getNombreAsignatura());
+        logger.info("Ha actualizado la asignatura: "+ getSelected().getNombreAsignatura());
     }
 
     public void destroy() {
@@ -242,8 +228,9 @@ public class AsignaturaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
-            logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado la asignatura "+ getSelected().getNombreAsignatura());
+            
         }
+        logger.info("Ha eliminado la asignatura "+ deletedAsignatura);
     }
 
     public List<Asignatura> getItems() {
@@ -268,6 +255,7 @@ public class AsignaturaController implements Serializable {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
+                    deletedAsignatura=selected.getNombreAsignatura();
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
