@@ -6,7 +6,7 @@
 
 package sessionbeans;
 
-import entities.SystemLog;
+import entities.systemLog;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,19 +15,19 @@ import javax.ejb.Local;
  * @author miguel
  */
 @Local
-public interface SystemLogFacadeLocal {
+public interface systemLogFacadeLocal {
 
-    void create(SystemLog systemLog);
+    void create(systemLog systemLog);
 
-    void edit(SystemLog systemLog);
+    void edit(systemLog systemLog);
 
-    void remove(SystemLog systemLog);
+    void remove(systemLog systemLog);
 
-    SystemLog find(Object id);
+    systemLog find(Object id);
 
-    List<SystemLog> findAll();
+    List<systemLog> findAll();
 
-    List<SystemLog> findRange(int[] range);
+    List<systemLog> findRange(int[] range);
 
     int count();
     

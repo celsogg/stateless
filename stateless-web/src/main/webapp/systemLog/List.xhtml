@@ -10,51 +10,44 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListSystemLogTitle}"></h:outputText>
+            <h:outputText value="#{bundle.ListsystemLogTitle}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="SystemLogListForm">
-                <p:panel header="#{bundle.ListSystemLogTitle}">
+            <h:form id="systemLogListForm">
+                <p:panel header="#{bundle.ListsystemLogTitle}">
                     <p:dataTable id="datalist" value="#{systemLogController.items}" var="item"
                                  selectionMode="single" selection="#{systemLogController.selected}"
                                  paginator="true"
                                  rowKey="#{item.logsId}"
                                  rows="20"
-                                 rowsPerPageTemplate="20,30,40,50"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 sortMode="multiple"
                                  >
 
-
-
-                        <p:column sortBy="#{item.logsId}">
+                       <p:column sortBy="#{item.dated}">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSystemLogTitle_logsId}"/>
+                                <h:outputText value="#{bundle.ListsystemLogTitle_dated}"/>
                             </f:facet>
-                            <h:outputText value="#{item.logsId}"/>
+                            <h:outputText value="#{item.dated}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                            </h:outputText>
                         </p:column>
-                        <p:column sortBy="#{item.userId}">
+                        <p:column filterBy="#{item.userId}" filterMatchMode="contains" sortBy="#{item.userId}">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSystemLogTitle_userId}"/>
+                                <h:outputText value="#{bundle.ListsystemLogTitle_userId}"/>
                             </f:facet>
                             <h:outputText value="#{item.userId}"/>
                         </p:column>
-                        <p:column sortBy="#{item.dated}">
+                        <p:column sortBy="#{item.level}">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSystemLogTitle_dated}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.dated}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column sortBy = "#{item.level}">
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSystemLogTitle_level}"/>
+                                <h:outputText value="#{bundle.ListsystemLogTitle_level}"/>
                             </f:facet>
                             <h:outputText value="#{item.level}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.message}">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSystemLogTitle_message}"/>
+                                <h:outputText value="#{bundle.ListsystemLogTitle_message}"/>
                             </f:facet>
                             <h:outputText value="#{item.message}"/>
                         </p:column>
@@ -63,7 +56,6 @@
                     </p:dataTable>
                 </p:panel>
             </h:form>
-
         </ui:define>
     </ui:composition>
 

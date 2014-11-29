@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -29,18 +31,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "LOGS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "SystemLog.findAll", query = "SELECT s FROM SystemLog s"),
-    @NamedQuery(name = "SystemLog.findByLogsId", query = "SELECT s FROM SystemLog s WHERE s.logsId = :logsId"),
-    @NamedQuery(name = "SystemLog.findByUserId", query = "SELECT s FROM SystemLog s WHERE s.userId = :userId"),
-    @NamedQuery(name = "SystemLog.findByDated", query = "SELECT s FROM SystemLog s WHERE s.dated = :dated"),
-    @NamedQuery(name = "SystemLog.findByLogger", query = "SELECT s FROM SystemLog s WHERE s.logger = :logger"),
-    @NamedQuery(name = "SystemLog.findByLevel", query = "SELECT s FROM SystemLog s WHERE s.level = :level"),
-    @NamedQuery(name = "SystemLog.findByMessage", query = "SELECT s FROM SystemLog s WHERE s.message = :message")})
-public class SystemLog implements Serializable {
+    @NamedQuery(name = "systemLog.findAll", query = "SELECT s FROM systemLog s"),
+    @NamedQuery(name = "systemLog.findByLogsId", query = "SELECT s FROM systemLog s WHERE s.logsId = :logsId"),
+    @NamedQuery(name = "systemLog.findByUserId", query = "SELECT s FROM systemLog s WHERE s.userId = :userId"),
+    @NamedQuery(name = "systemLog.findByDated", query = "SELECT s FROM systemLog s WHERE s.dated = :dated"),
+    @NamedQuery(name = "systemLog.findByLogger", query = "SELECT s FROM systemLog s WHERE s.logger = :logger"),
+    @NamedQuery(name = "systemLog.findByLevel", query = "SELECT s FROM systemLog s WHERE s.level = :level"),
+    @NamedQuery(name = "systemLog.findByMessage", query = "SELECT s FROM systemLog s WHERE s.message = :message")})
+public class systemLog implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "LOGS_ID")
     private Integer logsId;
     @Basic(optional = false)
@@ -51,7 +53,7 @@ public class SystemLog implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "DATED")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dated;
     @Basic(optional = false)
     @NotNull
@@ -69,14 +71,14 @@ public class SystemLog implements Serializable {
     @Column(name = "MESSAGE")
     private String message;
 
-    public SystemLog() {
+    public systemLog() {
     }
 
-    public SystemLog(Integer logsId) {
+    public systemLog(Integer logsId) {
         this.logsId = logsId;
     }
 
-    public SystemLog(Integer logsId, String userId, Date dated, String logger, String level, String message) {
+    public systemLog(Integer logsId, String userId, Date dated, String logger, String level, String message) {
         this.logsId = logsId;
         this.userId = userId;
         this.dated = dated;
@@ -143,10 +145,10 @@ public class SystemLog implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SystemLog)) {
+        if (!(object instanceof systemLog)) {
             return false;
         }
-        SystemLog other = (SystemLog) object;
+        systemLog other = (systemLog) object;
         if ((this.logsId == null && other.logsId != null) || (this.logsId != null && !this.logsId.equals(other.logsId))) {
             return false;
         }
@@ -155,7 +157,7 @@ public class SystemLog implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.SystemLog[ logsId=" + logsId + " ]";
+        return "entities.systemLog[ logsId=" + logsId + " ]";
     }
     
 }
