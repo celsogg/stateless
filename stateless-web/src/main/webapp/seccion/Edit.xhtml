@@ -11,13 +11,11 @@
         <p:dialog id="SeccionEditDlg" widgetVar="SeccionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSeccionTitle}">
             <h:form id="SeccionEditForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{seccionController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditSeccionLabel_idSeccion}" for="idSeccion" />
-                        <p:inputText id="idSeccion" value="#{seccionController.selected.idSeccion}" title="#{bundle.EditSeccionTitle_idSeccion}" required="true" requiredMessage="#{bundle.EditSeccionRequiredMessage_idSeccion}"/>
+                    <p:panelGrid columns="2" rendered="#{seccionController.selected != null}" >
                         <p:outputLabel value="#{bundle.EditSeccionLabel_nombreSeccion}" for="nombreSeccion" />
-                        <p:inputText id="nombreSeccion" value="#{seccionController.selected.nombreSeccion}" title="#{bundle.EditSeccionTitle_nombreSeccion}" />
+                        <p:inputText id="nombreSeccion" value="#{seccionController.selected.nombreSeccion}" title="#{bundle.EditSeccionTitle_nombreSeccion}"  />
                         <p:outputLabel value="#{bundle.EditSeccionLabel_descripcionSeccion}" for="descripcionSeccion" />
-                        <p:inputText id="descripcionSeccion" value="#{seccionController.selected.descripcionSeccion}" title="#{bundle.EditSeccionTitle_descripcionSeccion}" />
+                        <p:inputTextarea  id="descripcionSeccion" value="#{seccionController.selected.descripcionSeccion}" title="#{bundle.EditSeccionTitle_descripcionSeccion}" rows="30" cols="110"  />
                         <p:outputLabel value="#{bundle.EditSeccionLabel_idPerfil}" for="idPerfil" />
                         <p:selectOneMenu id="idPerfil" value="#{seccionController.selected.idPerfil}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

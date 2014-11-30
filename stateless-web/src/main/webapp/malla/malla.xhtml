@@ -10,6 +10,8 @@
 
     <ui:composition template="/template.xhtml">
 
+        <ui:define name="title">MI 2.0 - Malla #{planController.getPlan(param['planId']).getCodigoPlan()}</ui:define>
+        
         <ui:define name="body" id="body_malla">
             <script language="javascript" type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 
@@ -69,28 +71,28 @@
             </script>
             <div id="main" style="width: 1000px;">
                 <div id="header" style="">
-                    <div id="college">FACULTAD DE INGENIERIA</div>
-                    <div id="program">#{planController.getPlan(param['planId']).getNombrePlan()} (#{planController.getPlan(param['planId']).getCodigoPlan()})</div>
+                    <div id="college">Facultad de Ingeniería</div>
+                    <div id="program">#{planController.getPlan(param['planId']).getIdCarrera().getNombreCarrera()} (#{planController.getPlan(param['planId']).getCodigoPlan()}) #{planController.getPlan(param['planId']).getAnioPlan()}.#{planController.getPlan(param['planId']).getVersionPlan()}</div>
                 </div>
                     <a target="_blank" href="/stateless-web/pdfservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Plan</button></a>
                     <a target="_blank" href="/stateless-web/pdfmallaservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Malla</button></a>
-                    <button id="boton_resumen_simulacion" type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Resumen Simulacion</button>
+                    <button id="boton_resumen_simulacion" type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Resumen Simulación</button>
                     <button id="boton_tutorial" type="button" class="btn btn-success pull-left" style="margin-left: 10px;">Tutorial</button>
                 <div id="contenedor_outercanvas" style="width: 1100px;">
                     <div id="outercanvas">
                     </div>
                     <div id="control">
                         <div id="radio">
-                            <div id="apertura"><input type="radio" name="rg" id="fw" checked="checked"/>APERTURA</div>
-                            <div id="prerequisitos"><input type="radio" name="rg" id="bw"/>PRERREQUISITOS</div>
+                            <div id="apertura"><input type="radio" name="rg" id="fw" checked="checked"/>Apertura</div>
+                            <div id="prerequisitos"><input type="radio" name="rg" id="bw"/>Requisitos</div>
                             <div id="proyeccion">
-                                <input type="radio" name="rg" id="fwbw"/>PROYECCION
+                                <input type="radio" name="rg" id="fwbw"/>Proyección
                                 <div id="outline" class="outline">
                                     Nivel
                                     <input class="spin-decimal" id="spinme" value="0" type="text"/>
                                 </div>
                             </div>
-                            <input type="radio" name="rg" id="simulacion_radio"/>Simulacion
+                            <input type="radio" name="rg" id="simulacion_radio"/>Simulación
                             <div id="tomar_ramos_div">
                                 Proyectar Nivel:
                                 <input class="spin-decimal" id="spinme_tomar_ramos" value="0" type="text"/>
