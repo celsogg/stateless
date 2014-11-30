@@ -266,5 +266,6 @@ public class PdfMallaDownloadController extends HttpServlet {
         }
         return baosPDF;
     }
+}
 
     
