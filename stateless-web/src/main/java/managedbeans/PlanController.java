@@ -238,7 +238,6 @@ public class PlanController implements Serializable {
                 return null;
             }
         }
-
     }
 
     public String toJSON(Plan plan) {
