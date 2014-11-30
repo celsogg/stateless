@@ -30,7 +30,7 @@ public class PerfilController implements Serializable {
     private List<Perfil> items = null;
     private List<Perfil> itemsCarrera = null;
     private Perfil selected;
-    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PerfilController.class);
+    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(PerfilController.class);
     private String deletedProfile;
     @Inject
     private CarreraController carreraController;
@@ -47,9 +47,11 @@ public class PerfilController implements Serializable {
     }
 
     protected void setEmbeddableKeys() {
+        //no embeddable keys
     }
 
     protected void initializeEmbeddableKey() {
+        //no embeddable keys so no initialize needed
     }
 
     private PerfilFacadeLocal getFacade() {
@@ -65,23 +67,26 @@ public class PerfilController implements Serializable {
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PerfilCreated"));
         if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+            items = null;    
+            // Invalidate list of items to trigger re-query.
         }
-        logger.info("Se ha creado un perfil: "+ getSelected().getNombrePerfil());
+        LOGGER.info("Se ha creado un perfil: "+ getSelected().getNombrePerfil());
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PerfilUpdated"));
-        logger.info("Se ha modificado el perfil"+ getSelected().getNombrePerfil());
+        LOGGER.info("Se ha modificado el perfil"+ getSelected().getNombrePerfil());
     }
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PerfilDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
+            selected = null; 
+            // Remove selection
+            items = null;    
+            // Invalidate list of items to trigger re-query.
         }
-        logger.info("Se ha eliminado a el perfil: "+ deletedProfile);
+        LOGGER.info("Se ha eliminado a el perfil: "+ deletedProfile);
     }
 
     public List<Perfil> getItems() {

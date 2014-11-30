@@ -28,12 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.inject.Inject;
+import org.apache.log4j.Logger;
 
 public class PdfDownloadController extends HttpServlet {
 
     public static final String FILE_SEPARATOR = System.getProperty("file.separator");
     public static final String LOGO_USACH_URL = "/resources/images/UDS_HCOLOR.png";
-    
+    public static final Logger LOGGER = Logger.getLogger(PdfDownloadController.class);
     
     @Inject
     private PlanController planController;
@@ -84,6 +85,7 @@ public class PdfDownloadController extends HttpServlet {
             baosPDF.writeTo(sos);
             sos.flush();
         } catch (DocumentException dex) {
+            LOGGER.error(dex);
             response.setContentType("text/html");
             PrintWriter writer = response.getWriter();
             writer.println( this.getClass().getName()+" caught an exception: "+dex.getClass().getName()+"<br>");
@@ -103,15 +105,9 @@ public class PdfDownloadController extends HttpServlet {
         PdfWriter docWriter = null;
         try {
             docWriter = PdfWriter.getInstance(doc, baosPDF);
-            //doc.addAuthor(this.getClass().getName());
-            //doc.addCreationDate();
-            //doc.addProducer();
-            //doc.addCreator(this.getClass().getName());
-            //doc.addTitle("This is a title.");
-            //doc.addKeywords("pdf, itext, Java, open source, http");
+           
             doc.setPageSize(PageSize.LETTER);
-            //HeaderFooter footer = new HeaderFooter( new Phrase("This is a footer."), false);
-            //doc.setFooter(footer);
+
             doc.open();
             
             Image logo = Image.getInstance(getServletContext().getResource(LOGO_USACH_URL));
@@ -121,24 +117,9 @@ public class PdfDownloadController extends HttpServlet {
             
             doc.add(new Phrase("\n"+plan.getIdCarrera().getNombreCarrera()+"\n", new Font(FontFamily.HELVETICA, 22)));
             doc.add(new Phrase("Plan de Estudios "+plan.getCodigoPlan()+" ("+plan.getAnioPlan()+")"));
-//            PdfPTable table = new PdfPTable(5);
-//            table.setWidthPercentage(100);
-//            table.setWidths(new int[]{1, 4, 1,1,2});
-//            PdfPCell cell;
-//            cell = new PdfPCell(new Phrase("CÓDIGO"));
-//            table.addCell(cell);
-//            cell = new PdfPCell(new Phrase("ASIGNATURA"));
-//            table.addCell(cell);
-//            cell = new PdfPCell(new Phrase("T-E-L"));
-//            table.addCell(cell);
-//            cell = new PdfPCell(new Phrase("SCT"));
-//            table.addCell(cell);
-//            cell = new PdfPCell(new Phrase("REQUISITOS"));
-//            table.addCell(cell);
-//            doc.add(table);
+
             doc.add( new Phrase("\n"));
             doc.add( new Phrase("\n"));
-            //table = createTable();
             Integer totalNiveles = getTotalNiveles(plan);
             for (int i = 0; i < totalNiveles; i++) {
                 Paragraph para = new Paragraph("Nivel " + (i+1) + "\n\n");
@@ -148,10 +129,7 @@ public class PdfDownloadController extends HttpServlet {
                 doc.add(createInfoNivel(getAsignaturasNivel(plan, i+1)));
                 doc.add( new Phrase("\n"));
             }
-            //doc.add(table);
-            //doc.add(new Paragraph("This document was created by a class named: " + this.getClass().getName()));
-            //doc.add(new Paragraph("This document was created on " + new java.util.Date()));
-            //doc.add(new Paragraph("This is a multi-page document."));
+
         } catch (DocumentException /*| IOException*/ ex) {
             baosPDF.reset();
             throw ex;
@@ -169,77 +147,34 @@ public class PdfDownloadController extends HttpServlet {
         return baosPDF;
     }
 
-/*    private PdfPTable createTableNivel(ArrayList<Asignatura> asignaturas) throws DocumentException {
-        PdfPTable table = new PdfPTable(5);
-        table.setWidthPercentage(100);
-        table.setWidths(new int[]{1, 4, 1,1,2});
-        PdfPCell cell;
-//        cell = new PdfPCell(new Phrase("Table 1"));
-//        cell.setColspan(3);
-//        table.addCell(cell);
-//        cell = new PdfPCell(new Phrase("Cell with rowspan 2"));
-//        cell.setRowspan(2);
-//        table.addCell(cell);
-//        table.addCell("row 1; cell 1");
-//        table.addCell("row 1; cell 2");
-//        table.addCell("row 2; cell 1");
-//        table.addCell("row 2; cell 2");
-        //System.out.println(asignaturas.toString());
-        for (Asignatura asignatura : asignaturas) {
-//            System.out.println(asignatura.getCodigoAsignatura() + " "+asignatura.getNombreAsignatura()+" "+
-//                    asignatura.getHorasTeoria() +" "+
-//                    asignatura.getHorasEjercicio() +" "+
-//                    asignatura.getHorasLaboratorio()+" "+
-//                    asignatura.getSctAsignatura());
-            cell = new PdfPCell(new Phrase(asignatura.getCodigoAsignatura()));
-            table.addCell(cell);
-            cell = new PdfPCell(new Phrase(asignatura.getNombreAsignatura()));
-            table.addCell(cell);
-            cell = new PdfPCell(new Phrase(asignatura.getHorasTeoria().toString()+"-"+
-                        asignatura.getHorasEjercicio().toString()+"-"+
-                        asignatura.getHorasLaboratorio().toString()
-                    ));
-            table.addCell(cell);
-            cell = new PdfPCell(new Phrase((String) ((asignatura.getSctAsignatura()!=null) ? asignatura.getSctAsignatura().toString():"")));
-            table.addCell(cell);
-            StringBuilder sb = new StringBuilder();
-            List<Asignatura> req = (List<Asignatura>) asignatura.getAsignaturaCollection();
-            if (req.isEmpty()) sb.append("Ingreso");
-            else{
-                for (int i = 0; i<req.size(); i++) {
-                    sb.append(req.get(i).getCodigoAsignatura());
-                    sb.append(" ");
-                }
-            }
-            cell = new PdfPCell(new Phrase(sb.toString()));
-            table.addCell(cell);
-        }
-        return table;
-    }
-*/
+
     private Integer getTotalNiveles(Plan plan) {
         Integer max = 0;
         for (Asignatura a : plan.getAsignaturaCollection()) {
             Integer actual = a.getNivelAsignatura();
-            if ( actual > max ) max = actual;
+            if ( actual > max ){
+                max = actual;
+            }
         }
         return max;
     }
     
-    private ArrayList<Asignatura> getAsignaturasNivel(Plan plan, Integer nivel){
-        ArrayList<Asignatura> asignaturas = new ArrayList<>();
+    private List<Asignatura> getAsignaturasNivel(Plan plan, Integer nivel){
+        List<Asignatura> asignaturas;
+        asignaturas = new ArrayList<>();
         for (Asignatura asig : plan.getAsignaturaCollection()) {
-            if (Objects.equals(asig.getNivelAsignatura(), nivel)) asignaturas.add(asig);
+            if (Objects.equals(asig.getNivelAsignatura(), nivel)) {
+                asignaturas.add(asig);
+            }
         }
         return asignaturas;
     }
 
-    private Element createInfoNivel(ArrayList<Asignatura> asignaturasNivel) {
+    private Element createInfoNivel(List<Asignatura> asignaturasNivel) {
         StringBuilder contentSB = new StringBuilder();
         for (Asignatura asig : asignaturasNivel) {
             contentSB.append("\nAsignatura: ").append(blankIfNull(asig.getCodigoAsignatura()));
             contentSB.append(" - ").append(blankIfNull(asig.getNombreAsignatura())).append("\n");
-//            contentSB.append("Resultados de aprendizaje: ").append(blankIfNull(asig.getResumenAsignatura()));
             contentSB.append(blankIfNull(asig.getResumenAsignatura()));
             contentSB.append("\nRequisitos: ");
             List<Asignatura> requisitos =  (List<Asignatura>) asig.getAsignaturaCollection();
@@ -263,8 +198,11 @@ public class PdfDownloadController extends HttpServlet {
      */
     private String blankIfNull(String str){
         String ret;
-        if (str == null) ret = "";
-        else ret = str;
+        if (str == null) {
+            ret = "";
+        }else{
+            ret = str;
+        }
         return ret;
     }
 }

@@ -231,7 +231,7 @@ public class Asignatura implements Serializable {
     }
 
     public Boolean getEsAnual() {
-        return ( (esAnual == null || esAnual == 0 ) ? false : true );
+        return (esAnual != null && esAnual != 0);
     }
 
     public void setEsAnual(Boolean esAnual) {

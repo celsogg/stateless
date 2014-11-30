@@ -22,10 +22,11 @@ import org.apache.log4j.MDC;
 
 public class AuthFilter implements Filter {
 
-  private final String USER_KEY = "user";
+  private static final String USERKEY = "user";
   
   @Override
   public void destroy() {
+      //Nothing to destroy
   }
 
   @Override
@@ -48,13 +49,14 @@ public class AuthFilter implements Filter {
       chain.doFilter(request, response);
     } finally {
       if (successfulRegistration) {
-        MDC.remove(USER_KEY);
+        MDC.remove(USERKEY);
       }
     }
   }
 
   @Override
   public void init(FilterConfig arg0) throws ServletException {
+      //Empty 'cause the work is done in the other methods
   }
   
 
@@ -66,7 +68,7 @@ public class AuthFilter implements Filter {
    */
   private boolean registerUsername(String username) {
     if (username != null && username.trim().length() > 0) {
-      MDC.put(USER_KEY, username);
+      MDC.put(USERKEY, username);
       return true;
     }
     return false;

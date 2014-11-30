@@ -32,7 +32,7 @@ public class SeccionController implements Serializable {
     @Inject
     private PerfilController perfilController;
     private Seccion selected;
-    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SeccionController.class);
+    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(SeccionController.class);
     private Seccion deletedSeccion;
 
     public SeccionController() {
@@ -47,9 +47,11 @@ public class SeccionController implements Serializable {
     }
 
     protected void setEmbeddableKeys() {
+        //no embeddable keys
     }
 
     protected void initializeEmbeddableKey() {
+        //no embeddable keys so no initialize needed
     }
 
     private SeccionFacadeLocal getFacade() {
@@ -65,24 +67,27 @@ public class SeccionController implements Serializable {
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SeccionCreated"));
         if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+            items = null;    
+            // Invalidate list of items to trigger re-query.
         }
-        logger.info("Se ha creado una sección: "+getSelected().getNombreSeccion());
+        LOGGER.info("Se ha creado una sección: "+getSelected().getNombreSeccion());
         
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SeccionUpdated"));
-        logger.info("Se ha actualizado una sección: "+getSelected().getNombreSeccion());
+        LOGGER.info("Se ha actualizado una sección: "+getSelected().getNombreSeccion());
     }
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SeccionDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
+            selected = null; 
+            // Remove selection
+            items = null;    
+            // Invalidate list of items to trigger re-query.
         }
-        logger.info("Se ha eliminado la sección: " + deletedSeccion.getNombreSeccion());
+        LOGGER.info("Se ha eliminado la sección: " + deletedSeccion.getNombreSeccion());
     }
 
     public List<Seccion> getItems() {
