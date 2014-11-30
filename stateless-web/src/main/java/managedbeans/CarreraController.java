@@ -29,21 +29,14 @@ public class CarreraController implements Serializable {
     private CarreraFacadeLocal ejbFacade;
     private List<Carrera> items = null;
     private Carrera selected;
-    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(CarreraController.class);
-
+    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(CarreraController.class);
+    private String carreraEliminada;
+    
     public CarreraController() {
     }
 
     public Carrera getSelected() {
         return selected;
-    }
-    
-    private Principal getLoggedInUser()
-    {
-        HttpServletRequest request =
-                (HttpServletRequest) FacesContext.getCurrentInstance().
-                    getExternalContext().getRequest();
-        return request.getUserPrincipal();
     }
 
     public void setSelected(Carrera selected) {
@@ -51,9 +44,11 @@ public class CarreraController implements Serializable {
     }
 
     protected void setEmbeddableKeys() {
+        //no embeddable keys
     }
 
     protected void initializeEmbeddableKey() {
+        //no embeddable keys so no initialize needed
     }
 
     private CarreraFacadeLocal getFacade() {
@@ -69,23 +64,27 @@ public class CarreraController implements Serializable {
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("CarreraCreated"));
         if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+            items = null;    
+            // Invalidate list of items to trigger re-query.
         }
-        logger.info("El usuario "+getLoggedInUser().getName() +" ha creado una asignatura");
+        LOGGER.info("Se ha creado una carrera: "+getSelected().getNombreCarrera());
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CarreraUpdated"));
-        logger.info("El usuario "+getLoggedInUser().getName()+"ha actualizado la asignatura "+ getSelected().getNombreCarrera());
+        LOGGER.info("Se ha actualizado la carrera: "+ getSelected().getNombreCarrera());
     }
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("CarreraDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-            logger.info("El usuario "+getLoggedInUser().getName()+"ha eliminado la asignatura "+ getSelected().getNombreCarrera());
+            selected = null; 
+            // Remove selection
+            items = null;    
+            // Invalidate list of items to trigger re-query.
+            
         }
+        LOGGER.info("Se ha eliminado la carrera: "+ carreraEliminada);
     }
 
     public List<Carrera> getItems() {
@@ -102,7 +101,9 @@ public class CarreraController implements Serializable {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
+                    carreraEliminada=selected.getNombreCarrera();
                     getFacade().remove(selected);
+                    
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {

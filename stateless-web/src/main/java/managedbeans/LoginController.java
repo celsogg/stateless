@@ -37,7 +37,7 @@ public class LoginController {
     private String rol;
     private boolean isLoggedIn;
     private String originalURL;
-    final static Logger logger = Logger.getLogger(LoginController.class);
+    private static final Logger LOGGER = Logger.getLogger(LoginController.class);
     
     @PostConstruct
     public void init() {
@@ -70,9 +70,7 @@ public class LoginController {
             List<Usuario> results;
             results = userService.findUsuarioByUid(request.getUserPrincipal().getName());
             Usuario user;
-            //MDC.getContext().clear();
-            //MDC.put("user", request.getUserPrincipal().getName());
-            
+
             
             if (!results.isEmpty()) {
                 user = results.get(0);
@@ -89,11 +87,11 @@ public class LoginController {
                 navto = "/index.xhtml";
             }
 
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
-            logger.info("El usuario "+ request.getUserPrincipal().getName()+" ha iniciado sesión");
+
+            LOGGER.info("El usuario "+ request.getUserPrincipal().getName()+" ha iniciado sesión");
             return navto;
         } catch (ServletException e) {
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An Error ocurred: login failed", null));
+            LOGGER.error(e);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ha ocurrido un error, compruebe sus credenciales o contacte al administrador.", null));
         }
         return "";
@@ -102,7 +100,7 @@ public class LoginController {
     public void logout() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();
-        logger.info("El usuario ha cerrado sesión");
+        LOGGER.info("El usuario ha cerrado sesión");
         externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
     }
 

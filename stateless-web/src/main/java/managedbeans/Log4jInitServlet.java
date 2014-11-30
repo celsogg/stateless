@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -27,6 +28,10 @@ public class Log4jInitServlet extends HttpServlet {
      * @param config
      * @throws javax.servlet.ServletException
      */
+    private static final Logger LOGGER = org.apache.log4j.Logger.getLogger(Log4jInitServlet.class);
+
+
+    
     @Override 
     public void init(ServletConfig config) throws ServletException {
         String log4jLocation = config.getInitParameter("log4j-properties-location");
@@ -44,7 +49,7 @@ public class Log4jInitServlet extends HttpServlet {
                 System.setProperty("rootPath", webAppPath);
                 
             }else{
-                System.err.println("*** " + log4jProp + " file not found, so initializing log4j with BasicConfigurator");
+                LOGGER.error("*** " + log4jProp + " file not found, so initializing log4j with BasicConfigurator");
 		BasicConfigurator.configure();
             }
             
