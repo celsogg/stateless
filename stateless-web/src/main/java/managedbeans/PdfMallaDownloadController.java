@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.inject.Inject;
-import static managedbeans.PdfDownloadController.LOGO_USACH_URL;
 
 public class PdfMallaDownloadController extends HttpServlet {
 

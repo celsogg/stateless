@@ -51,6 +51,16 @@
         <servlet-name>PdfMallaDownloadController</servlet-name>
         <url-pattern>/pdfmallaservlet</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Perfil</servlet-name>
+        <servlet-class>managedbeans.PdfPerfilController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Perfil</servlet-name>
+        <url-pattern>/Perfil</url-pattern>
+    </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>ServletContextListener</servlet-name>
         <url-pattern>/ServletContextListener</url-pattern>
