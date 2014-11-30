@@ -1,5 +1,6 @@
 package managedbeans;
 
+import entities.Carrera;
 import entities.Perfil;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
@@ -18,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("perfilController")
 @SessionScoped
@@ -26,9 +28,12 @@ public class PerfilController implements Serializable {
     @EJB
     private PerfilFacadeLocal ejbFacade;
     private List<Perfil> items = null;
+    private List<Perfil> itemsCarrera = null;
     private Perfil selected;
     final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PerfilController.class);
     private String deletedProfile;
+    @Inject
+    private CarreraController carreraController;
 
     public PerfilController() {
     }
@@ -125,6 +130,12 @@ public class PerfilController implements Serializable {
 
     public List<Perfil> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+    
+    public List<Perfil> getItemsCarrera(){
+        Carrera carrera = carreraController.getSelected();
+        itemsCarrera = carrera.getPerfilCollection();
+        return itemsCarrera;
     }
 
     @FacesConverter(forClass = Perfil.class)

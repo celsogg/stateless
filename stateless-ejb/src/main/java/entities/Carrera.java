@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Carrera.findByNombreCarrera", query = "SELECT c FROM Carrera c WHERE c.nombreCarrera = :nombreCarrera")})
 public class Carrera implements Serializable {
     @OneToMany(mappedBy = "idCarrera")
-    private Collection<Perfil> perfilCollection;
+    private List<Perfil> perfilCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -105,12 +106,12 @@ public class Carrera implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Perfil> getPerfilCollection() {
+    public List <Perfil> getPerfilCollection() {
         return perfilCollection;
     }
 
     public void setPerfilCollection(Collection<Perfil> perfilCollection) {
-        this.perfilCollection = perfilCollection;
+        this.perfilCollection = (List<Perfil>)  perfilCollection;
     }
     
 }

@@ -24,8 +24,8 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton perfilesButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton perfilesButton"/>
 
                         
                         <p:column>
@@ -39,6 +39,7 @@
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CarreraViewForm" oncomplete="PF('CarreraViewDialog').show()" disabled="#{empty carreraController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":CarreraEditForm" oncomplete="PF('CarreraEditDialog').show()" disabled="#{empty carreraController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{carreraController.destroy}" update=":growl,datalist" disabled="#{empty carreraController.selected}"/>
+                            <p:commandButton id="perfilesButton" ajax="false" value="Perfiles de la carrera" action="/perfil/Perfiles" disabled="#{empty carreraController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

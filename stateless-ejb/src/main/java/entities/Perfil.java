@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,7 +53,7 @@ public class Perfil implements Serializable {
     @ManyToOne
     private Carrera idCarrera;
     @OneToMany(mappedBy = "idPerfil")
-    private Collection<Seccion> seccionCollection;
+    private List<Seccion> seccionCollection;
 
     public Perfil() {
     }
@@ -94,12 +95,12 @@ public class Perfil implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Seccion> getSeccionCollection() {
+    public List<Seccion> getSeccionCollection() {
         return seccionCollection;
     }
 
     public void setSeccionCollection(Collection<Seccion> seccionCollection) {
-        this.seccionCollection = seccionCollection;
+        this.seccionCollection = (List<Seccion>)seccionCollection;
     }
 
     @Override

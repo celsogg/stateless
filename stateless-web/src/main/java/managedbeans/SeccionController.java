@@ -1,5 +1,6 @@
 package managedbeans;
 
+import entities.Perfil;
 import entities.Seccion;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
@@ -18,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("seccionController")
 @SessionScoped
@@ -26,6 +28,9 @@ public class SeccionController implements Serializable {
     @EJB
     private SeccionFacadeLocal ejbFacade;
     private List<Seccion> items = null;
+    private List<Seccion> itemsPerfil = null;
+    @Inject
+    private PerfilController perfilController;
     private Seccion selected;
     final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SeccionController.class);
     private Seccion deletedSeccion;
@@ -86,7 +91,13 @@ public class SeccionController implements Serializable {
         }
         return items;
     }
-
+    
+    public List<Seccion> getItemsPerfil(){
+        Perfil perfil = perfilController.getSelected();
+        itemsPerfil = perfil.getSeccionCollection();
+        return itemsPerfil;
+    }
+        
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
