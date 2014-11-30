@@ -28,9 +28,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.inject.Inject;
+<<<<<<< HEAD
 import org.apache.log4j.Logger;
+=======
+>>>>>>> fc5c9c4a3b31af5da53330a7df8e148c676247e1
 
 public class PdfMallaDownloadController extends HttpServlet {
 
@@ -267,4 +269,6 @@ public class PdfMallaDownloadController extends HttpServlet {
         return baosPDF;
     }
 
-    
+
+
+}
