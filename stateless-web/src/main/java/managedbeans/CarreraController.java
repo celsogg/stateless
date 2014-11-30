@@ -6,7 +6,6 @@ import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.CarreraFacadeLocal;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,7 +18,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.servlet.http.HttpServletRequest;
+
 
 @Named("carreraController")
 @SessionScoped
@@ -29,7 +28,7 @@ public class CarreraController implements Serializable {
     private CarreraFacadeLocal ejbFacade;
     private List<Carrera> items = null;
     private Carrera selected;
-    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(CarreraController.class);
+    private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(CarreraController.class);
     private String carreraEliminada;
     
     public CarreraController() {

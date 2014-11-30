@@ -6,7 +6,7 @@
 
 package sessionbeans;
 
-import entities.systemLog;
+import entities.SystemLog;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,17 +16,20 @@ import javax.persistence.PersistenceContext;
  * @author miguel
  */
 @Stateless
-public class systemLogFacade extends AbstractFacade<systemLog> implements systemLogFacadeLocal {
+public class SystemLogFacade extends AbstractFacade<SystemLog> implements SystemLogFacadeLocal {
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-
+    
+    
+    public SystemLogFacade() {
+        super(SystemLog.class);
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public systemLogFacade() {
-        super(systemLog.class);
-    }
+    
     
 }

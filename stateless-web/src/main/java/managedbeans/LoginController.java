@@ -38,7 +38,9 @@ public class LoginController {
     private boolean isLoggedIn;
     private String originalURL;
     private static final Logger LOGGER = Logger.getLogger(LoginController.class);
-    
+    @EJB
+    private UsuarioFacadeLocal userService;
+
     @PostConstruct
     public void init() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -55,8 +57,7 @@ public class LoginController {
         }
     }
 
-    @EJB
-    private UsuarioFacadeLocal userService;
+    
 
     public String login() throws IOException, ServletException {
         FacesContext context = FacesContext.getCurrentInstance();

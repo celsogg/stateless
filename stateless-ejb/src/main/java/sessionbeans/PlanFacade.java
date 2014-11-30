@@ -20,15 +20,18 @@ import javax.persistence.Query;
 public class PlanFacade extends AbstractFacade<Plan> implements PlanFacadeLocal {
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-
+    
+    
+    public PlanFacade() {
+        super(Plan.class);
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public PlanFacade() {
-        super(Plan.class);
-    }
+    
 
     @Override
     public List<Plan> findByVisiblePlan() {

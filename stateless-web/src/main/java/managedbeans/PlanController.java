@@ -44,7 +44,7 @@ public class PlanController implements Serializable {
     private List<SelectItem> listaPlanes;
     private String selection;
     private Asignatura selectedAsignatura;
-    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(PlanController.class);
+    private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(PlanController.class);
     private Plan deletedPlan;
 
     private UploadedFile csvFile = null;
@@ -53,7 +53,10 @@ public class PlanController implements Serializable {
 
     @Inject
     private AsignaturaController asigController;
-
+    
+    public PlanController() {
+    }
+    
     public Asignatura getSelectedAsignatura() {
         return selectedAsignatura;
     }
@@ -62,8 +65,7 @@ public class PlanController implements Serializable {
         this.selectedAsignatura = selectedAsignatura;
     }
 
-    public PlanController() {
-    }
+    
 
     public Plan getSelected() {
         return selected;
@@ -380,16 +382,26 @@ public class PlanController implements Serializable {
     private String[] getCsvLineCols(String line) {
         String otherThanQuote = " [^\"] ";
         String quotedString = String.format(" \" %s* \" ", otherThanQuote);
-        String regex = String.format("(?x) " + // enable comments, ignore white spaces
-                ",                         " + // match a comma
-                "(?=                       " + // start positive look ahead
-                "  (                       " + //   start group 1
-                "    %s*                   " + //     match 'otherThanQuote' zero or more times
-                "    %s                    " + //     match 'quotedString'
-                "  )*                      " + //   end group 1 and repeat it zero or more times
-                "  %s*                     " + //   match 'otherThanQuote'
-                "  $                       " + // match the end of the string
-                ")                         ", // stop positive look ahead
+        String regex = String.format("(?x) " + 
+                // enable comments, ignore white spaces
+                ",                         " + 
+                // match a comma
+                "(?=                       " + 
+                // start positive look ahead
+                "  (                       " + 
+                //   start group 1
+                "    %s*                   " + 
+                //     match 'otherThanQuote' zero or more times
+                "    %s                    " + 
+                //     match 'quotedString'
+                "  )*                      " + 
+                //   end group 1 and repeat it zero or more times
+                "  %s*                     " + 
+                //   match 'otherThanQuote'
+                "  $                       " + 
+                // match the end of the string
+                ")                         ", 
+                // stop positive look ahead
                 otherThanQuote, quotedString, otherThanQuote);
 
         String[] tokens = line.split(regex, -1);

@@ -1,9 +1,9 @@
 package managedbeans;
 
-import entities.systemLog;
+import entities.SystemLog;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
-import sessionbeans.systemLogFacadeLocal;
+import sessionbeans.SystemLogFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,21 +21,21 @@ import javax.faces.convert.FacesConverter;
 
 @Named("systemLogController")
 @SessionScoped
-public class systemLogController implements Serializable {
+public class SystemLogController implements Serializable {
 
     @EJB
-    private systemLogFacadeLocal ejbFacade;
-    private List<systemLog> items = null;
-    private systemLog selected;
+    private SystemLogFacadeLocal ejbFacade;
+    private List<SystemLog> items = null;
+    private SystemLog selected;
 
-    public systemLogController() {
+    public SystemLogController() {
     }
 
-    public systemLog getSelected() {
+    public SystemLog getSelected() {
         return selected;
     }
 
-    public void setSelected(systemLog selected) {
+    public void setSelected(SystemLog selected) {
         this.selected = selected;
     }
 
@@ -47,12 +47,12 @@ public class systemLogController implements Serializable {
         //no embeddable keys so no initialize needed
     }
 
-    private systemLogFacadeLocal getFacade() {
+    private SystemLogFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public systemLog prepareCreate() {
-        selected = new systemLog();
+    public SystemLog prepareCreate() {
+        selected = new SystemLog();
         initializeEmbeddableKey();
         return selected;
     }
@@ -79,7 +79,7 @@ public class systemLogController implements Serializable {
         }
     }
 
-    public List<systemLog> getItems() {
+    public List<SystemLog> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -114,29 +114,29 @@ public class systemLogController implements Serializable {
         }
     }
 
-    public systemLog getsystemLog(java.lang.Integer id) {
+    public SystemLog getSystemLog(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<systemLog> getItemsAvailableSelectMany() {
+    public List<SystemLog> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<systemLog> getItemsAvailableSelectOne() {
+    public List<SystemLog> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = systemLog.class)
-    public static class systemLogControllerConverter implements Converter {
+    @FacesConverter(forClass = SystemLog.class)
+    public static class SystemLogControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            systemLogController controller = (systemLogController) facesContext.getApplication().getELResolver().
+            SystemLogController controller = (SystemLogController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "systemLogController");
-            return controller.getsystemLog(getKey(value));
+            return controller.getSystemLog(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -156,11 +156,11 @@ public class systemLogController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof systemLog) {
-                systemLog o = (systemLog) object;
+            if (object instanceof SystemLog) {
+                SystemLog o = (SystemLog) object;
                 return getStringKey(o.getLogsId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), systemLog.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SystemLog.class.getName()});
                 return null;
             }
         }

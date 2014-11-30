@@ -30,7 +30,7 @@ public class PerfilController implements Serializable {
     private List<Perfil> items = null;
     private List<Perfil> itemsCarrera = null;
     private Perfil selected;
-    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(PerfilController.class);
+    private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(PerfilController.class);
     private String deletedProfile;
     @Inject
     private CarreraController carreraController;

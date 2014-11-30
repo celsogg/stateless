@@ -21,6 +21,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 
+
 @Named("seccionController")
 @SessionScoped
 public class SeccionController implements Serializable {
@@ -32,7 +33,7 @@ public class SeccionController implements Serializable {
     @Inject
     private PerfilController perfilController;
     private Seccion selected;
-    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(SeccionController.class);
+    private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(SeccionController.class);
     private Seccion deletedSeccion;
 
     public SeccionController() {
