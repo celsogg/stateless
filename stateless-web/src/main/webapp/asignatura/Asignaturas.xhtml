@@ -9,12 +9,16 @@
 
     <ui:composition template="/template.xhtml">
 
+        <f:facet name="last">
+		<h:outputStylesheet library="default" name="css/stateless.css" />
+	</f:facet>
+        
         <ui:define name="title">
             <h:outputText value="#{bundle.ListAsignaturaTitle}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="AsignaturaListForm">
+            <h:form id="AsignaturaListForm2">
                 <p:panel header="Asignaturas del Plan: #{planController.selected.nombrePlan} #{planController.selected.codigoPlan} - #{planController.selected.anioPlan}.#{planController.selected.versionPlan}">
                     <p:dataTable id="datalist" value="#{asignaturaController.itemsPlan}" var="item"
                                  selectionMode="single" selection="#{asignaturaController.selected}"
@@ -32,13 +36,6 @@
                                 <h:outputText value="id"/>
                             </f:facet>
                             <h:outputText value="{item.idAsignatura}"/>
-                        </p:column>
-                        
-                        <p:column style="width: 50px">
-                            <f:facet name="header">
-                                <h:outputText value="PId"/>
-                            </f:facet>
-                            <h:outputText value="{item.idPlan}"/>
                         </p:column>-->
                         
                         <p:column style="width: 50px">

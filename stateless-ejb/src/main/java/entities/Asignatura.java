@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Asignatura.findByHorasTeoria", query = "SELECT a FROM Asignatura a WHERE a.horasTeoria = :horasTeoria"),
     @NamedQuery(name = "Asignatura.findByHorasEjercicio", query = "SELECT a FROM Asignatura a WHERE a.horasEjercicio = :horasEjercicio"),
     @NamedQuery(name = "Asignatura.findByHorasLaboratorio", query = "SELECT a FROM Asignatura a WHERE a.horasLaboratorio = :horasLaboratorio"),
-    @NamedQuery(name = "Asignatura.findByResumenAsignatura", query = "SELECT a FROM Asignatura a WHERE a.resumenAsignatura = :resumenAsignatura")})
+    @NamedQuery(name = "Asignatura.findByResumenAsignatura", query = "SELECT a FROM Asignatura a WHERE a.resumenAsignatura = :resumenAsignatura"),
+    @NamedQuery(name = "Asignatura.findByPlanId", query = "SELECT a FROM Asignatura a WHERE a.idPlan = :planId")})
 public class Asignatura implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -230,7 +231,7 @@ public class Asignatura implements Serializable {
     }
 
     public Boolean getEsAnual() {
-        return ( esAnual == 1 ? true : false );
+        return ( (esAnual == null || esAnual == 0 ) ? false : true );
     }
 
     public void setEsAnual(Boolean esAnual) {

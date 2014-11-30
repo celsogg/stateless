@@ -14,7 +14,7 @@
                     <p:panelGrid columns="2" rendered="#{asignaturaController.selected != null}">
                         
                         <p:outputLabel value="Plan" for="idPlan" />
-                        <p:selectOneMenu id="idPlan" value="#{asignaturaController.selected.idPlan}" >
+                        <p:selectOneMenu id="idPlan" value="#{asignaturaController.selected.idPlan}" disabled="true">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{planController.itemsAvailableSelectOne}"
                                            var="idPlanItem"
@@ -50,7 +50,7 @@
                         <p:selectBooleanCheckbox id="visiblePlan" value="#{asignaturaController.selected.esAnual}" />
                         
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{asignaturaController.update}" value="#{bundle.Save}" update="display,:AsignaturaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AsignaturaEditDialog');"/>
+                    <p:commandButton actionListener="#{asignaturaController.update}" value="#{bundle.Save}" update="display,:AsignaturaListForm2:datalist,:growl" oncomplete="handleSubmit(args, 'AsignaturaEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="AsignaturaEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

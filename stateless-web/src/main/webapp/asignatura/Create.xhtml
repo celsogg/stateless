@@ -12,32 +12,36 @@
             <h:form id="AsignaturaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{asignaturaController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateAsignaturaLabel_idAsignatura}" for="idAsignatura" />
-                        <p:inputText id="idAsignatura" value="#{asignaturaController.selected.idAsignatura}" title="#{bundle.CreateAsignaturaTitle_idAsignatura}" required="true" requiredMessage="#{bundle.CreateAsignaturaRequiredMessage_idAsignatura}"/>
-                        <p:outputLabel value="#{bundle.CreateAsignaturaLabel_nombreAsignatura}" for="nombreAsignatura" />
-                        <p:inputText id="nombreAsignatura" value="#{asignaturaController.selected.nombreAsignatura}" title="#{bundle.CreateAsignaturaTitle_nombreAsignatura}" />
-                        <p:outputLabel value="#{bundle.CreateAsignaturaLabel_sctAsignatura}" for="sctAsignatura" />
-                        <p:inputText id="sctAsignatura" value="#{asignaturaController.selected.sctAsignatura}" title="#{bundle.CreateAsignaturaTitle_sctAsignatura}" />
-                        <p:outputLabel value="#{bundle.CreateAsignaturaLabel_nivelAsignatura}" for="nivelAsignatura" />
-                        <p:inputText id="nivelAsignatura" value="#{asignaturaController.selected.nivelAsignatura}" title="#{bundle.CreateAsignaturaTitle_nivelAsignatura}" />
+                         
                         <p:outputLabel value="#{bundle.CreateAsignaturaLabel_codigoAsignatura}" for="codigoAsignatura" />
                         <p:inputText id="codigoAsignatura" value="#{asignaturaController.selected.codigoAsignatura}" title="#{bundle.CreateAsignaturaTitle_codigoAsignatura}" />
+                        
+                        <p:outputLabel value="#{bundle.CreateAsignaturaLabel_nombreAsignatura}" for="nombreAsignatura" />
+                        <p:inputText id="nombreAsignatura" value="#{asignaturaController.selected.nombreAsignatura}" title="#{bundle.CreateAsignaturaTitle_nombreAsignatura}" />
+                        
+                        <p:outputLabel value="#{bundle.CreateAsignaturaLabel_resumenAsignatura}" for="resumenAsignatura" />
+                        <p:inputTextarea id="resumenAsignatura" value="#{asignaturaController.selected.resumenAsignatura}" title="#{bundle.CreateAsignaturaTitle_resumenAsignatura}" />
+                        
+                        <p:outputLabel value="#{bundle.CreateAsignaturaLabel_nivelAsignatura}" for="nivelAsignatura" />
+                        <p:inputText id="nivelAsignatura" value="#{asignaturaController.selected.nivelAsignatura}" title="#{bundle.CreateAsignaturaTitle_nivelAsignatura}" />
+                        
+                        <p:outputLabel value="Anual" for="esAnual" />
+                        <p:selectBooleanCheckbox id="esAnual" value="#{asignaturaController.selected.esAnual}" />
+                        
+                        <p:outputLabel value="#{bundle.CreateAsignaturaLabel_sctAsignatura}" for="sctAsignatura" />
+                        <p:inputText id="sctAsignatura" value="#{asignaturaController.selected.sctAsignatura}" title="#{bundle.CreateAsignaturaTitle_sctAsignatura}" />
+                        
                         <p:outputLabel value="#{bundle.CreateAsignaturaLabel_horasTeoria}" for="horasTeoria" />
                         <p:inputText id="horasTeoria" value="#{asignaturaController.selected.horasTeoria}" title="#{bundle.CreateAsignaturaTitle_horasTeoria}" />
+                        
                         <p:outputLabel value="#{bundle.CreateAsignaturaLabel_horasEjercicio}" for="horasEjercicio" />
                         <p:inputText id="horasEjercicio" value="#{asignaturaController.selected.horasEjercicio}" title="#{bundle.CreateAsignaturaTitle_horasEjercicio}" />
+                        
                         <p:outputLabel value="#{bundle.CreateAsignaturaLabel_horasLaboratorio}" for="horasLaboratorio" />
                         <p:inputText id="horasLaboratorio" value="#{asignaturaController.selected.horasLaboratorio}" title="#{bundle.CreateAsignaturaTitle_horasLaboratorio}" />
-                        <p:outputLabel value="#{bundle.CreateAsignaturaLabel_resumenAsignatura}" for="resumenAsignatura" />
-                        <p:inputText id="resumenAsignatura" value="#{asignaturaController.selected.resumenAsignatura}" title="#{bundle.CreateAsignaturaTitle_resumenAsignatura}" />
-                        <p:outputLabel value="#{bundle.CreateAsignaturaLabel_idPlan}" for="idPlan" />
-                        <p:selectOneMenu id="idPlan" value="#{asignaturaController.selected.idPlan}" >
-                            <f:selectItems value="#{planController.itemsAvailableSelectOne}"
-                                           var="idPlanItem"
-                                           itemValue="#{idPlanItem}"/>
-                        </p:selectOneMenu>
+                        
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{asignaturaController.create}" value="#{bundle.Save}" update="display,:AsignaturaListForm:datalist,:growl" oncomplete="handleSubmit(args,'AsignaturaCreateDialog');"/>
+                    <p:commandButton actionListener="#{asignaturaController.create}" value="#{bundle.Save}" update="display,:AsignaturaListForm2:datalist,:growl" oncomplete="handleSubmit(args,'AsignaturaCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="AsignaturaCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

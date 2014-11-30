@@ -22,15 +22,15 @@
                             <p:ajax event="transfer" listener="#{asignaturaController.onTransfer}" update=":growl" />
 
                             <p:column >
-                                <h:outputText value="#{asig.codigoAsignatura}"/>
+                                <h:outputText value="#{asig.codigoAsignatura} #{asig.nombreAsignatura}"/>
                             </p:column>
 
-                            <p:column >
+<!--                            <p:column >
                                 <h:outputText value="#{asig.nombreAsignatura}" />
-                            </p:column>
+                            </p:column>-->
                         </p:pickList>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{asignaturaController.saveRequisitos()}" value="#{bundle.Save}" update="display,:AsignaturaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'RequisitosEditDialog');"/>
+                    <p:commandButton actionListener="#{asignaturaController.saveRequisitos()}" value="#{bundle.Save}" update="display,:AsignaturaListForm2:datalist,:growl" oncomplete="handleSubmit(args, 'RequisitosEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="RequisitosEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

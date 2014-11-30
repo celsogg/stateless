@@ -12,3 +12,15 @@ and open the template in the editor.
 .ui-widget-content{
     border-style: none;
 }
+
+.ui-picklist-button-add-all {
+   visibility: hidden !important;
+}
+
+.ui-picklist-button-remove-all {
+   visibility: hidden !important;
+}
+
+.ui-picklist-item ui-corner-all ui-sortable-handle ui-state-highlight {
+    padding: 10px !important;
+}

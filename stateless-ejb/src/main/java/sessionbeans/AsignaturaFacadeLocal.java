@@ -28,9 +28,9 @@ public interface AsignaturaFacadeLocal {
 
     List<Asignatura> findRange(int[] range);
     
-    List<Asignatura> findAsignaturas(int id);
-    
+    List<Asignatura> findAsignaturas(int id);  
     
     int count();
-    
+
+    List<Asignatura> findAsignaturasByPlan(int planId);
 }

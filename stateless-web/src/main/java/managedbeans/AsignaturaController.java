@@ -9,6 +9,7 @@ import sessionbeans.AsignaturaFacadeLocal;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -69,6 +70,15 @@ public class AsignaturaController implements Serializable {
             DLAsignaturas = new DualListModel<>(asignaturasPosibles, asignaturasActuales);
         }
     }
+    
+    public void refreshSelected() {
+        if (selected != null) {
+            Integer id = selected.getIdAsignatura();
+            if (id != null) {
+                selected = getAsignatura(id);
+            }
+        }
+    }
 
     public DualListModel<Asignatura> getDLAsignaturas() {
         return DLAsignaturas;
@@ -105,10 +115,13 @@ public class AsignaturaController implements Serializable {
     public Asignatura prepareCreate() {
         selected = new Asignatura();
         initializeEmbeddableKey();
+        selected.setIdPlan(planController.getSelected());
+        selected.setAsignaturaCollection(new ArrayList<Asignatura>());
+        selected.setAsignaturaCollection1(new ArrayList<Asignatura>());
         return selected;
     }
     
-         public String getNombresAsignaturaString(Asignatura asignatura){
+    public String getNombresAsignaturaString(Asignatura asignatura){
         
         String salida = "";
         
@@ -127,7 +140,6 @@ public class AsignaturaController implements Serializable {
         }
         return salida;
     }
-    
      
     public String getStringRequisitos(Asignatura asignatura){
         StringBuilder sb = null;
@@ -137,15 +149,29 @@ public class AsignaturaController implements Serializable {
         }
         return sb.toString();
     }
-    
-  
 
     public void create() {
+//        List<Asignatura> asigs = planController.getSelected().getAsignaturaCollection();
+//        asigs.add(selected);
+//        planController.getSelected().setAsignaturaCollection(asigs);
+//        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaCreated"));
+//        if (!JsfUtil.isValidationFailed()) {
+//            items = null;    // Invalidate list of items to trigger re-query.
+//            
+//            planController.update();
+//            logger.info("Ha creado la asignatura: "+ getSelected().getNombreAsignatura());
+//            selected = null;
+//        }
+        //List<Asignatura> asigs = planController.getSelected().getAsignaturaCollection();
+        //asigs.add(selected);
+        //planController.update();
+        //planController.getSelected().setAsignaturaCollection(asigs);
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+        if ( ! JsfUtil.isValidationFailed() ) {
+            logger.info("Ha creado la asignatura: " + getSelected().getNombreAsignatura());
+            items = null;
+            itemsPlan = null;
         }
-        logger.info("Ha creado la asignatura: "+ getSelected().getNombreAsignatura());
     }
 
     public void update() {
@@ -158,25 +184,32 @@ public class AsignaturaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
-            
+            //planController.update();
         }
         logger.info("Ha eliminado la asignatura "+ deletedAsignatura);
     }
 
     public List<Asignatura> getItems() {
+        //System.out.println("get items");
         if (items == null) {
+            //System.out.println("get items null");
             items = getFacade().findAll();
         }
         return items;
     }
     
     public List<Asignatura> getItemsPlan(){
-        Plan plan = planController.getSelected();
-        itemsPlan = plan.getAsignaturaCollection();
+        //System.out.println("get itemsplan");
+        //if (itemsPlan == null){
+        //    System.out.println("get itemsplan null");
+        //    Plan plan = planController.getSelected();
+        //    itemsPlan = plan.getAsignaturaCollection();
+        //}
+        planController.refreshSelected();
+        itemsPlan = planController.getSelected().getAsignaturaCollection();
+        refreshSelected();
         return itemsPlan;
     }
-    
-   
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {

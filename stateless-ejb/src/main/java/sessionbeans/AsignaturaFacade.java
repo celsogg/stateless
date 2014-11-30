@@ -39,7 +39,14 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> implements Asig
         return query.getResultList();
     }
 
-    
+    @Override
+    public List<Asignatura> findAsignaturasByPlan(int planId) {
+        Query query;
+        query = em.createNamedQuery("Asignatura.findByPlanId")
+                .setParameter("planId", planId);
+        
+        return query.getResultList();
+    }
     
     
     

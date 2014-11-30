@@ -37,7 +37,7 @@
                         <p:selectBooleanCheckbox id="visiblePlan" value="#{planController.selected.visiblePlan}" />
                         
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{planController.create}" value="#{bundle.Save}" update="display,:PlanListForm:datalist,:growl" oncomplete="handleSubmit(args,'PlanCreateDialog');"/>
+                    <p:commandButton actionListener="#{planController.create}" value="#{bundle.Save}" update="display,:PlanListForm:datalist,:growl,:menuBar" oncomplete="handleSubmit(args,'PlanCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PlanCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

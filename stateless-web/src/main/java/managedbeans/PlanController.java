@@ -78,6 +78,15 @@ public class PlanController implements Serializable {
         this.selected = selected;
     }
 
+    public void refreshSelected() {
+        if (selected != null) {
+            Integer id = selected.getIdPlan();
+            if (id != null) {
+                selected = getPlan(id);
+            }
+        }
+    }
+
     protected void setEmbeddableKeys() {
     }
 
@@ -114,7 +123,7 @@ public class PlanController implements Serializable {
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PlanCreated"));
-        System.out.println("create!");
+        //System.out.println("create!");
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
@@ -316,7 +325,7 @@ public class PlanController implements Serializable {
 
     public void upload() throws IOException {
         //System.out.println("upload");
-        if (   csvFile != null  && csvFile.getFileName().compareToIgnoreCase("") != 0 ){
+        if (csvFile != null && csvFile.getFileName().compareToIgnoreCase("") != 0) {
             UploadedFile uf = csvFile;
 
             File save;
@@ -363,11 +372,10 @@ public class PlanController implements Serializable {
 
            // FacesMessage message = new FacesMessage( "Asignaturas agregadas exitosamente desde el archivo \"" + uf.getFileName() + "\"");
             //FacesContext.getCurrentInstance().addMessage(null, message);
-            
             selected.setAsignaturaCollection(asignaturas);
             csvFile = null;
             update();
-            
+
         } else {
             FacesMessage message = new FacesMessage("No se ha seleccionado un archivo.");
             FacesContext.getCurrentInstance().addMessage(null, message);
