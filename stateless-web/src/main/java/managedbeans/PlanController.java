@@ -24,7 +24,6 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -32,9 +31,6 @@ import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.inject.Inject;
 import org.apache.commons.lang.StringEscapeUtils;
-import org.primefaces.context.RequestContext;
-import sessionbeans.PlanFacade;
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 @Named("planController")
@@ -43,13 +39,12 @@ public class PlanController implements Serializable {
 
     @EJB
     private PlanFacadeLocal ejbFacade;
-    private PlanFacade ejbPlanFacade;
     private List<Plan> items = null;
     private Plan selected;
     private List<SelectItem> listaPlanes;
     private String selection;
     private Asignatura selectedAsignatura;
-    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PlanController.class);
+    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(PlanController.class);
     private Plan deletedPlan;
 
     private UploadedFile csvFile = null;
@@ -88,9 +83,11 @@ public class PlanController implements Serializable {
     }
 
     protected void setEmbeddableKeys() {
+        // no embeddable keys
     }
 
     protected void initializeEmbeddableKey() {
+        //no embeddable keys so no initialize needed
     }
 
     private PlanFacadeLocal getFacade() {
@@ -112,7 +109,6 @@ public class PlanController implements Serializable {
             for (int j = 0; j < asignaturas.size(); j++) {
                 Asignatura asignatura = asignaturas.get(j);
                 SelectItem option = new SelectItem(asignatura.getIdAsignatura(), asignatura.getNombreAsignatura());
-                //option.setLabel("asd");
                 seleccion[j] = option;
             }
             group.setSelectItems(seleccion);
@@ -123,24 +119,26 @@ public class PlanController implements Serializable {
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PlanCreated"));
-        //System.out.println("create!");
         if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+            items = null;    
+            // Invalidate list of items to trigger re-query.
         }
-        logger.info("Se ha creado un plan " + getSelected().getNombrePlan());
+        LOGGER.info("Se ha creado un plan " + getSelected().getNombrePlan());
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PlanUpdated"));
-        logger.info("Se ha actualizado el plan " + getSelected().getNombrePlan() + ", codigo:" + getSelected().getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
+        LOGGER.info("Se ha actualizado el plan " + getSelected().getNombrePlan() + ", codigo:" + getSelected().getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
     }
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PlanDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-            logger.info("Se ha eliminado el plan " + deletedPlan.getNombrePlan() + ", codigo:" + deletedPlan.getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
+            LOGGER.info("Se ha eliminado el plan " + deletedPlan.getNombrePlan() + ", codigo:" + deletedPlan.getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
+            selected = null; 
+            // Remove selection
+            items = null;    
+            // Invalidate list of items to trigger re-query.
 
         }
     }
@@ -153,9 +151,9 @@ public class PlanController implements Serializable {
     }
 
     public List<Plan> getItemsByVisible() {
-        //if (items == null) {
+
         List<Plan> items = getFacade().findByVisiblePlan();
-        //}
+
         return items;
     }
 
@@ -244,10 +242,10 @@ public class PlanController implements Serializable {
     public String toJSON(Plan plan) {
         StringBuilder jsonB = new StringBuilder();
         jsonB.append("var context = [");
-        ArrayList<Asignatura> as;
+        List<Asignatura> as;
         as = new ArrayList<>(plan.getAsignaturaCollection());
         for (Asignatura a : as) {
-            ArrayList<Asignatura> pre, post;
+            List<Asignatura> pre, post;
             jsonB.append("{ \"nombre\": \"").append(a.getNombreAsignatura());
             jsonB.append("\", \"id\": ").append(a.getCodigoAsignatura());
             jsonB.append(", \"nivel\": ").append(a.getNivelAsignatura());
@@ -324,7 +322,6 @@ public class PlanController implements Serializable {
     }
 
     public void upload() throws IOException {
-        //System.out.println("upload");
         if (csvFile != null && csvFile.getFileName().compareToIgnoreCase("") != 0) {
             UploadedFile uf = csvFile;
 
@@ -334,7 +331,7 @@ public class PlanController implements Serializable {
             uf.getContents();
             Files.copy(uf.getInputstream(), save.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-            ArrayList<Asignatura> asignaturas = new ArrayList<>();
+            List<Asignatura> asignaturas = new ArrayList<>();
 
             BufferedReader br = Files.newBufferedReader(save.toPath(), Charset.forName("Windows-1252"));
             String line;
@@ -356,7 +353,7 @@ public class PlanController implements Serializable {
 
                 if (strs[6].compareToIgnoreCase("ingreso") != 0) {
                     String[] requisitosStrs = strs[6].replace("\"", "").split(",");
-                    ArrayList<Asignatura> requisitos = new ArrayList<>();
+                    List<Asignatura> requisitos = new ArrayList<>();
                     for (String requisito : requisitosStrs) {
 
                         for (Asignatura a : asignaturas) {
@@ -370,8 +367,6 @@ public class PlanController implements Serializable {
                 asignaturas.add(asignatura);
             }
 
-           // FacesMessage message = new FacesMessage( "Asignaturas agregadas exitosamente desde el archivo \"" + uf.getFileName() + "\"");
-            //FacesContext.getCurrentInstance().addMessage(null, message);
             selected.setAsignaturaCollection(asignaturas);
             csvFile = null;
             update();

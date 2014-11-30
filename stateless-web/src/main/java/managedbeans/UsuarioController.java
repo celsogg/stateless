@@ -26,7 +26,7 @@ public class UsuarioController implements Serializable {
     private UsuarioFacadeLocal ejbFacade;
     private List<Usuario> items = null;
     private Usuario selected;
-    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UsuarioController.class);
+    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(UsuarioController.class);
     private String deletedUser;
     
     public UsuarioController() {
@@ -42,9 +42,11 @@ public class UsuarioController implements Serializable {
     }
 
     protected void setEmbeddableKeys() {
+        //no embeddable keys
     }
 
     protected void initializeEmbeddableKey() {
+        //no embeddable keys so no initialize needed
     }
 
     private UsuarioFacadeLocal getFacade() {
@@ -60,25 +62,28 @@ public class UsuarioController implements Serializable {
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioCreated"));
         if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+            items = null;    
+            // Invalidate list of items to trigger re-query.
         }
         
-        logger.info("Se ha creado un usuario: "+ getSelected().getUid());
+        LOGGER.info("Se ha creado un usuario: "+ getSelected().getUid());
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UsuarioUpdated"));
-        logger.info("Se ha modificado a el usuario "+ getSelected().getUid());
+        LOGGER.info("Se ha modificado a el usuario "+ getSelected().getUid());
     }
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("UsuarioDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
+            selected = null; 
+            // Remove selection
+            items = null;    
+            // Invalidate list of items to trigger re-query.
             
         }
-        logger.info("Se ha eliminado a el usuario: "+ deletedUser);
+        LOGGER.info("Se ha eliminado a el usuario: "+ deletedUser);
         
     }
 

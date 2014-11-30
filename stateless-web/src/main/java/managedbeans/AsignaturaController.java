@@ -1,7 +1,6 @@
 package managedbeans;
 
 import entities.Asignatura;
-import entities.Plan;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.AsignaturaFacadeLocal;
@@ -9,7 +8,6 @@ import sessionbeans.AsignaturaFacadeLocal;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -37,7 +35,7 @@ public class AsignaturaController implements Serializable {
     private List<Asignatura> items = null;
     private List<Asignatura> itemsPlan = null;
     private Asignatura selected;
-    final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
+    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
     private String deletedAsignatura;
     
     @Inject
@@ -47,14 +45,7 @@ public class AsignaturaController implements Serializable {
 
     public AsignaturaController() {
     }
-    
-    private Principal getLoggedInUser()
-    {
-        HttpServletRequest request =
-                (HttpServletRequest) FacesContext.getCurrentInstance().
-                    getExternalContext().getRequest();
-        return request.getUserPrincipal();
-    }
+
     
     public Asignatura getSelected() {
         return selected;
@@ -103,9 +94,11 @@ public class AsignaturaController implements Serializable {
     }  
     
     protected void setEmbeddableKeys() {
+        //no embeddable keys
     }
 
     protected void initializeEmbeddableKey() {
+        //no embeddable keys so no initialized needed
     }
 
     private AsignaturaFacadeLocal getFacade() {
@@ -151,24 +144,10 @@ public class AsignaturaController implements Serializable {
     }
 
     public void create() {
-//        List<Asignatura> asigs = planController.getSelected().getAsignaturaCollection();
-//        asigs.add(selected);
-//        planController.getSelected().setAsignaturaCollection(asigs);
-//        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaCreated"));
-//        if (!JsfUtil.isValidationFailed()) {
-//            items = null;    // Invalidate list of items to trigger re-query.
-//            
-//            planController.update();
-//            logger.info("Ha creado la asignatura: "+ getSelected().getNombreAsignatura());
-//            selected = null;
-//        }
-        //List<Asignatura> asigs = planController.getSelected().getAsignaturaCollection();
-        //asigs.add(selected);
-        //planController.update();
-        //planController.getSelected().setAsignaturaCollection(asigs);
+
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaCreated"));
         if ( ! JsfUtil.isValidationFailed() ) {
-            logger.info("Ha creado la asignatura: " + getSelected().getNombreAsignatura());
+             LOGGER.info("Ha creado la asignatura: " + getSelected().getNombreAsignatura());
             items = null;
             itemsPlan = null;
         }
@@ -176,35 +155,32 @@ public class AsignaturaController implements Serializable {
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaUpdated"));
-        logger.info("Ha actualizado la asignatura: "+ getSelected().getNombreAsignatura());
+         LOGGER.info("Ha actualizado la asignatura: "+ getSelected().getNombreAsignatura());
     }
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-            //planController.update();
+            selected = null; 
+            // Remove selection
+            items = null;   
+           // Invalidate list of items to trigger re-query.
+           
         }
-        logger.info("Ha eliminado la asignatura "+ deletedAsignatura);
+         LOGGER.info("Ha eliminado la asignatura "+ deletedAsignatura);
     }
 
     public List<Asignatura> getItems() {
-        //System.out.println("get items");
+       
         if (items == null) {
-            //System.out.println("get items null");
+           
             items = getFacade().findAll();
         }
         return items;
     }
     
     public List<Asignatura> getItemsPlan(){
-        //System.out.println("get itemsplan");
-        //if (itemsPlan == null){
-        //    System.out.println("get itemsplan null");
-        //    Plan plan = planController.getSelected();
-        //    itemsPlan = plan.getAsignaturaCollection();
-        //}
+
         planController.refreshSelected();
         itemsPlan = planController.getSelected().getAsignaturaCollection();
         refreshSelected();
@@ -253,11 +229,7 @@ public class AsignaturaController implements Serializable {
     }
     
     public void saveRequisitos() {
-        /*System.out.println("Selected: "+selected.getCodigoAsignatura()+" "+selected.getNombreAsignatura());
-        System.out.println("Requisitos");
-        for (Asignatura item : DLAsignaturas.getTarget()) {
-            System.out.println("-"+item.getCodigoAsignatura()+" "+item.getNombreAsignatura());
-        }*/
+
         selected.setAsignaturaCollection(DLAsignaturas.getTarget());
         update();
     }

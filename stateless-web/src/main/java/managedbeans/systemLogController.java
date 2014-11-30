@@ -40,9 +40,11 @@ public class systemLogController implements Serializable {
     }
 
     protected void setEmbeddableKeys() {
+        //no embeddable keys
     }
 
     protected void initializeEmbeddableKey() {
+        //no embeddable keys so no initialize needed
     }
 
     private systemLogFacadeLocal getFacade() {
@@ -58,7 +60,8 @@ public class systemLogController implements Serializable {
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("systemLogCreated"));
         if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+            items = null;    
+            // Invalidate list of items to trigger re-query.
         }
     }
 
@@ -69,8 +72,10 @@ public class systemLogController implements Serializable {
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("systemLogDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
+            selected = null; 
+            // Remove selection
+            items = null;    
+            // Invalidate list of items to trigger re-query.
         }
     }
 
