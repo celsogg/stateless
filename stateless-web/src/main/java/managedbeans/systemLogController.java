@@ -1,9 +1,9 @@
 package managedbeans;
 
-import entities.SystemLog;
+import entities.systemLog;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
-import sessionbeans.SystemLogFacadeLocal;
+import sessionbeans.systemLogFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,21 +21,21 @@ import javax.faces.convert.FacesConverter;
 
 @Named("systemLogController")
 @SessionScoped
-public class SystemLogController implements Serializable {
+public class systemLogController implements Serializable {
 
     @EJB
-    private SystemLogFacadeLocal ejbFacade;
-    private List<SystemLog> items = null;
-    private SystemLog selected;
+    private systemLogFacadeLocal ejbFacade;
+    private List<systemLog> items = null;
+    private systemLog selected;
 
-    public SystemLogController() {
+    public systemLogController() {
     }
 
-    public SystemLog getSelected() {
+    public systemLog getSelected() {
         return selected;
     }
 
-    public void setSelected(SystemLog selected) {
+    public void setSelected(systemLog selected) {
         this.selected = selected;
     }
 
@@ -45,36 +45,36 @@ public class SystemLogController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private SystemLogFacadeLocal getFacade() {
+    private systemLogFacadeLocal getFacade() {
         return ejbFacade;
     }
 
-    public SystemLog prepareCreate() {
-        selected = new SystemLog();
+    public systemLog prepareCreate() {
+        selected = new systemLog();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SystemLogCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("systemLogCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SystemLogUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("systemLogUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SystemLogDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("systemLogDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public List<SystemLog> getItems() {
+    public List<systemLog> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,29 +109,29 @@ public class SystemLogController implements Serializable {
         }
     }
 
-    public SystemLog getSystemLog(java.lang.Integer id) {
+    public systemLog getsystemLog(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<SystemLog> getItemsAvailableSelectMany() {
+    public List<systemLog> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<SystemLog> getItemsAvailableSelectOne() {
+    public List<systemLog> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = SystemLog.class)
-    public static class SystemLogControllerConverter implements Converter {
+    @FacesConverter(forClass = systemLog.class)
+    public static class systemLogControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            SystemLogController controller = (SystemLogController) facesContext.getApplication().getELResolver().
+            systemLogController controller = (systemLogController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "systemLogController");
-            return controller.getSystemLog(getKey(value));
+            return controller.getsystemLog(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -151,11 +151,11 @@ public class SystemLogController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof SystemLog) {
-                SystemLog o = (SystemLog) object;
+            if (object instanceof systemLog) {
+                systemLog o = (systemLog) object;
                 return getStringKey(o.getLogsId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), SystemLog.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), systemLog.class.getName()});
                 return null;
             }
         }
