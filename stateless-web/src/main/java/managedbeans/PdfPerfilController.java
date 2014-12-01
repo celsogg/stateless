@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -34,6 +35,7 @@ import org.apache.commons.lang3.StringUtils;
 public class PdfPerfilController extends HttpServlet {
     
     public static final String LOGO_USACH_URL = "/resources/images/UDS_HCOLOR.png";
+    private static final Logger LOGGER = Logger.getLogger(PdfPerfilController.class);
     
     @Inject
     PerfilController perfilCtrl;
@@ -53,7 +55,9 @@ public class PdfPerfilController extends HttpServlet {
             Perfil perfil;
             perfil = perfilCtrl.getPerfil(Integer.parseInt(request.getParameter("id")));
             
-            if (perfil == null) throw new NullPointerException("Perfil no encontrado");
+            if (perfil == null){
+                throw new NullPointerException("Perfil no encontrado");
+            }
 
             baosPDF = generatePDFDocumentBytes(perfil);
             StringBuffer sbFilename = new StringBuffer();
@@ -86,6 +90,7 @@ public class PdfPerfilController extends HttpServlet {
             baosPDF.writeTo(sos);
             sos.flush();
         } catch (NumberFormatException | NullPointerException | DocumentException | IOException dex) {
+            LOGGER.error(dex);
             response.setContentType("text/html");
             PrintWriter writer = response.getWriter();
             writer.println("Documento no disponible<br>");
@@ -107,8 +112,7 @@ public class PdfPerfilController extends HttpServlet {
             docWriter = PdfWriter.getInstance(doc, baosPDF);
             doc.addTitle("Perfil de Egreso "+WordUtils.capitalize(perfil.getIdCarrera().getNombreCarrera()));
             doc.setPageSize(PageSize.LETTER);
-            //HeaderFooter footer = new HeaderFooter( new Phrase("This is a footer."), false);
-            //doc.setFooter(footer);
+
             doc.open();
             
             Image logo = Image.getInstance(getServletContext().getResource(LOGO_USACH_URL));
@@ -126,7 +130,6 @@ public class PdfPerfilController extends HttpServlet {
                 BufferedReader bufReader = new BufferedReader(new StringReader(seccion.getDescripcionSeccion()));
 
                 String line = null;
-                int c = 0;
                 while( (line = bufReader.readLine()) != null ) {
                     String s = StringUtils.stripAccents(line.toLowerCase());
                     if (s.startsWith("habilidades g")){

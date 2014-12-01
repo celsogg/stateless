@@ -207,15 +207,6 @@ public class Asignatura implements Serializable {
     public void setIdPlan(Plan idPlan) {
         this.idPlan = idPlan;
     }
-
-    
-    public Boolean getEsAnual() {
-        return (esAnual != null && esAnual != 0);
-    }
-
-    public void setEsAnual(Boolean esAnual) {
-        this.esAnual = (short) (esAnual  ?  1 : 0);
-    }
     
     public Collection<Asignatura> getConvalidaciones() {
         return convalidaciones;
@@ -257,4 +248,13 @@ public class Asignatura implements Serializable {
     public String toString() {
         return "entities.Asignatura[ idAsignatura=" + idAsignatura + " ]";
     }
+
+    public Boolean getEsAnual() {
+        return esAnual != null && esAnual != 0;
+    }
+
+    public void setEsAnual(Boolean esAnual) {
+        this.esAnual = (short) (esAnual  ?  1 : 0);
+    }
+    
 }

@@ -21,15 +21,17 @@ import javax.persistence.Query;
 public class AsignaturaFacade extends AbstractFacade<Asignatura> implements AsignaturaFacadeLocal {
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-
+    
+    public AsignaturaFacade() {
+        super(Asignatura.class);
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public AsignaturaFacade() {
-        super(Asignatura.class);
-    }
+    
     
     @Override
     public List<Asignatura> findAsignaturas(int id) {
