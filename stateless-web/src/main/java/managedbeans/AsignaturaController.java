@@ -1,6 +1,7 @@
 package managedbeans;
 
 import entities.Asignatura;
+import entities.Plan;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.AsignaturaFacadeLocal;
@@ -55,7 +56,9 @@ public class AsignaturaController implements Serializable {
         this.selected = selected;
         if (selected != null){
             List<Asignatura> asignaturasActuales = (List<Asignatura>) selected.getAsignaturaCollection();
-            List<Asignatura> asignaturasPosibles = new ArrayList<>(itemsPlan);
+            List<Asignatura> asignaturasPosibles;
+            if (itemsPlan != null) asignaturasPosibles = new ArrayList<>(itemsPlan);
+            else asignaturasPosibles = new ArrayList<>();
             asignaturasPosibles.remove(selected);
             asignaturasPosibles.removeAll(asignaturasActuales);
             DLAsignaturas = new DualListModel<>(asignaturasPosibles, asignaturasActuales);
@@ -232,6 +235,10 @@ public class AsignaturaController implements Serializable {
 
         selected.setAsignaturaCollection(DLAsignaturas.getTarget());
         update();
+    }
+
+    public List<Asignatura> getAsignaturasPlan(Plan plan) {
+        return getFacade().findAsignaturasByPlan(plan);
     }
 
     @FacesConverter(forClass = Asignatura.class, value = "asig")

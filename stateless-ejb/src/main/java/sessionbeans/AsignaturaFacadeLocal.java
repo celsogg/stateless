@@ -6,6 +6,7 @@
 package sessionbeans;
 
 import entities.Asignatura;
+import entities.Plan;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -31,6 +32,6 @@ public interface AsignaturaFacadeLocal {
     List<Asignatura> findAsignaturas(int id);  
     
     int count();
-
-    List<Asignatura> findAsignaturasByPlan(int planId);
+    
+    List<Asignatura> findAsignaturasByPlan(Plan p);
 }

@@ -100,6 +100,14 @@
                             </h:outputLink>
                         </li>
                     </c:if>
+                     <c:if test="${loginController.esAdmin()}">
+                        <li class="sub-menu">
+                            <h:outputLink value="/stateless-web/convalidaciones/index.xhtml">
+                                <i class="fa fa-dashboard"></i>
+                                <span>Convalidaciones</span>
+                            </h:outputLink>
+                        </li>
+                    </c:if>
                     <li class="sub-menu">
                         <a href="javascript:;" >
                             <i class="fa fa-desktop"></i>
