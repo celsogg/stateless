@@ -142,8 +142,10 @@ public class PdfMallaDownloadController extends HttpServlet {
             }
 
             PdfPTable table = new PdfPTable(maximoNivel);
-            table.setSplitLate(false); // default value
-            table.setWidthPercentage(CIEN); //Width 100%
+            table.setSplitLate(false); 
+            // default value
+            table.setWidthPercentage(CIEN);
+            //Width 100%
 
 
             float columnWidths[] = new float[maximoNivel];

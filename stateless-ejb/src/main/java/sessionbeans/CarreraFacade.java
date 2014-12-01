@@ -19,13 +19,15 @@ public class CarreraFacade extends AbstractFacade<Carrera> implements CarreraFac
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
+    public CarreraFacade() {
+        super(Carrera.class);
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public CarreraFacade() {
-        super(Carrera.class);
-    }
+    
     
 }

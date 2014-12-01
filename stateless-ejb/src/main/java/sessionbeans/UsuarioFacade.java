@@ -22,15 +22,18 @@ import javax.persistence.Query;
 public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFacadeLocal {
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-
+    
+    
+    public UsuarioFacade() {
+        super(Usuario.class);
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public UsuarioFacade() {
-        super(Usuario.class);
-    }
+    
     
     /**
      *

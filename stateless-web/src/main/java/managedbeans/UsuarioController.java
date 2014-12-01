@@ -18,6 +18,7 @@ import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.UsuarioFacadeLocal;
 
+
 @Named("usuarioController")
 @SessionScoped
 public class UsuarioController implements Serializable {
@@ -26,7 +27,7 @@ public class UsuarioController implements Serializable {
     private UsuarioFacadeLocal ejbFacade;
     private List<Usuario> items = null;
     private Usuario selected;
-    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(UsuarioController.class);
+    private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(UsuarioController.class);
     private String deletedUser;
     
     public UsuarioController() {

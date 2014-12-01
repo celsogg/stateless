@@ -6,6 +6,7 @@
 package sessionbeans;
 
 import entities.Asignatura;
+import entities.Plan;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,15 +21,17 @@ import javax.persistence.Query;
 public class AsignaturaFacade extends AbstractFacade<Asignatura> implements AsignaturaFacadeLocal {
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-
+    
+    public AsignaturaFacade() {
+        super(Asignatura.class);
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public AsignaturaFacade() {
-        super(Asignatura.class);
-    }
+    
     
     @Override
     public List<Asignatura> findAsignaturas(int id) {
@@ -39,11 +42,10 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> implements Asig
         return query.getResultList();
     }
 
-    @Override
-    public List<Asignatura> findAsignaturasByPlan(int planId) {
+    public List<Asignatura> findAsignaturasByPlan(Plan p) {
         Query query;
         query = em.createNamedQuery("Asignatura.findByPlanId")
-                .setParameter("planId", planId);
+                .setParameter("planId", p);
         
         return query.getResultList();
     }

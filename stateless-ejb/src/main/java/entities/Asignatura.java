@@ -86,9 +86,14 @@ public class Asignatura implements Serializable {
     @ManyToOne
     private Plan idPlan;
     
-
-
-    
+    @JoinTable(name = "convalidacion", joinColumns = {
+        @JoinColumn(name = "ID_ASIG_CONVALIDANTE", referencedColumnName = "ID_ASIGNATURA")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_ASIG_CONVALIDADA", referencedColumnName = "ID_ASIGNATURA")})
+    @ManyToMany
+    private Collection<Asignatura> convalidaciones;
+    @ManyToMany(mappedBy = "convalidaciones")
+    private Collection<Asignatura> convalidadaPor;
+  
     public Asignatura() {
     }
 
@@ -202,8 +207,22 @@ public class Asignatura implements Serializable {
     public void setIdPlan(Plan idPlan) {
         this.idPlan = idPlan;
     }
+    
+    public Collection<Asignatura> getConvalidaciones() {
+        return convalidaciones;
+    }
 
+    public void setConvalidaciones(Collection<Asignatura> convalidaciones) {
+        this.convalidaciones = convalidaciones;
+    }
 
+    public Collection<Asignatura> getConvalidadaPor() {
+        return convalidadaPor;
+    }
+
+    public void setConvalidadaPor(Collection<Asignatura> convalidadaPor) {
+        this.convalidadaPor = convalidadaPor;
+    }
 
     @Override
     public int hashCode() {
@@ -231,7 +250,7 @@ public class Asignatura implements Serializable {
     }
 
     public Boolean getEsAnual() {
-        return (esAnual != null && esAnual != 0);
+        return esAnual != null && esAnual != 0;
     }
 
     public void setEsAnual(Boolean esAnual) {

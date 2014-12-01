@@ -18,14 +18,17 @@ import javax.persistence.PersistenceContext;
 public class PerfilFacade extends AbstractFacade<Perfil> implements PerfilFacadeLocal {
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-
+    
+    
+    public PerfilFacade() {
+        super(Perfil.class);
+    }
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public PerfilFacade() {
-        super(Perfil.class);
-    }
+    
     
 }

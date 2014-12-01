@@ -183,6 +183,32 @@ INSERT INTO `carrera` VALUES (1,'Ingeniería civil informática'),(2,'Ingenierí
 UNLOCK TABLES;
 
 --
+-- Table structure for table `convalidacion`
+--
+
+DROP TABLE IF EXISTS `convalidacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `convalidacion` (
+  `ID_ASIG_CONVALIDANTE` int(11) NOT NULL,
+  `ID_ASIG_CONVALIDADA` int(11) NOT NULL,
+  KEY `ASI_CONV_idx` (`ID_ASIG_CONVALIDANTE`,`ID_ASIG_CONVALIDADA`),
+  KEY `CONVD_idx` (`ID_ASIG_CONVALIDADA`),
+  CONSTRAINT `CONV` FOREIGN KEY (`ID_ASIG_CONVALIDANTE`) REFERENCES `asignatura` (`ID_ASIGNATURA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `CONVD` FOREIGN KEY (`ID_ASIG_CONVALIDADA`) REFERENCES `asignatura` (`ID_ASIGNATURA`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `convalidacion`
+--
+
+LOCK TABLES `convalidacion` WRITE;
+/*!40000 ALTER TABLE `convalidacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `convalidacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `perfil`
 --
 

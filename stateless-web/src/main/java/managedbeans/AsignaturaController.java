@@ -1,12 +1,12 @@
 package managedbeans;
 
 import entities.Asignatura;
+import entities.Plan;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.AsignaturaFacadeLocal;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,7 +24,7 @@ import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
-import javax.servlet.http.HttpServletRequest;
+
 
 @Named("asignaturaController")
 @SessionScoped
@@ -35,13 +35,13 @@ public class AsignaturaController implements Serializable {
     private List<Asignatura> items = null;
     private List<Asignatura> itemsPlan = null;
     private Asignatura selected;
-    final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
+    private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
     private String deletedAsignatura;
     
     @Inject
     private PlanController planController;
     
-    private DualListModel<Asignatura> DLAsignaturas;
+    private DualListModel<Asignatura> dlAsignaturas;
 
     public AsignaturaController() {
     }
@@ -55,10 +55,12 @@ public class AsignaturaController implements Serializable {
         this.selected = selected;
         if (selected != null){
             List<Asignatura> asignaturasActuales = (List<Asignatura>) selected.getAsignaturaCollection();
-            List<Asignatura> asignaturasPosibles = new ArrayList<>(itemsPlan);
+            List<Asignatura> asignaturasPosibles;
+            if (itemsPlan != null) asignaturasPosibles = new ArrayList<>(itemsPlan);
+            else asignaturasPosibles = new ArrayList<>();
             asignaturasPosibles.remove(selected);
             asignaturasPosibles.removeAll(asignaturasActuales);
-            DLAsignaturas = new DualListModel<>(asignaturasPosibles, asignaturasActuales);
+            dlAsignaturas = new DualListModel<>(asignaturasPosibles, asignaturasActuales);
         }
     }
     
@@ -72,11 +74,11 @@ public class AsignaturaController implements Serializable {
     }
 
     public DualListModel<Asignatura> getDLAsignaturas() {
-        return DLAsignaturas;
+        return dlAsignaturas;
     }
 
-    public void setDLAsignaturas(DualListModel<Asignatura> DLAsignaturas) {
-        this.DLAsignaturas = DLAsignaturas;
+    public void setDLAsignaturas(DualListModel<Asignatura> dlAsignaturas) {
+        this.dlAsignaturas = dlAsignaturas;
     }
 
     public void onTransfer(TransferEvent event) {
@@ -230,8 +232,12 @@ public class AsignaturaController implements Serializable {
     
     public void saveRequisitos() {
 
-        selected.setAsignaturaCollection(DLAsignaturas.getTarget());
+        selected.setAsignaturaCollection(dlAsignaturas.getTarget());
         update();
+    }
+
+    public List<Asignatura> getAsignaturasPlan(Plan plan) {
+        return getFacade().findAsignaturasByPlan(plan);
     }
 
     @FacesConverter(forClass = Asignatura.class, value = "asig")

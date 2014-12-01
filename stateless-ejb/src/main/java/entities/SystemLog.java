@@ -31,14 +31,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "LOGS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "systemLog.findAll", query = "SELECT s FROM systemLog s"),
-    @NamedQuery(name = "systemLog.findByLogsId", query = "SELECT s FROM systemLog s WHERE s.logsId = :logsId"),
-    @NamedQuery(name = "systemLog.findByUserId", query = "SELECT s FROM systemLog s WHERE s.userId = :userId"),
-    @NamedQuery(name = "systemLog.findByDated", query = "SELECT s FROM systemLog s WHERE s.dated = :dated"),
-    @NamedQuery(name = "systemLog.findByLogger", query = "SELECT s FROM systemLog s WHERE s.logger = :logger"),
-    @NamedQuery(name = "systemLog.findByLevel", query = "SELECT s FROM systemLog s WHERE s.level = :level"),
-    @NamedQuery(name = "systemLog.findByMessage", query = "SELECT s FROM systemLog s WHERE s.message = :message")})
-public class systemLog implements Serializable {
+    @NamedQuery(name = "SystemLog.findAll", query = "SELECT s FROM SystemLog s"),
+    @NamedQuery(name = "SystemLog.findByLogsId", query = "SELECT s FROM SystemLog s WHERE s.logsId = :logsId"),
+    @NamedQuery(name = "SystemLog.findByUserId", query = "SELECT s FROM SystemLog s WHERE s.userId = :userId"),
+    @NamedQuery(name = "SystemLog.findByDated", query = "SELECT s FROM SystemLog s WHERE s.dated = :dated"),
+    @NamedQuery(name = "SystemLog.findByLogger", query = "SELECT s FROM SystemLog s WHERE s.logger = :logger"),
+    @NamedQuery(name = "SystemLog.findByLevel", query = "SELECT s FROM SystemLog s WHERE s.level = :level"),
+    @NamedQuery(name = "SystemLog.findByMessage", query = "SELECT s FROM SystemLog s WHERE s.message = :message")})
+public class SystemLog implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,14 +71,14 @@ public class systemLog implements Serializable {
     @Column(name = "MESSAGE")
     private String message;
 
-    public systemLog() {
+    public SystemLog() {
     }
 
-    public systemLog(Integer logsId) {
+    public SystemLog(Integer logsId) {
         this.logsId = logsId;
     }
 
-    public systemLog(Integer logsId, String userId, Date dated, String logger, String level, String message) {
+    public SystemLog(Integer logsId, String userId, Date dated, String logger, String level, String message) {
         this.logsId = logsId;
         this.userId = userId;
         this.dated = dated;
@@ -145,10 +145,10 @@ public class systemLog implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof systemLog)) {
+        if (!(object instanceof SystemLog)) {
             return false;
         }
-        systemLog other = (systemLog) object;
+        SystemLog other = (SystemLog) object;
         if ((this.logsId == null && other.logsId != null) || (this.logsId != null && !this.logsId.equals(other.logsId))) {
             return false;
         }
@@ -157,7 +157,7 @@ public class systemLog implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.systemLog[ logsId=" + logsId + " ]";
+        return "entities.SystemLog[ logsId=" + logsId + " ]";
     }
     
 }
