@@ -39,6 +39,12 @@
                             </f:facet>
                             <h:outputText value="#{item.versionPerfil}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPerfilTitle_descripcionPerfil}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcionPerfil}"/>
+                        </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{perfilController.prepareCreate}" update=":PerfilCreateForm" oncomplete="PF('PerfilCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PerfilViewForm" oncomplete="PF('PerfilViewDialog').show()" disabled="#{empty perfilController.selected}"/>

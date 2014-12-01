@@ -29,12 +29,6 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSeccionTitle_idSeccion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idSeccion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSeccionTitle_nombreSeccion}"/>
                             </f:facet>
                             <h:outputText value="#{item.nombreSeccion}"/>
@@ -44,12 +38,6 @@
                                 <h:outputText value="#{bundle.ListSeccionTitle_descripcionSeccion}"/>
                             </f:facet>
                             <h:outputText value="#{item.descripcionSeccion}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSeccionTitle_idPerfil}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idPerfil}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{seccionController.prepareCreate}" update=":SeccionCreateForm" oncomplete="PF('SeccionCreateDialog').show()"/>

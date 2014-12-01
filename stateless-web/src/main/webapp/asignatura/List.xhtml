@@ -15,7 +15,7 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="AsignaturaListForm">
+            <h:form id="AsignaturaListForm2">
                 <p:panel header="#{bundle.ListAsignaturaTitle}">
                     <p:dataTable id="datalist" value="#{asignaturaController.items}" var="item"
                                  selectionMode="single" selection="#{asignaturaController.selected}"
@@ -28,31 +28,13 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAsignaturaTitle_idAsignatura}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idAsignatura}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAsignaturaTitle_nombreAsignatura}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nombreAsignatura}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAsignaturaTitle_sctAsignatura}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.sctAsignatura}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column style="width: 50px">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAsignaturaTitle_nivelAsignatura}"/>
                             </f:facet>
                             <h:outputText value="#{item.nivelAsignatura}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="width: 55px">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAsignaturaTitle_codigoAsignatura}"/>
                             </f:facet>
@@ -60,17 +42,29 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignaturaTitle_nombreAsignatura}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombreAsignatura}"/>
+                        </p:column>
+                        <p:column style="width: 45px">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignaturaTitle_sctAsignatura}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sctAsignatura}"/>
+                        </p:column>
+                        <p:column style="width: 55px">
+                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAsignaturaTitle_horasTeoria}"/>
                             </f:facet>
                             <h:outputText value="#{item.horasTeoria}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="width: 55px">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAsignaturaTitle_horasEjercicio}"/>
                             </f:facet>
                             <h:outputText value="#{item.horasEjercicio}"/>
                         </p:column>
-                        <p:column>
+                        <p:column style="width: 55px">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListAsignaturaTitle_horasLaboratorio}"/>
                             </f:facet>
@@ -88,13 +82,7 @@
                             </f:facet>
                             <h:outputText value="#{asignaturaController.getNombresAsignatura2String(item)}"/>
                         </p:column>
-                        
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListAsignaturaTitle_idPlan}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idPlan}"/>
-                        </p:column>
+                      
                         
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{asignaturaController.prepareCreate}" update=":AsignaturaCreateForm" oncomplete="PF('AsignaturaCreateDialog').show()"/>

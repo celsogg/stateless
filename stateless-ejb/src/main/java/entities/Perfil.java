@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p"),
     @NamedQuery(name = "Perfil.findByIdPerfil", query = "SELECT p FROM Perfil p WHERE p.idPerfil = :idPerfil"),
     @NamedQuery(name = "Perfil.findByNombrePerfil", query = "SELECT p FROM Perfil p WHERE p.nombrePerfil = :nombrePerfil"),
-    @NamedQuery(name = "Perfil.findByVersionPerfil", query = "SELECT p FROM Perfil p WHERE p.versionPerfil = :versionPerfil")})
+    @NamedQuery(name = "Perfil.findByVersionPerfil", query = "SELECT p FROM Perfil p WHERE p.versionPerfil = :versionPerfil"),
+    @NamedQuery(name = "Perfil.findByDescripcionPerfil", query = "SELECT p FROM Perfil p WHERE p.descripcionPerfil = :descripcionPerfil")})
 public class Perfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,6 +50,9 @@ public class Perfil implements Serializable {
     @Size(max = 32)
     @Column(name = "VERSION_PERFIL")
     private String versionPerfil;
+    @Size(max = 2048)
+    @Column(name = "DESCRIPCION_PERFIL")
+    private String descripcionPerfil;
     @JoinColumn(name = "ID_CARRERA", referencedColumnName = "ID_CARRERA")
     @ManyToOne
     private Carrera idCarrera;
@@ -72,6 +76,14 @@ public class Perfil implements Serializable {
 
     public String getNombrePerfil() {
         return nombrePerfil;
+    }
+
+    public String getDescripcionPerfil() {
+        return descripcionPerfil;
+    }
+
+    public void setDescripcionPerfil(String descripcionPerfil) {
+        this.descripcionPerfil = descripcionPerfil;
     }
 
     public void setNombrePerfil(String nombrePerfil) {

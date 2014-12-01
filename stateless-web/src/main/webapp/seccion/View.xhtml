@@ -12,15 +12,11 @@
             <h:form id="SeccionViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{seccionController.selected != null}">
-                        <h:outputText value="#{bundle.ViewSeccionLabel_idSeccion}"/>
-                        <h:outputText value="#{seccionController.selected.idSeccion}" title="#{bundle.ViewSeccionTitle_idSeccion}"/>
                         <h:outputText value="#{bundle.ViewSeccionLabel_nombreSeccion}"/>
                         <h:outputText value="#{seccionController.selected.nombreSeccion}" title="#{bundle.ViewSeccionTitle_nombreSeccion}"/>
                         <h:outputText value="#{bundle.ViewSeccionLabel_descripcionSeccion}"/>
                         <h:outputText value="#{seccionController.selected.descripcionSeccion}" title="#{bundle.ViewSeccionTitle_descripcionSeccion}"/>
-                        <h:outputText value="#{bundle.ViewSeccionLabel_idPerfil}"/>
-                        <h:outputText value="#{seccionController.selected.idPerfil}" title="#{bundle.ViewSeccionTitle_idPerfil}"/>
-                    </p:panelGrid>
+                </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="SeccionViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

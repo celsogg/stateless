@@ -13,9 +13,11 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{perfilController.selected != null}">
                         <p:outputLabel value="#{bundle.CreatePerfilLabel_nombrePerfil}" for="nombrePerfil" />
-                        <p:inputText id="nombrePerfil" value="#{perfilController.selected.nombrePerfil}" title="#{bundle.CreatePerfilTitle_nombrePerfil}" />
+                        <p:inputTextarea id="nombrePerfil" value="#{perfilController.selected.nombrePerfil}" title="#{bundle.CreatePerfilTitle_nombrePerfil}" cols="100" autoResize="false" />
                         <p:outputLabel value="#{bundle.CreatePerfilLabel_versionPerfil}" for="versionPerfil" />
                         <p:inputText id="versionPerfil" value="#{perfilController.selected.versionPerfil}" title="#{bundle.CreatePerfilTitle_versionPerfil}" />
+                        <p:outputLabel value="#{bundle.CreatePerfilLabel_descripcionPerfil}" for="descripcionPerfil" />
+                        <p:inputTextarea id="descripcionPerfil" value="#{perfilController.selected.descripcionPerfil}" title="#{bundle.CreatePerfilTitle_descripcionPerfil}" rows="15" cols="100" autoResize="false" />
                         <p:outputLabel value="#{bundle.CreatePerfilLabel_idCarrera}" for="idCarrera" />
                         <p:selectOneMenu id="idCarrera" value="#{perfilController.selected.idCarrera}" >
                             <f:selectItems value="#{carreraController.itemsAvailableSelectOne}"

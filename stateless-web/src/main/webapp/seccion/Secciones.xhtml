@@ -15,7 +15,7 @@
 
         <ui:define name="body">
             <h:form id="SeccionListForm">
-                <p:panel header="Secciones del Perfil: #{perfilController.selected.nombrePerfil}">
+                <p:panel header="Secciones del #{perfilController.selected.nombrePerfil}">
                     <p:dataTable id="datalist" value="#{seccionController.itemsPerfil}" var="item"
                                  selectionMode="single" selection="#{seccionController.selected}"
                                  paginator="true"
@@ -26,31 +26,17 @@
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-<!--                        <p:column style="width: 30px;">
-                            <f:facet name="header">
-                                <h:outputText value="id"/>
-                            </f:facet>
-                            <h:outputText value="{item.idAsignatura}"/>
-                        </p:column>
                         
                         <p:column style="width: 50px">
                             <f:facet name="header">
-                                <h:outputText value="PId"/>
-                            </f:facet>
-                            <h:outputText value="{item.idPlan}"/>
-                        </p:column>-->
-                        
-                        <p:column style="width: 50px">
-                            <f:facet name="header">
-                                <h:outputText value="Nombre Sección"/>
+                                <h:outputText value="Nombre de la Sección"/>
                             </f:facet>
                             <h:outputText value="#{item.nombreSeccion}"/>
                         </p:column>
                         
                         <p:column style="width: 55px">
                             <f:facet name="header">
-                                <h:outputText value="Descripción Sección"/>
+                                <h:outputText value="Descripción de la Sección"/>
                             </f:facet>
                             <h:outputText value="#{item.descripcionSeccion}"/>
                         </p:column>

@@ -27,32 +27,25 @@
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton seccionesButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton seccionesButton"/>
 
-<!--                        <p:column style="width: 30px;">
-                            <f:facet name="header">
-                                <h:outputText value="id"/>
-                            </f:facet>
-                            <h:outputText value="{item.idAsignatura}"/>
-                        </p:column>
                         
                         <p:column style="width: 50px">
                             <f:facet name="header">
-                                <h:outputText value="PId"/>
-                            </f:facet>
-                            <h:outputText value="{item.idPlan}"/>
-                        </p:column>-->
-                        
-                        <p:column style="width: 50px">
-                            <f:facet name="header">
-                                <h:outputText value="Nombre Perfil"/>
+                                <h:outputText value="Nombre del Perfil"/>
                             </f:facet>
                             <h:outputText value="#{item.nombrePerfil}"/>
                         </p:column>
                         
                         <p:column style="width: 55px">
                             <f:facet name="header">
-                                <h:outputText value="Versión Perfil"/>
+                                <h:outputText value="Versión del Perfil"/>
                             </f:facet>
                             <h:outputText value="#{item.versionPerfil}"/>
+                        </p:column>
+                        <p:column style="width: 55px">
+                            <f:facet name="header">
+                                <h:outputText value="Descripción del Perfil"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcionPerfil}"/>
                         </p:column>
                         
                                                                      

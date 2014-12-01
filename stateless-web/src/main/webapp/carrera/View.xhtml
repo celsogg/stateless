@@ -12,8 +12,6 @@
             <h:form id="CarreraViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{carreraController.selected != null}">
-                        <h:outputText value="#{bundle.ViewCarreraLabel_idCarrera}"/>
-                        <h:outputText value="#{carreraController.selected.idCarrera}" title="#{bundle.ViewCarreraTitle_idCarrera}"/>
                         <h:outputText value="#{bundle.ViewCarreraLabel_nombreCarrera}"/>
                         <h:outputText value="#{carreraController.selected.nombreCarrera}" title="#{bundle.ViewCarreraTitle_nombreCarrera}"/>
                     </p:panelGrid>

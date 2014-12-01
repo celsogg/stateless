@@ -12,17 +12,17 @@
             <h:form id="SeccionCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{seccionController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateSeccionLabel_idSeccion}" for="idSeccion" />
-                        <p:inputText id="idSeccion" value="#{seccionController.selected.idSeccion}" title="#{bundle.CreateSeccionTitle_idSeccion}" required="true" requiredMessage="#{bundle.CreateSeccionRequiredMessage_idSeccion}"/>
                         <p:outputLabel value="#{bundle.CreateSeccionLabel_nombreSeccion}" for="nombreSeccion" />
-                        <p:inputText id="nombreSeccion" value="#{seccionController.selected.nombreSeccion}" title="#{bundle.CreateSeccionTitle_nombreSeccion}" />
+                        <p:inputTextarea id="nombreSeccion" value="#{seccionController.selected.nombreSeccion}" title="#{bundle.CreateSeccionTitle_nombreSeccion}" cols="100" />
                         <p:outputLabel value="#{bundle.CreateSeccionLabel_descripcionSeccion}" for="descripcionSeccion" />
-                        <p:inputText id="descripcionSeccion" value="#{seccionController.selected.descripcionSeccion}" title="#{bundle.CreateSeccionTitle_descripcionSeccion}" />
+                        <p:inputTextarea id="descripcionSeccion" value="#{seccionController.selected.descripcionSeccion}" title="#{bundle.CreateSeccionTitle_descripcionSeccion}" rows="25" cols="100"
+                                         autoResize="false" />
                         <p:outputLabel value="#{bundle.CreateSeccionLabel_idPerfil}" for="idPerfil" />
                         <p:selectOneMenu id="idPerfil" value="#{seccionController.selected.idPerfil}" >
                             <f:selectItems value="#{perfilController.itemsAvailableSelectOne}"
                                            var="idPerfilItem"
-                                           itemValue="#{idPerfilItem}"/>
+                                           itemValue="#{idPerfilItem}"
+                                           itemLabel="#{idPerfilItem.nombrePerfil}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{seccionController.create}" value="#{bundle.Save}" update="display,:SeccionListForm:datalist,:growl" oncomplete="handleSubmit(args,'SeccionCreateDialog');"/>

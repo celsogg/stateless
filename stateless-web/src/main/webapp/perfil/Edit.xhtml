@@ -12,12 +12,12 @@
             <h:form id="PerfilEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{perfilController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditPerfilLabel_idPerfil}" for="idPerfil" />
-                        <p:inputText id="idPerfil" value="#{perfilController.selected.idPerfil}" title="#{bundle.EditPerfilTitle_idPerfil}" required="true" requiredMessage="#{bundle.EditPerfilRequiredMessage_idPerfil}"/>
                         <p:outputLabel value="#{bundle.EditPerfilLabel_nombrePerfil}" for="nombrePerfil" />
-                        <p:inputText id="nombrePerfil" value="#{perfilController.selected.nombrePerfil}" title="#{bundle.EditPerfilTitle_nombrePerfil}" />
+                        <p:inputTextarea id="nombrePerfil" value="#{perfilController.selected.nombrePerfil}" title="#{bundle.EditPerfilTitle_nombrePerfil}" cols="100" autoResize="false"/>
                         <p:outputLabel value="#{bundle.EditPerfilLabel_versionPerfil}" for="versionPerfil" />
                         <p:inputText id="versionPerfil" value="#{perfilController.selected.versionPerfil}" title="#{bundle.EditPerfilTitle_versionPerfil}" />
+                        <p:outputLabel value="#{bundle.EditPerfilLabel_descripcionPerfil}" for="descripcionPerfil" />
+                        <p:inputTextarea id="descripcionPerfil" value="#{perfilController.selected.descripcionPerfil}" title="#{bundle.EditPerfilTitle_descripcionPerfil}" rows="15" cols="100" autoResize="false" />
                         <p:outputLabel value="#{bundle.EditPerfilLabel_idCarrera}" for="idCarrera" />
                         <p:selectOneMenu id="idCarrera" value="#{perfilController.selected.idCarrera}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
