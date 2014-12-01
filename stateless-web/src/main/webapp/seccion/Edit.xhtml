@@ -13,9 +13,9 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{seccionController.selected != null}" >
                         <p:outputLabel value="#{bundle.EditSeccionLabel_nombreSeccion}" for="nombreSeccion" />
-                        <p:inputText id="nombreSeccion" value="#{seccionController.selected.nombreSeccion}" title="#{bundle.EditSeccionTitle_nombreSeccion}"  />
+                        <p:inputTextarea id="nombreSeccion" value="#{seccionController.selected.nombreSeccion}" title="#{bundle.EditSeccionTitle_nombreSeccion}" cols="100" />
                         <p:outputLabel value="#{bundle.EditSeccionLabel_descripcionSeccion}" for="descripcionSeccion" />
-                        <p:inputTextarea  id="descripcionSeccion" value="#{seccionController.selected.descripcionSeccion}" title="#{bundle.EditSeccionTitle_descripcionSeccion}" rows="30" cols="110"  />
+                        <p:inputTextarea  id="descripcionSeccion" value="#{seccionController.selected.descripcionSeccion}" title="#{bundle.EditSeccionTitle_descripcionSeccion}" rows="25" cols="110" autoResize="false" />
                         <p:outputLabel value="#{bundle.EditSeccionLabel_idPerfil}" for="idPerfil" />
                         <p:selectOneMenu id="idPerfil" value="#{seccionController.selected.idPerfil}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

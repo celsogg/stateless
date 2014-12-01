@@ -44,7 +44,7 @@
                         <p:inputText id="horasLaboratorio" value="#{asignaturaController.selected.horasLaboratorio}" title="#{bundle.EditAsignaturaTitle_horasLaboratorio}" />
                         
                         <p:outputLabel value="Resumen" for="resumenAsignatura" />
-                        <p:inputText id="resumenAsignatura" value="#{asignaturaController.selected.resumenAsignatura}" title="#{bundle.EditAsignaturaTitle_resumenAsignatura}" />
+                        <p:inputTextarea id="resumenAsignatura" value="#{asignaturaController.selected.resumenAsignatura}" cols="100" rows="10" autoResize="false" title="#{bundle.EditAsignaturaTitle_resumenAsignatura}" />
                         
                         <h:outputLabel value="Anual" for="visiblePlan"/>
                         <p:selectBooleanCheckbox id="visiblePlan" value="#{asignaturaController.selected.esAnual}" />
