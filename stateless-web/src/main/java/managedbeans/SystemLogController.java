@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("systemLogController")
+@Named("SystemLogController")
 @SessionScoped
 public class SystemLogController implements Serializable {
 
@@ -58,7 +58,7 @@ public class SystemLogController implements Serializable {
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("systemLogCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("SystemLogCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    
             // Invalidate list of items to trigger re-query.
@@ -66,11 +66,11 @@ public class SystemLogController implements Serializable {
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("systemLogUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("SystemLogUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("systemLogDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("SystemLogDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; 
             // Remove selection

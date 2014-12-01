@@ -10,14 +10,14 @@
 
 
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListsystemLogTitle}"></h:outputText>
+            <h:outputText value="#{bundle.ListSystemLogTitle}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h:form id="systemLogListForm">
-                <p:panel header="#{bundle.ListsystemLogTitle}">
-                    <p:dataTable id="datalist" value="#{systemLogController.items}" var="item"
-                                 selectionMode="single" selection="#{systemLogController.selected}"
+                <p:panel header="#{bundle.ListSystemLogTitle}">
+                    <p:dataTable id="datalist" value="#{SystemLogController.items}" var="item"
+                                 selectionMode="single" selection="#{SystemLogController.selected}"
                                  paginator="true"
                                  rowKey="#{item.logsId}"
                                  rows="20"
@@ -27,7 +27,7 @@
 
                        <p:column sortBy="#{item.dated}">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListsystemLogTitle_dated}"/>
+                                <h:outputText value="#{bundle.ListSystemLogTitle_dated}"/>
                             </f:facet>
                             <h:outputText value="#{item.dated}">
                                 <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
@@ -35,19 +35,19 @@
                         </p:column>
                         <p:column filterBy="#{item.userId}" filterMatchMode="contains" sortBy="#{item.userId}">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListsystemLogTitle_userId}"/>
+                                <h:outputText value="#{bundle.ListSystemLogTitle_userId}"/>
                             </f:facet>
                             <h:outputText value="#{item.userId}"/>
                         </p:column>
                         <p:column sortBy="#{item.level}">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListsystemLogTitle_level}"/>
+                                <h:outputText value="#{bundle.ListSystemLogTitle_level}"/>
                             </f:facet>
                             <h:outputText value="#{item.level}"/>
                         </p:column>
                         <p:column sortBy="#{item.message}">
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListsystemLogTitle_message}"/>
+                                <h:outputText value="#{bundle.ListSystemLogTitle_message}"/>
                             </f:facet>
                             <h:outputText value="#{item.message}"/>
                         </p:column>

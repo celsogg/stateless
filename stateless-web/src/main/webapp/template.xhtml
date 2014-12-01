@@ -74,7 +74,7 @@
                 <ul class="sidebar-menu" id="nav-accordion">
 
                     <!--<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>-->
-                    <h5 class="centered">Bienvenido #{loginController.username}</h5>
+                    <h5 class="centered">Hola #{loginController.nombreMostrado}!</h5>
 
                     <c:if test="${loginController.esAdmin()}">
                         <li class="sub-menu">
@@ -94,7 +94,7 @@
                     </c:if>
                      <c:if test="${loginController.esAdmin()}">
                         <li class="sub-menu">
-                            <h:outputLink value="/stateless-web/systemLog/List.xhtml">
+                            <h:outputLink value="/stateless-web/SystemLog/List.xhtml">
                                 <i class="fa fa-dashboard"></i>
                                 <span>Ver Log de Auditoría</span>
                             </h:outputLink>

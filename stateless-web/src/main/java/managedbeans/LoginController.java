@@ -33,6 +33,8 @@ import org.apache.log4j.Logger;
 public class LoginController {
 
     private String username;
+    private String nombreMostrado;  
+    private String nombre;
     private String password;
     private String rol;
     private boolean isLoggedIn;
@@ -76,14 +78,19 @@ public class LoginController {
             if (!results.isEmpty()) {
                 user = results.get(0);
                 this.rol = user.getRol();
+                this.nombre = user.getNombre();
+                
                 if("".equals(this.rol)){
                     this.rol = "estudiante";
+                    setNombreMostrado(this.nombre);
                 }
                 if (this.rol.equalsIgnoreCase("administrador")) {
+                    setNombreMostrado(this.nombre);
                     message = "Username: " + request.getUserPrincipal().getName() + " You are administrator";
                     navto = "/index.xhtml";
                 }
             } else {
+                setNombreMostrado(getUsername());
                 message = "Username: " + request.getUserPrincipal().getName() + " You are student";
                 navto = "/index.xhtml";
             }
@@ -144,6 +151,15 @@ public class LoginController {
     public Boolean esAdmin() {
         return "administrador".equals(this.rol);
     }
+    
+    public String getNombreMostrado() {
+        return nombreMostrado;
+    }
+    
+    public void setNombreMostrado(String nombreMostrado) {
+        this.nombreMostrado = nombreMostrado;
+    }
+    
 
     public Boolean noEsAdmin() {
         return !"administrador".equals(this.rol);

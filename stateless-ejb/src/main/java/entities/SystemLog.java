@@ -157,7 +157,7 @@ public class SystemLog implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.systemLog[ logsId=" + logsId + " ]";
+        return "entities.SystemLog[ logsId=" + logsId + " ]";
     }
     
 }
