@@ -252,6 +252,7 @@ public class PlanController implements Serializable {
                 jsonB.append("\t\t\t\tnombre: \"" + asignatura_candidata.getNombreAsignatura() + "\", \n");
                 jsonB.append("\t\t\t\tcodigo: " + asignatura_candidata.getCodigoAsignatura() + ", \n");
                 jsonB.append("\t\t\t\tnivel: " + asignatura_candidata.getNivelAsignatura() + ", \n");
+                jsonB.append("\t\t\t\tid: " + asignatura_candidata.getCodigoAsignatura() + ", \n");
                 jsonB.append("\t\t\t},\n");
             }
             jsonB.append("\t\t],\n");
@@ -278,14 +279,14 @@ public class PlanController implements Serializable {
             }
 
             for (Plan plan_convalidable : todos_los_planes) {
-                jsonB.append("\n\tid: " + plan_convalidable.getIdPlan() + ",\n\tconvalidaciones: {\n");
+                jsonB.append("\n\t\"" + plan_convalidable.getIdPlan() + "\": [\n");
 
                 for (Asignatura asignatura_convalidable : plan_convalidable.getAsignaturaCollection()) {
-                    if (asignatura_convalidable.getConvalidadaPor().contains(a.getCodigoAsignatura())) {
-                        jsonB.append("\t\t" + asignatura_convalidable.getCodigoAsignatura() + ",\n");
-                    }
+                        if(asignatura_convalidable.getConvalidaciones().contains(a)){
+                            jsonB.append("\t\t" + asignatura_convalidable.getCodigoAsignatura() + ",\n");
+                        }
                 }
-                jsonB.append("\n\t},");
+                jsonB.append("\n\t],");
             }
 
 //            for (Asignatura asignatura : as) {

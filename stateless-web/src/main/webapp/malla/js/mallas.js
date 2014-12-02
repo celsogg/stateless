@@ -1,5 +1,6 @@
 var accion = 'aperturas';
-
+var ultimo_id = -1;
+var id_actual = -1;
 jQuery(document).ready(function ($) {
     $('#tomar_ramos_div').hide();
     $('#boton_tutorial').hide();
@@ -167,6 +168,13 @@ jQuery(document).ready(function ($) {
             var total_asignaturas = asignaturas.length;
             var asignatura_impresas_por_este_ciclo = 0;
 
+            var nivel_mas_alto = 1;
+            for (var i = asignaturas.length - 1; i >= 0; i--) {
+                if (asignaturas[i].nivel > nivel_mas_alto)
+                    nivel_mas_alto = asignaturas[i].nivel;
+            }
+            console.log(nivel_mas_alto);
+
             while (asignaturas_impresas < total_asignaturas) {
                 var imprimio = false;
                 for (var i = 0; i < asignaturas.length; i++) {
@@ -187,6 +195,7 @@ jQuery(document).ready(function ($) {
                         break;
                     }
                 }
+                console.log(".");
                 if (!imprimio) {
                     html += '<div class="col-md-1 alto_asignatura"></div>';
                 }
@@ -622,7 +631,7 @@ jQuery(document).ready(function ($) {
                 $(this).addClass('btn-success');
                 $(this).text('Fijar');
                 for (var i = context.length - 1; i >= 0; i--) {
-                    if (GetEstadoById(context[i].id) == ESTADO_SIMULANDO_TOMA) {
+                    if (GetEstadoById(context[i].id) == ESTADO_TOMADO) {
                         CambiarEstadoById(context[i].id, ESTADO_PREREQUISITO);
                         var aperturas_recursiva = GetAperturasRecursiveById(context[i].id);
                         CambiarEstadoArrayById(aperturas_recursiva, ESTADO_INICIAL);
@@ -813,60 +822,86 @@ jQuery(document).ready(function ($) {
 
     $('#boton_convalidar').on('click', function () {
         var index_plan_seleccionado = $('#select_asignaturas').val();
-        
-        // Code using $ as usual goes here.
-        var source = $("#asignaturas").html();
-        var template = Handlebars.compile(source);
 
-        var contexto = context_planes[ index_plan_seleccionado ].asignaturas;
-        var html = template(contexto);
+        var id_actual = context_planes[ index_plan_seleccionado ].id;
 
-        var texto_niveles = '';
-        var nivel_mas_alto = 1;
+        if (id_actual != ultimo_id) {
+            ultimo_id = id_actual;
 
-        for (var i = 0, max = contexto.length; i < max; i++) {
-            if (contexto[ i ].nivel > nivel_mas_alto) {
-                nivel_mas_alto = contexto[ i ].nivel;
+            // Code using $ as usual goes here.
+            var source = $("#asignaturas").html();
+            var template = Handlebars.compile(source);
+
+            var contexto = context_planes[ index_plan_seleccionado ].asignaturas;
+            var html = template(contexto);
+
+            var texto_niveles = '';
+            var nivel_mas_alto = 1;
+
+            for (var i = 0, max = contexto.length; i < max; i++) {
+                if (contexto[ i ].nivel > nivel_mas_alto) {
+                    nivel_mas_alto = contexto[ i ].nivel;
+                }
             }
-        }
 
-        for (var nivel = 1; nivel <= nivel_mas_alto; nivel++) {
-            texto_niveles += '<div class="col-xs-1 texto_nivel">Nivel ' + nivel + '</div>';
-        }
-        for (var i = nivel_mas_alto; i < 12; i++) {
-            texto_niveles += '<div class="col-xs-1 texto_nivel"></div>';
-        }
-
-        html = texto_niveles + html;
-
-        //        $('#malla_convalidada').html(html);
-        $('#modal_malla_convalidad_body').html(html);
-
-        var mas_alto = 0;
-        $('.contenedor_asignatura').each(function () {
-            var alto = $(this).height();
-            if (alto > mas_alto) {
-                mas_alto = alto;
+            for (var nivel = 1; nivel <= nivel_mas_alto; nivel++) {
+                texto_niveles += '<div class="col-xs-1 texto_nivel">Nivel ' + nivel + '</div>';
             }
-        });
+            for (var i = nivel_mas_alto; i < 12; i++) {
+                texto_niveles += '<div class="col-xs-1 texto_nivel"></div>';
+            }
 
-        // Le asignamos a todas las asignaturas el alto del elemento mas alto
-        $('.alto_asignatura').height(50);
-        if (mas_alto > 50) {
-            $('.asignatura').css('font-size', '9px');
+            html = texto_niveles + html;
+
+            //        $('#malla_convalidada').html(html);
+            $('#modal_malla_convalidad_body').html(html);
+
+            var mas_alto = 0;
+            $('.contenedor_asignatura').each(function () {
+                var alto = $(this).height();
+                if (alto > mas_alto) {
+                    mas_alto = alto;
+                }
+            });
+
+            // Le asignamos a todas las asignaturas el alto del elemento mas alto
+            $('.alto_asignatura').height(50);
+            if (mas_alto > 50) {
+                $('.asignatura').css('font-size', '9px');
+            }
+
+            // $('#contenedor_outercanvas').height($('#outercanvas').height() + 250);
+
+            $('.centrar_vertical span').each(function () {
+                var elemento = $(this);
+                var height = elemento.height();
+                var parent = elemento.parent();
+                var parent_height = parent.parent().height();
+                var nuevo_alto = (parent_height - height) / 3;
+                parent.css('padding-top', nuevo_alto + 'px');
+            });
+
         }
 
-        // $('#contenedor_outercanvas').height($('#outercanvas').height() + 250);
+        $('#modal_malla_convalidad_body .asignatura').css('background', COLOR_BLANCO);
+        for (var i = 0, max = context.length; i < max; i++) {
+            // console.log("context[ " + i + " ].convalidaciones[ " + context_planes[ index_plan_seleccionado ].id + " ]");
 
-        $('.centrar_vertical span').each(function () {
-            var elemento = $(this);
-            var height = elemento.height();
-            var parent = elemento.parent();
-            var parent_height = parent.parent().height();
-            var nuevo_alto = (parent_height - height) / 3;
-            parent.css('padding-top', nuevo_alto + 'px');
-        });
-        
+            console.log("Estado: ( " + context[ i ].id + " )  " + GetEstadoById(context[ i ].id));
+            if (GetEstadoById(context[ i ].id) == ESTADO_TOMADO) {
+                var convalidadas = context[ i ].convalidaciones[ context_planes[ index_plan_seleccionado ].id ];
+                // console.log(convalidadas);
+                for (var j = 0, max = convalidadas.length; j < max; j++) {
+                    // console.log(convalidadas[ j ]);
+                    $('#modal_malla_convalidad_body #asignatura_' + convalidadas[ j ]).css('background', COLOR_AZUL);
+
+                }
+            }
+//                for (var j = 0, max = convalidadas.length; j < max; j++) {
+//                    $('#modal_malla_convalidad_body #asignatura_' + convalidadas[ j ].id).css('background', 'red');
+//                }
+        }
+
         $('#modal_malla_convalidada').modal({
             keyboard: true
         });
@@ -874,7 +909,7 @@ jQuery(document).ready(function ($) {
 
     for (var i = 0, max = context_planes.length; i < max; i++) {
         if (context_planes[ i ].id != id_plan) {
-            $('#select_asignaturas').append('<option value='  + i +  '>' + context_planes[ i ].nombre + '</option>');
+            $('#select_asignaturas').append('<option value=' + i + '>' + context_planes[ i ].nombre + '</option>');
         }
     }
 });
