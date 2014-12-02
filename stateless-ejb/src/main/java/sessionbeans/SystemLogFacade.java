@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class SystemLogFacade extends AbstractFacade<SystemLog> implements SystemLogFacadeLocal {
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
-    private EntityManager em;
+    EntityManager em;
     
     
     public SystemLogFacade() {

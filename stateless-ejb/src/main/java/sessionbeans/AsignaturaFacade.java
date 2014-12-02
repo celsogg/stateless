@@ -20,7 +20,7 @@ import javax.persistence.Query;
 @Stateless
 public class AsignaturaFacade extends AbstractFacade<Asignatura> implements AsignaturaFacadeLocal {
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
-    private EntityManager em;
+    EntityManager em;
     
     public AsignaturaFacade() {
         super(Asignatura.class);

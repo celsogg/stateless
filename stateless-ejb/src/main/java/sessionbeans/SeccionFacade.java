@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class SeccionFacade extends AbstractFacade<Seccion> implements SeccionFacadeLocal {
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
-    private EntityManager em;
+    EntityManager em;
     
     
     public SeccionFacade() {
