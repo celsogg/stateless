@@ -248,8 +248,6 @@ jQuery(document).ready(function ($) {
             parent.css('padding-top', nuevo_alto + 'px');
         });
 
-
-
         // TIENEN QUE ESTAR EN MAYUSCULA
         var COLOR_NARANJO = '#FF8800';
         var COLOR_NARANJO_NO_TOMABLE = '#FFC641';
@@ -804,77 +802,9 @@ jQuery(document).ready(function ($) {
             keyboard: true
         });
     });
-
-    $(window).resize(function () {
+    
+    $( window ).resize(function(){
 //       $('#contenedor_outercanvas').css('margin-bottom', '50px');
     });
-    $(window).resize();
-
-
-    $('#boton_convalidar').on('click', function () {
-        var index_plan_seleccionado = $('#select_asignaturas').val();
-        
-        // Code using $ as usual goes here.
-        var source = $("#asignaturas").html();
-        var template = Handlebars.compile(source);
-
-        var contexto = context_planes[ index_plan_seleccionado ].asignaturas;
-        var html = template(contexto);
-
-        var texto_niveles = '';
-        var nivel_mas_alto = 1;
-
-        for (var i = 0, max = contexto.length; i < max; i++) {
-            if (contexto[ i ].nivel > nivel_mas_alto) {
-                nivel_mas_alto = contexto[ i ].nivel;
-            }
-        }
-
-        for (var nivel = 1; nivel <= nivel_mas_alto; nivel++) {
-            texto_niveles += '<div class="col-xs-1 texto_nivel">Nivel ' + nivel + '</div>';
-        }
-        for (var i = nivel_mas_alto; i < 12; i++) {
-            texto_niveles += '<div class="col-xs-1 texto_nivel"></div>';
-        }
-
-        html = texto_niveles + html;
-
-        //        $('#malla_convalidada').html(html);
-        $('#modal_malla_convalidad_body').html(html);
-
-        var mas_alto = 0;
-        $('.contenedor_asignatura').each(function () {
-            var alto = $(this).height();
-            if (alto > mas_alto) {
-                mas_alto = alto;
-            }
-        });
-
-        // Le asignamos a todas las asignaturas el alto del elemento mas alto
-        $('.alto_asignatura').height(50);
-        if (mas_alto > 50) {
-            $('.asignatura').css('font-size', '9px');
-        }
-
-        // $('#contenedor_outercanvas').height($('#outercanvas').height() + 250);
-
-        $('.centrar_vertical span').each(function () {
-            var elemento = $(this);
-            var height = elemento.height();
-            var parent = elemento.parent();
-            var parent_height = parent.parent().height();
-            var nuevo_alto = (parent_height - height) / 3;
-            parent.css('padding-top', nuevo_alto + 'px');
-        });
-        
-        $('#modal_malla_convalidada').modal({
-            keyboard: true
-        });
-    });
-
-    for (var i = 0, max = context_planes.length; i < max; i++) {
-        if (context_planes[ i ].id != id_plan) {
-            $('#select_asignaturas').append('<option value='  + i +  '>' + context_planes[ i ].nombre + '</option>');
-        }
-    }
+    $( window ).resize();
 });
