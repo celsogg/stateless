@@ -19,7 +19,7 @@ import javax.persistence.Query;
 @Stateless
 public class PlanFacade extends AbstractFacade<Plan> implements PlanFacadeLocal {
     @PersistenceContext(unitName = "com.stateless_stateless-ejb_ejb_1.0-SNAPSHOTPU")
-    private EntityManager em;
+    EntityManager em;
     
     
     public PlanFacade() {
