@@ -34,6 +34,12 @@ public class Usuario implements Serializable {
     private String apellido;
     private String rol;
 
+    public Usuario() {
+    }
+    
+    public Usuario(Integer id) {
+        this.id = id;
+    }
 
     public String getUid() {
         return uid;

@@ -80,8 +80,6 @@ public class Asignatura implements Serializable {
     private Collection<Asignatura> asignaturaCollection;
     @ManyToMany(mappedBy = "asignaturaCollection")
     private Collection<Asignatura> asignaturaCollection1;
-    @ManyToMany(mappedBy = "asignaturaCollection")
-    private Collection<Profesor> profesorCollection;
     @JoinColumn(name = "ID_PLAN", referencedColumnName = "ID_PLAN")
     @ManyToOne
     private Plan idPlan;
@@ -191,14 +189,7 @@ public class Asignatura implements Serializable {
         this.asignaturaCollection1 = asignaturaCollection1;
     }
 
-    @XmlTransient
-    public Collection<Profesor> getProfesorCollection() {
-        return profesorCollection;
-    }
-
-    public void setProfesorCollection(Collection<Profesor> profesorCollection) {
-        this.profesorCollection = profesorCollection;
-    }
+    
 
     public Plan getIdPlan() {
         return idPlan;
