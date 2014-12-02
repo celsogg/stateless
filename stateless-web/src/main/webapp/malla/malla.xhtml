@@ -90,6 +90,7 @@
                 </div>
                 <a target="_blank" href="/stateless-web/pdfservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Plan</button></a>
                 <a target="_blank" href="/stateless-web/pdfmallaservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Malla</button></a>
+                <a target="_blank" href="/stateless-web/Perfil?id=#{planController.getPlan(param['planId']).idCarrera.perfilCollection.get(0).getIdPerfil()}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Perfil</button></a>
                 <button id="boton_resumen_simulacion" type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Resumen Simulación</button>
                 <button id="boton_tutorial" type="button" class="btn btn-success pull-left" style="margin-left: 10px;">Tutorial</button>
                 <div id="contenedor_outercanvas" style="width: 1100px;">
