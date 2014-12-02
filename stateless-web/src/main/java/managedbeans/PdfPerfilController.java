@@ -120,9 +120,32 @@ public class PdfPerfilController extends HttpServlet {
             logo.setAlignment(Element.ALIGN_RIGHT);
             doc.add(logo);
             
-            doc.add(new Phrase("Perfil de Egreso\n\n"));
-            doc.add(new Phrase("Carrera: "+WordUtils.capitalize(perfil.getIdCarrera().getNombreCarrera())+"\n\n", new Font(Font.FontFamily.HELVETICA, 22)));
+            Paragraph para = new Paragraph();
+            
+            para.setFont( new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD));
+            para.add("Perfil de Egreso\n\n");
+            para.setAlignment(Element.ALIGN_CENTER);
+            doc.add(para);
+            
+            para = new Paragraph();
+            para.setFont(new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD));
+            para.add("Carrera: "+WordUtils.capitalize(perfil.getIdCarrera().getNombreCarrera())+"\n\n");
+            para.setAlignment(Element.ALIGN_CENTER);
+            doc.add(para);
 
+            para = new Paragraph();
+            para.add("Versión aprobada en Consejo Departamental Extraordinario\n" +
+                        "con fecha "+perfil.getVersionPerfil()+".\n\n");
+            para.setAlignment(Element.ALIGN_CENTER);
+            doc.add(para);
+            
+            para = new Paragraph();
+            para.setFont( new Font(Font.FontFamily.HELVETICA, 12, Font.ITALIC));
+            para.add(perfil.getDescripcionPerfil()+"\n\n\n");
+            para.setFirstLineIndent(30);
+            para.setAlignment(Element.ALIGN_JUSTIFIED);
+            doc.add(para);
+            
             for (int i = 0; i < perfil.getSeccionCollection().size(); i++) {
                 Seccion seccion = perfil.getSeccionCollection().get(i);
                 doc.add(new Phrase(getRoman(i+1) + ". "+ seccion.getNombreSeccion() + "\n\n", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
@@ -161,7 +184,8 @@ public class PdfPerfilController extends HttpServlet {
                     }
                     
                 }
-                doc.add(new Phrase("\n\n"));
+                if (i < perfil.getSeccionCollection().size() - 1)
+                    doc.add(new Phrase("\n\n"));
             }
         } catch (DocumentException /*| IOException*/ ex) {
             baosPDF.reset();
