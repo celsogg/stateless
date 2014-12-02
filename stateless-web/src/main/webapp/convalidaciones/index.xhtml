@@ -19,7 +19,7 @@
                     <f:selectItems value="#{planController.itemsAvailableSelectOne}"
                                    var="planConvalidante"
                                    itemValue="#{planConvalidante}"
-                                   itemLabel="#{planConvalidante.codigoPlan}"
+                                   itemLabel="#{planConvalidante.nombrePlan}"
                                    />
                     <p:ajax update="datalist selectConvalidado" />
                 </p:selectOneMenu>
@@ -28,7 +28,7 @@
                     <f:selectItems value="#{convalidacionesCtrl.posiblesConvalidados}"
                                    var="planConvalidado"
                                    itemValue="#{planConvalidado}"
-                                   itemLabel="#{planConvalidado.codigoPlan}"/>
+                                   itemLabel="#{planConvalidado.nombrePlan}"/>
                     <p:ajax update="datalist" />
                 </p:selectOneMenu>
                 <p:dataTable id="datalist" value="#{convalidacionesCtrl.asignaturasConvalidante}" var="item"
@@ -37,6 +37,8 @@
                              rowKey="#{item.idAsignatura}"
                              rows="20"
                              rowsPerPageTemplate="10,20,30,40,50"
+                             scrollable="true"
+                             scrollHeight="400"
                              >
                     <p:ajax event="rowSelect"   update="AsigConv "/>
                     <p:ajax event="rowUnselect" update="AsigConv "/>
