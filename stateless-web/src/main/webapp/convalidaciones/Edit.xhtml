@@ -10,27 +10,29 @@
         <p:dialog id="ConvEditDlg" widgetVar="ConvEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar Convalidación">
             <h:form id="ConvEditForm">
                 <h:panelGroup id="display">
-                    <div class="ui-grid-row">
-                        <h:outputText value="Seleccione la asignatura del plan #{convalidacionesCtrl.planConvalidado.codigoPlan} que es convalidada por #{convalidacionesCtrl.asignaturaConvalidanteSelected.codigoAsignatura} del plan #{convalidacionesCtrl.planConvalidante.codigoPlan}"/>
-                    </div>
-                    <div class="ui-grid-row">
-                        <p:selectOneMenu value="#{convalidacionesCtrl.asigConvalidadaSelected}" converter="asig" panelStyle="width:180px"
-                                         effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="contains">
-                            <!--                        <f:selectItem itemLabel="Seleccione un plan" itemValue="" />-->
-                            <f:selectItems value="#{convalidacionesCtrl.planConvalidado.asignaturaCollection}" var="asig" itemLabel="#{asig.codigoAsignatura} #{asig.nombreAsignatura}" itemValue="#{asig}" />
+                    <p:panelGrid columns="1" rendered="#{convalidacionesCtrl.asigConvalidadaSelected != null}">
+                        <p:pickList value="#{convalidacionesCtrl.DLAsignaturas}" var="asig" effect="fade"
+                                    itemValue="#{asig}" itemLabel="#{asig.codigoAsignatura} #{asig.nombreAsignatura}" showSourceControls="false" showTargetControls="false" showCheckbox="true"
+                                    showSourceFilter="true" showTargetFilter="false" filterMatchMode="contains" converter="asig">
 
+                            <f:facet name="sourceCaption">Disponibles</f:facet>
+                            <f:facet name="targetCaption">Asignaturas que la convalidan</f:facet>
 
+                            <p:ajax event="transfer" listener="#{convalidacionesCtrl.onTransfer}" update=":growl" />
 
-                            <p:column>
-                                <h:outputText value="#{t.codigoAsignatura}" />
+                            <p:column >
+                                <h:outputText value="#{asig.codigoAsignatura} #{asig.nombreAsignatura}"/>
                             </p:column>
-                        </p:selectOneMenu>
-                    </div>
-                    <div class="ui-grid-row">
-                        <p:commandButton actionListener="#{convalidacionesCtrl.update}" value="Aceptar" update="display,:convalidacionesForm:datalist,:growl" oncomplete="handleSubmit(args, 'ConvEditDialog');"/>
-                        <p:commandButton actionListener="#{convalidacionesCtrl.noConvalida}" value="No convalida ninguna asignatura" update="display,:convalidacionesForm:datalist,:growl" oncomplete="handleSubmit(args, 'ConvEditDialog');"/>
+
+<!--                            <p:column >
+                                <h:outputText value="{asig.nombreAsignatura}" />
+                            </p:column>-->
+                        </p:pickList>
+                    </p:panelGrid>
+                    
+                        <p:commandButton actionListener="#{convalidacionesCtrl.update}" value="Guardar" update="display,:convalidacionesForm:datalist,:growl" oncomplete="handleSubmit(args, 'ConvEditDialog');"/>
                         <p:commandButton value="#{bundle.Cancel}" onclick="ConvEditDialog.hide()"/>
-                    </div>
+                    
                 </h:panelGroup>
             </h:form>
         </p:dialog>
