@@ -11,18 +11,18 @@
             <h:form id="ConvEditForm">
                 <h:panelGroup id="display">
                     <div class="ui-grid-row">
-                        <h:outputText value="Seleccione la asignatura del plan #{convalidacionesCtrl.planConvalidado.codigoPlan} que es convalidada por #{convalidacionesCtrl.asignaturaConvalidanteSelected.codigoAsignatura} del plan #{convalidacionesCtrl.planConvalidante.codigoPlan}"/>
+                        <h:outputText value="Seleccione la asignatura del plan #{convalidacionesCtrl.planConvalidado.nombrePlan} que es convalidada por #{convalidacionesCtrl.asignaturaConvalidanteSelected.nombreAsignatura} del plan #{convalidacionesCtrl.planConvalidante.nombrePlan}"/>
                     </div>
                     <div class="ui-grid-row">
                         <p:selectOneMenu value="#{convalidacionesCtrl.asigConvalidadaSelected}" converter="asig" panelStyle="width:180px"
-                                         effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="contains">
+                                         effect="fade" var="t" style="width:300px" filter="true" filterMatchMode="contains">
                             <!--                        <f:selectItem itemLabel="Seleccione un plan" itemValue="" />-->
                             <f:selectItems value="#{convalidacionesCtrl.planConvalidado.asignaturaCollection}" var="asig" itemLabel="#{asig.codigoAsignatura} #{asig.nombreAsignatura}" itemValue="#{asig}" />
 
 
 
                             <p:column>
-                                <h:outputText value="#{t.codigoAsignatura}" />
+                                <h:outputText value="#{t.nombreAsignatura}" />
                             </p:column>
                         </p:selectOneMenu>
                     </div>

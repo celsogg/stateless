@@ -11,7 +11,7 @@
     <ui:composition template="/template.xhtml">
 
         <ui:define name="title">MI 2.0 - Malla #{planController.getPlan(param['planId']).getCodigoPlan()}</ui:define>
-        
+
         <ui:define name="body" id="body_malla">
             <script language="javascript" type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 
@@ -47,7 +47,7 @@
                     color: white;
                 }
                 .shepherd-content{
-                    width: 400px;
+                    width: 600px;
                 }
                 #tomar_ramos_div{
                     width: 300px;
@@ -57,6 +57,19 @@
                 }
                 #spinme_tomar_ramos{
                     margin-left: 5px;
+                }
+                #malla_convalidada{
+                    width: 90%;
+                    height: 90%;
+                    position: absolute;
+                    top: 5%;
+                    left: 5%;
+                }
+                #modal_malla_convalidad_body{
+                    width: 1000px;
+                }
+                #modal_malla_convalidada > div{
+                    width: 1200px;
                 }
             </style>
             <link rel="shortcut icon" href="images/favicon.ico" type="image/vnd.microsoft.icon"></link>
@@ -69,15 +82,16 @@
                 {{{imprimir this}}}
                 </div>
             </script>
+            <!--<div id="malla_convalidada" style="min-height: 100px; min-width: 100px"></div>-->
             <div id="main" style="width: 1000px;">
                 <div id="header" style="">
                     <div id="college">Facultad de Ingeniería</div>
                     <div id="program">#{planController.getPlan(param['planId']).getIdCarrera().getNombreCarrera()} (#{planController.getPlan(param['planId']).getCodigoPlan()}) #{planController.getPlan(param['planId']).getAnioPlan()}.#{planController.getPlan(param['planId']).getVersionPlan()}</div>
                 </div>
-                    <a target="_blank" href="/stateless-web/pdfservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Plan</button></a>
-                    <a target="_blank" href="/stateless-web/pdfmallaservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Malla</button></a>
-                    <button id="boton_resumen_simulacion" type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Resumen Simulación</button>
-                    <button id="boton_tutorial" type="button" class="btn btn-success pull-left" style="margin-left: 10px;">Tutorial</button>
+                <a target="_blank" href="/stateless-web/pdfservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Plan</button></a>
+                <a target="_blank" href="/stateless-web/pdfmallaservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Malla</button></a>
+                <button id="boton_resumen_simulacion" type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Resumen Simulación</button>
+                <button id="boton_tutorial" type="button" class="btn btn-success pull-left" style="margin-left: 10px;">Tutorial</button>
                 <div id="contenedor_outercanvas" style="width: 1100px;">
                     <div id="outercanvas">
                     </div>
@@ -90,6 +104,8 @@
                                 <div id="outline" class="outline">
                                     Nivel
                                     <input class="spin-decimal" id="spinme" value="0" type="text"/>
+                                    <select id="select_asignaturas"></select>
+                                    <button id="boton_convalidar" type="button" class="btn btn-success">Convalidar</button>
                                 </div>
                             </div>
                             <input type="radio" name="rg" id="simulacion_radio"/>Simulación
@@ -143,8 +159,26 @@
                 </div>
             </div>
 
+            <!-- Modal -->
+            <div class="modal fade" id="modal_malla_convalidada" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Cerrar</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Accion no permitida</h4>
+                        </div>
+                        <div class="modal-body" id="modal_malla_convalidad_body">
+                            Lo sentimos, no puede seleccionar esta asignatura.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Entiendo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <script language="javascript" type="text/javascript">
-                    var tomar_ramos = #{ planController.getAccion( param['tomar_ramos'] ) };
+                var tomar_ramos = #{ planController.getAccion( param['tomar_ramos'] ) };
                 #{planController.toJSON(planController.getPlan(param['planId']))}
             </script>
             <script language="javascript" type="text/javascript">var pruebas = false;</script>

@@ -53,10 +53,10 @@ public class PlanController implements Serializable {
 
     @Inject
     private AsignaturaController asigController;
-    
+
     public PlanController() {
     }
-    
+
     public Asignatura getSelectedAsignatura() {
         return selectedAsignatura;
     }
@@ -64,8 +64,6 @@ public class PlanController implements Serializable {
     public void setSelectedAsignatura(Asignatura selectedAsignatura) {
         this.selectedAsignatura = selectedAsignatura;
     }
-
-    
 
     public Plan getSelected() {
         return selected;
@@ -122,7 +120,7 @@ public class PlanController implements Serializable {
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PlanCreated"));
         if (!JsfUtil.isValidationFailed()) {
-            items = null;    
+            items = null;
             // Invalidate list of items to trigger re-query.
         }
         LOGGER.info("Se ha creado un plan " + getSelected().getNombrePlan());
@@ -137,9 +135,9 @@ public class PlanController implements Serializable {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PlanDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             LOGGER.info("Se ha eliminado el plan " + deletedPlan.getNombrePlan() + ", codigo:" + deletedPlan.getCodigoPlan() + ", version: " + getSelected().getVersionPlan());
-            selected = null; 
+            selected = null;
             // Remove selection
-            items = null;    
+            items = null;
             // Invalidate list of items to trigger re-query.
 
         }
@@ -242,13 +240,62 @@ public class PlanController implements Serializable {
 
     public String toJSON(Plan plan) {
         StringBuilder jsonB = new StringBuilder();
+        jsonB.append("var context_planes = [\n");
+
+        for (Plan un_plan : getFacade().findByVisiblePlan()) {
+            jsonB.append("\t{\n");
+            jsonB.append("\t\tid: " + un_plan.getIdPlan() + ",\n");
+            jsonB.append("\t\tnombre: \"" + un_plan.getNombrePlan() + "\",\n");
+            jsonB.append("\t\tasignaturas: [\n");
+            for (Asignatura asignatura_candidata : un_plan.getAsignaturaCollection()) {
+                jsonB.append("\t\t\t{\n");
+                jsonB.append("\t\t\t\tnombre: \"" + asignatura_candidata.getNombreAsignatura() + "\", \n");
+                jsonB.append("\t\t\t\tcodigo: " + asignatura_candidata.getCodigoAsignatura() + ", \n");
+                jsonB.append("\t\t\t\tnivel: " + asignatura_candidata.getNivelAsignatura() + ", \n");
+                jsonB.append("\t\t\t},\n");
+            }
+            jsonB.append("\t\t],\n");
+            jsonB.append("\t},\n");
+        }
+
+        jsonB.append("];\n");
+        jsonB.append("var id_plan = " + plan.getIdPlan() + ";");
         jsonB.append("var context = [");
         List<Asignatura> as;
         as = new ArrayList<>(plan.getAsignaturaCollection());
         for (Asignatura a : as) {
             List<Asignatura> pre, post;
             jsonB.append("{ \"nombre\": \"").append(a.getNombreAsignatura());
-            jsonB.append("\", \"id\": ").append(a.getCodigoAsignatura());
+            jsonB.append("\", \n\"convalidaciones\": {");
+
+            List<Plan> todos_los_planes = getFacade().findByVisiblePlan();
+
+            for (int i = 0; i < todos_los_planes.size(); i++) {
+                if (todos_los_planes.get(i).getIdPlan() == plan.getIdPlan()) {
+                    todos_los_planes.remove(i);
+                    break;
+                }
+            }
+
+            for (Plan plan_convalidable : todos_los_planes) {
+                jsonB.append("\n\tid: " + plan_convalidable.getIdPlan() + ",\n\tconvalidaciones: {\n");
+
+                for (Asignatura asignatura_convalidable : plan_convalidable.getAsignaturaCollection()) {
+                    if (asignatura_convalidable.getConvalidadaPor().contains(a.getCodigoAsignatura())) {
+                        jsonB.append("\t\t" + asignatura_convalidable.getCodigoAsignatura() + ",\n");
+                    }
+                }
+                jsonB.append("\n\t},");
+            }
+
+//            for (Asignatura asignatura : as) {
+//                jsonB.append("\t\"id\": ").append(asignatura.getCodigoAsignatura() + ": {\n");
+//                for (Asignatura asignatura_convalidable : asignatura.getConvalidaciones()) {
+//                    jsonB.append("\t\tid_plan: " + asignatura_convalidable.getIdPlan().getCodigoPlan() + ", id_asignatura: " + asignatura_convalidable.getCodigoAsignatura()+ ", ");
+//                }
+//                jsonB.append("\n\t}");
+//            }
+            jsonB.append("}, \"id\": ").append(a.getCodigoAsignatura());
             jsonB.append(", \"nivel\": ").append(a.getNivelAsignatura());
             jsonB.append(", \"anual\": ").append(a.getEsAnual());
             jsonB.append(", \"sct\": ").append(a.getSctAsignatura());
@@ -381,25 +428,25 @@ public class PlanController implements Serializable {
     private String[] getCsvLineCols(String line) {
         String otherThanQuote = " [^\"] ";
         String quotedString = String.format(" \" %s* \" ", otherThanQuote);
-        String regex = String.format("(?x) " + 
-                // enable comments, ignore white spaces
-                ",                         " + 
-                // match a comma
-                "(?=                       " + 
-                // start positive look ahead
-                "  (                       " + 
-                //   start group 1
-                "    %s*                   " + 
-                //     match 'otherThanQuote' zero or more times
-                "    %s                    " + 
-                //     match 'quotedString'
-                "  )*                      " + 
-                //   end group 1 and repeat it zero or more times
-                "  %s*                     " + 
-                //   match 'otherThanQuote'
-                "  $                       " + 
-                // match the end of the string
-                ")                         ", 
+        String regex = String.format("(?x) "
+                + // enable comments, ignore white spaces
+                ",                         "
+                + // match a comma
+                "(?=                       "
+                + // start positive look ahead
+                "  (                       "
+                + //   start group 1
+                "    %s*                   "
+                + //     match 'otherThanQuote' zero or more times
+                "    %s                    "
+                + //     match 'quotedString'
+                "  )*                      "
+                + //   end group 1 and repeat it zero or more times
+                "  %s*                     "
+                + //   match 'otherThanQuote'
+                "  $                       "
+                + // match the end of the string
+                ")                         ",
                 // stop positive look ahead
                 otherThanQuote, quotedString, otherThanQuote);
 
