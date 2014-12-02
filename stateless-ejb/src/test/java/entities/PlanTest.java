@@ -50,9 +50,9 @@ public class PlanTest {
     @Test
     public void testSetIdPlan() {
         System.out.println("setIdPlan");
-        Integer idPlan = null;
+        Integer idPlan = 1;
         Plan instance = new Plan();
-        instance.setIdPlan(idPlan);
+        instance.setIdPlan(1);
         assertEquals(idPlan, instance.getIdPlan());
     }
 
@@ -127,9 +127,12 @@ public class PlanTest {
     @Test
     public void testSetIdCarrera() {
         System.out.println("setIdCarrera");
-        Carrera idCarrera = null;
+        Carrera idCarrera = new Carrera(1);
         Plan instance = new Plan();
         instance.setIdCarrera(idCarrera);
+        Carrera expResult = idCarrera;
+        Carrera result = instance.getIdCarrera();
+        assertEquals(expResult, result);
     }
 
     @Test
