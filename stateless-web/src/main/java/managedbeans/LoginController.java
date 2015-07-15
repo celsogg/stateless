@@ -67,42 +67,33 @@ public class LoginController {
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         String navto = "";
         String message = "";
-        try {
-            request.login(this.username, this.password);
-            setUsername(this.username);
-            List<Usuario> results;
-            results = userService.findUsuarioByUid(request.getUserPrincipal().getName());
-            Usuario user;
-
+        setUsername(this.username);
+        List<Usuario> results;
+//        results = userService.findUsuarioByUid(request.getUserPrincipal().getName());
+        results = userService.findUsuarioByUid(this.username);
+        Usuario user;
+        if (!results.isEmpty()) {
+            user = results.get(0);
+            this.rol = user.getRol();
+            this.nombre = user.getNombre();
             
-            if (!results.isEmpty()) {
-                user = results.get(0);
-                this.rol = user.getRol();
-                this.nombre = user.getNombre();
-                
-                if("".equals(this.rol)){
-                    this.rol = "estudiante";
-                    setNombreMostrado(this.nombre);
-                }
-                if (this.rol.equalsIgnoreCase("administrador")) {
-                    setNombreMostrado(this.nombre);
-                    message = "Username: " + request.getUserPrincipal().getName() + " You are administrator";
-                    navto = "/index.xhtml";
-                }
-            } else {
-                setNombreMostrado(getUsername());
-                message = "Username: " + request.getUserPrincipal().getName() + " You are student";
+            if("".equals(this.rol)){
+                this.rol = "estudiante";
+                setNombreMostrado(this.nombre);
+            }
+            if (this.rol.equalsIgnoreCase("administrador")) {
+                setNombreMostrado(this.nombre);
+//                message = "Username: " + request.getUserPrincipal().getName() + " You are administrator";
                 navto = "/index.xhtml";
             }
-
-
-            LOGGER.info("El usuario "+ request.getUserPrincipal().getName()+" ha iniciado sesión");
-            return navto;
-        } catch (ServletException e) {
-            LOGGER.error(e);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ha ocurrido un error, compruebe sus credenciales o contacte al administrador.", null));
+        } else {
+            setNombreMostrado(getUsername());
+            message = "Username: " + request.getUserPrincipal().getName() + " You are student";
+            navto = "/index.xhtml";
         }
-        return "";
+//        LOGGER.info("El usuario "+ request.getUserPrincipal().getName()+" ha iniciado sesión");
+        return navto;
+//        return "";
     }
 
     public void logout() throws IOException {
