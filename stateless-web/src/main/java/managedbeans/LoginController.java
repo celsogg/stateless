@@ -83,15 +83,15 @@ public class LoginController {
             }
             if (this.rol.equalsIgnoreCase("administrador")) {
                 setNombreMostrado(this.nombre);
-//                message = "Username: " + request.getUserPrincipal().getName() + " You are administrator";
+                message = "Username: " + this.nombre + " You are administrator";
                 navto = "/index.xhtml";
             }
         } else {
             setNombreMostrado(getUsername());
-            message = "Username: " + request.getUserPrincipal().getName() + " You are student";
+            message = "Username: " + this.nombre + " You are student";
             navto = "/index.xhtml";
         }
-//        LOGGER.info("El usuario "+ request.getUserPrincipal().getName()+" ha iniciado sesión");
+        LOGGER.info("El usuario "+ this.nombre+" ha iniciado sesión");
         return navto;
 //        return "";
     }
@@ -140,6 +140,7 @@ public class LoginController {
     }
 
     public Boolean esAdmin() {
+        System.out.println("Rol: " + this.rol);
         return "administrador".equals(this.rol);
     }
     

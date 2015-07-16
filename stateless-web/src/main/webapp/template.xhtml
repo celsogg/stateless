@@ -37,6 +37,42 @@
                 -webkit-border-radius: 4px;
                 color: white;
             }
+            * {
+                font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+            #sidebar {
+                background: #ffffff;
+                border: 1px solid #aeb2b7;
+            }
+            #sidebar a {
+                font-size: 14px;
+            }
+            #sidebar a i {
+                font-size: 12px;
+            }
+            #sidebar a.active {
+                color: #555555;
+                background: #ffffff;
+            }
+            #sidebar a.active i {
+                color: #555;
+                background: #ffffff;
+            }
+            #sidebar a:hover i {
+                color: #555555;
+                background: #ffffff;
+            }
+            #sidebar a i {
+                color: #aeb2b7;
+                background: #ffffff;
+            }
+            #sidebar a:hover {
+                color: #555555;
+                background: #ffffff;
+            }
+            #sidebar li{
+                background: #ffffff;
+            }
         </style>
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
     </h:head>
@@ -45,13 +81,13 @@
 
         <p:growl id="growl" life="3000" />
 
-        <header class="header black-bg">
+        <header class="header black-bg" style="background-color: #1b65bd; border-color: #1b65bd;">
             <div class="sidebar-toggle-box">
                 <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
             </div>
             <!--logo start-->
             <h:form>
-                <h:outputLink value="/stateless-web/index.xhtml" class="logo">MI 2.0</h:outputLink>
+                <h:outputLink value="/stateless-web/index.xhtml" class="logo" style="font-size: 20px; font-weight: 300;">MI 2.0</h:outputLink>
             </h:form>
             <!--logo end-->
 
@@ -74,7 +110,7 @@
                 <ul class="sidebar-menu" id="nav-accordion">
 
                     <!--<p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>-->
-                    <h5 class="centered">Hola #{loginController.nombreMostrado}!</h5>
+                    <h5 class="centered" style="color: #ddd;">Hola #{loginController.nombreMostrado}!</h5>
 
                     <c:if test="${loginController.esAdmin()}">
                         <li class="sub-menu">
