@@ -71,6 +71,27 @@
                 #modal_malla_convalidada > div{
                     width: 1200px;
                 }
+                .etiqueta{
+                    margin-left: 10px;
+                    width: 10px;
+                    height: 10px;
+                    border: 1px solid black;
+                    background: red;
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+                #etiqueta_ramo_aprobado {
+                    background: #669900;
+                }
+                #etiqueta_ramo_disponible_para_tomar {
+                    background: #FF8800;
+                }
+                #etiqueta_ramo_disponible_para_tomar_bloqueado {
+                    background: #FFC641;
+                }
+                #etiqueta_ramo_tomado_en_simulacion {
+                    background: #0099CC;
+                }
             </style>
             <link rel="shortcut icon" href="images/favicon.ico" type="image/vnd.microsoft.icon"></link>
             <script>
@@ -86,13 +107,21 @@
             <div id="main" style="width: 1000px;">
                 <div id="header" style="">
                     <div id="college">Facultad de Ingeniería</div>
-                    <div id="program">#{planController.getPlan(param['planId']).getIdCarrera().getNombreCarrera()} (#{planController.getPlan(param['planId']).getCodigoPlan()}) #{planController.getPlan(param['planId']).getAnioPlan()}.#{planController.getPlan(param['planId']).getVersionPlan()}</div>
+                    <div id="program">#{planController.getPlan(param['planId']).getIdCarrera().getNombreCarrera()} (#{planController.getPlan(param['planId']).getCodigoPlan()} #{planController.getPlan(param['planId']).getAnioPlan()}.#{planController.getPlan(param['planId']).getVersionPlan()})</div>
                 </div>
                 <a target="_blank" href="/stateless-web/pdfservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Plan</button></a>
                 <a target="_blank" href="/stateless-web/pdfmallaservlet?planId=#{param['planId']}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Malla</button></a>
                 <a target="_blank" href="/stateless-web/Perfil?id=#{planController.getPlan(param['planId']).idCarrera.perfilCollection.get(0).getIdPerfil()}"><button type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Imprimir Perfil</button></a>
                 <button id="boton_resumen_simulacion" type="button" class="btn btn-success pull-left" style="margin-left: 15px;">Resumen Simulación</button>
                 <button id="boton_tutorial" type="button" class="btn btn-success pull-left" style="margin-left: 10px;">Tutorial</button>
+                <div class="etiquetas pull-left">
+                    <div id="etiqueta_ramo_aprobado" class="etiqueta"></div>Aprobada<br />
+                    <div id="etiqueta_ramo_disponible_para_tomar" class="etiqueta"></div>Disponible<br />
+                </div>
+                <div class="etiquetas pull-left">
+                    <div id="etiqueta_ramo_disponible_para_tomar_bloqueado" class="etiqueta"></div>Desbloqueada<br />
+                    <div id="etiqueta_ramo_tomado_en_simulacion" class="etiqueta"></div>Elegida<br />
+                </div>
                 <div id="contenedor_outercanvas" style="width: 1100px;">
                     <div id="outercanvas">
                     </div>
@@ -100,7 +129,7 @@
                         <div id="radio">
                             <div id="apertura"><input type="radio" name="rg" id="fw" checked="checked"/>Apertura</div>
                             <div id="prerequisitos"><input type="radio" name="rg" id="bw"/>Requisitos</div>
-                            <div id="proyeccion">
+<!--                            <div id="proyeccion">
                                 <input type="radio" name="rg" id="fwbw"/>Proyección
                                 <div id="outline" class="outline">
                                     Nivel
@@ -108,12 +137,12 @@
                                     <select id="select_asignaturas"></select>
                                     <button id="boton_convalidar" type="button" class="btn btn-success">Convalidar</button>
                                 </div>
-                            </div>
+                            </div>-->
                             <input type="radio" name="rg" id="simulacion_radio"/>Simulación
                             <div id="tomar_ramos_div">
                                 Proyectar Nivel:
-                                <input class="spin-decimal" id="spinme_tomar_ramos" value="0" type="text"/>
-                                <button id="boton_fijar" type="button" class="btn btn-success">Fijar</button><span id="sct_y_tel" class="label label-info" style="font-size: 10px; padding: 12px 20px;">SCT: 0</span>
+                                <input class="spin-decimal" id="spinme_tomar_ramos" value="0" type="text" />
+                                <button style="margin-left: 10px;" id="boton_fijar" type="button" class="btn btn-success">Fijar</button><span id="sct_y_tel" class="label label-info" style="font-size: 10px; padding: 12px 20px;">SCT: 0</span>
                             </div>
                         </div>
                     </div>

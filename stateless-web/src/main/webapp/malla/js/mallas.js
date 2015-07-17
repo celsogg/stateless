@@ -5,6 +5,8 @@ jQuery(document).ready(function ($) {
     $('#tomar_ramos_div').hide();
     $('#boton_tutorial').hide();
     $('#boton_resumen_simulacion').hide();
+    $('#etiqueta_ramo_tomado_en_simulacion').hide();
+    $('#etiqueta_ramo_disponible_para_tomar_bloqueado').hide();
 
     for (var i = context.length - 1; i >= 0; i--) {
         context[i].aperturas = [];
@@ -565,6 +567,8 @@ jQuery(document).ready(function ($) {
         });
 
         $('#fw').on('click', function () {
+            $('#etiqueta_ramo_tomado_en_simulacion').hide();
+            $('#etiqueta_ramo_disponible_para_tomar_bloqueado').hide();
             $('#boton_resumen_simulacion').hide();
             accion = 'aperturas';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
@@ -575,6 +579,8 @@ jQuery(document).ready(function ($) {
             $('#boton_tutorial').hide();
         });
         $('#simulacion_radio').on('click', function () {
+            $('#etiqueta_ramo_tomado_en_simulacion').show();
+            $('#etiqueta_ramo_disponible_para_tomar_bloqueado').show();
             $('#boton_resumen_simulacion').show();
             $('#boton_resumen_simulacion').attr('disabled', 'enabled');
             $('#tomar_ramos_div').show();
@@ -584,6 +590,8 @@ jQuery(document).ready(function ($) {
             $('#spinme, #spinme_tomar_ramos').change();
         });
         $('#bw').on('click', function () {
+            $('#etiqueta_ramo_tomado_en_simulacion').hide();
+            $('#etiqueta_ramo_disponible_para_tomar_bloqueado').hide();
             $('#boton_resumen_simulacion').hide();
             accion = 'prerequisitos';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
@@ -646,6 +654,7 @@ jQuery(document).ready(function ($) {
                 $(this).addClass('btn-warning');
                 $(this).text('Liberar');
             }
+            $('#sct_y_tel').show();
         });
 
         if (tomar_ramos) {
@@ -748,6 +757,7 @@ jQuery(document).ready(function ($) {
         action: tour.cancel
     };
 
+    //    while(GetEstadoById(context[ 0 ].id) == ESTADO_TOMADO) {
     tour.addStep('example', {
         title: 'Indica tus asignaturas aprobadas',
         text: 'Selecciona esta asignatura para indicar que está aprobada',
@@ -757,7 +767,7 @@ jQuery(document).ready(function ($) {
     });
     tour.addStep('example', {
         title: 'Iniciar la simulación',
-        text: 'Ahora haz click aquí para indicar que ya ingresaste tus asignaturas aprobadas y deseas iniciar la simulación',
+        text: 'Ahora haz en el botón "fijar" para indicar que ya ingresaste tus asignaturas aprobadas y deseas iniciar la simulación',
         attachTo: "#boton_fijar",
         advanceOn: '.docs-link click',
         buttons: [boton_anterior, boton_siguiente_listo]
@@ -778,8 +788,17 @@ jQuery(document).ready(function ($) {
     });
 
     $('#boton_tutorial').on('click', function () {
+        for (var i = context.length - 1; i >= 0; i--) {
+            if (GetEstadoById(context[i].id) == ESTADO_TOMADO) {
+                CambiarEstadoById(context[i].id, ESTADO_PREREQUISITO);
+                var aperturas_recursiva = GetAperturasRecursiveById(context[i].id);
+                CambiarEstadoArrayById(aperturas_recursiva, ESTADO_INICIAL);
+                CambiarValorSCT(0);
+            }
+        }
         ProyectarNivel(0);
         tour.start();
+        $('#sct_y_tel').show();
     })
 
     $('#boton_resumen_simulacion').on('click', function () {
