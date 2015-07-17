@@ -101,6 +101,15 @@
                         </ul>
                     </li>
                 </ul>
+                <ul class="nav pull-right top-menu">
+                    <li>
+                        <ul class="nav pull-right top-menu" style="padding-top: 15px;">
+                            <h:outputLink value="/stateless-web/ldap/login.xhtml" class="logout">
+                                <span>Login</span>
+                            </h:outputLink>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </header>
 
@@ -136,14 +145,14 @@
                             </h:outputLink>
                         </li>
                     </c:if>
-                     <c:if test="${loginController.esAdmin()}">
+<!--                     <c:if test="${loginController.esAdmin()}">
                         <li class="sub-menu">
                             <h:outputLink value="/stateless-web/convalidaciones/index.xhtml">
                                 <i class="fa fa-dashboard"></i>
                                 <span>Convalidaciones</span>
                             </h:outputLink>
                         </li>
-                    </c:if>
+                    </c:if>-->
                      <c:if test="${loginController.esAdmin()}">
                         <li class="sub-menu">
                             <h:outputLink value="/stateless-web/carrera/List.xhtml">

@@ -22,14 +22,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
-
 
 @Named("asignaturaController")
 @SessionScoped
 public class AsignaturaController implements Serializable {
-    
+
     @EJB
     private AsignaturaFacadeLocal ejbFacade;
     private List<Asignatura> items = null;
@@ -37,33 +37,35 @@ public class AsignaturaController implements Serializable {
     private Asignatura selected;
     private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(AsignaturaController.class);
     private String deletedAsignatura;
-    
+
     @Inject
     private PlanController planController;
-    
+
     private DualListModel<Asignatura> dlAsignaturas;
 
     public AsignaturaController() {
     }
 
-    
     public Asignatura getSelected() {
         return selected;
     }
 
     public void setSelected(Asignatura selected) {
         this.selected = selected;
-        if (selected != null){
+        if (selected != null) {
             List<Asignatura> asignaturasActuales = (List<Asignatura>) selected.getAsignaturaCollection();
             List<Asignatura> asignaturasPosibles;
-            if (itemsPlan != null) asignaturasPosibles = new ArrayList<>(itemsPlan);
-            else asignaturasPosibles = new ArrayList<>();
+            if (itemsPlan != null) {
+                asignaturasPosibles = new ArrayList<>(itemsPlan);
+            } else {
+                asignaturasPosibles = new ArrayList<>();
+            }
             asignaturasPosibles.remove(selected);
             asignaturasPosibles.removeAll(asignaturasActuales);
             dlAsignaturas = new DualListModel<>(asignaturasPosibles, asignaturasActuales);
         }
     }
-    
+
     public void refreshSelected() {
         if (selected != null) {
             Integer id = selected.getIdAsignatura();
@@ -83,18 +85,18 @@ public class AsignaturaController implements Serializable {
 
     public void onTransfer(TransferEvent event) {
         StringBuilder builder = new StringBuilder();
-        for(Object item : event.getItems()) {
+        for (Object item : event.getItems()) {
             builder.append(((Asignatura) item).getNombreAsignatura()).append("<br />");
         }
-         
+
         FacesMessage msg = new FacesMessage();
         msg.setSeverity(FacesMessage.SEVERITY_INFO);
         msg.setSummary("Items Transferred");
         msg.setDetail(builder.toString());
-         
+
         FacesContext.getCurrentInstance().addMessage(null, msg);
-    }  
-    
+    }
+
     protected void setEmbeddableKeys() {
         //no embeddable keys
     }
@@ -108,35 +110,37 @@ public class AsignaturaController implements Serializable {
     }
 
     public Asignatura prepareCreate() {
-        selected = new Asignatura();
-        initializeEmbeddableKey();
-        selected.setIdPlan(planController.getSelected());
-        selected.setAsignaturaCollection(new ArrayList<Asignatura>());
-        selected.setAsignaturaCollection1(new ArrayList<Asignatura>());
+        if (selected == null) {
+            selected = new Asignatura();
+            initializeEmbeddableKey();
+            selected.setIdPlan(planController.getSelected());
+            selected.setAsignaturaCollection(new ArrayList<Asignatura>());
+            selected.setAsignaturaCollection1(new ArrayList<Asignatura>());
+        }
         return selected;
     }
-    
-    public String getNombresAsignaturaString(Asignatura asignatura){
-        
+
+    public String getNombresAsignaturaString(Asignatura asignatura) {
+
         String salida = "";
-        
+
         for (Asignatura a1 : asignatura.getAsignaturaCollection()) {
             salida = salida + a1.getNombreAsignatura() + "\n";
         }
-        
+
         return salida;
     }
-    
-    public String getNombresAsignatura2String(Asignatura a){
+
+    public String getNombresAsignatura2String(Asignatura a) {
         String salida = "";
-        
+
         for (Asignatura a1 : a.getAsignaturaCollection1()) {
-            salida = salida + a1.getNombreAsignatura()+ "\n";
+            salida = salida + a1.getNombreAsignatura() + "\n";
         }
         return salida;
     }
-     
-    public String getStringRequisitos(Asignatura asignatura){
+
+    public String getStringRequisitos(Asignatura asignatura) {
         StringBuilder sb = null;
         for (Asignatura req : asignatura.getAsignaturaCollection()) {
             sb.append("");
@@ -146,42 +150,81 @@ public class AsignaturaController implements Serializable {
     }
 
     public void create() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (this.selected.getCodigoAsignatura() == null || this.selected.getCodigoAsignatura().trim().isEmpty()) {
+            context.addMessage(null, new FacesMessage("Error: Debe ingresar un código", "Debe ingresar un código"));
+            return;
+        }
+        
+        if (this.selected.getNombreAsignatura() == null || this.selected.getNombreAsignatura().trim().isEmpty()) {
+            context.addMessage(null, new FacesMessage("Error: Debe ingresar un nombre", "Debe ingresar un nombre"));
+            return;
+        }
+
+        if (this.selected.getNivelAsignatura() == null) {
+            context.addMessage(null, new FacesMessage("Error: Debe ingresar un nivel", "Debe ingresar un nivel"));
+            return;
+        }
+        
+        if (this.selected.getSctAsignatura() == null) {
+            context.addMessage(null, new FacesMessage("Error: Debe ingresar SCT", "Debe ingresar un valor válido de SCT"));
+            return;
+        }
+
+        if (this.selected.getHorasTeoria() == null) {
+            context.addMessage(null, new FacesMessage("Error: Debe ingresar el número de horas teoría", "Debe ingresar el número de horas teoría"));
+            return;
+        }
+
+        if (this.selected.getHorasEjercicio() == null) {
+            context.addMessage(null, new FacesMessage("Error: Debe ingresar el número de horas ejecicio", "Debe ingresar el número de horas ejercicio"));
+            return;
+        }
+
+        if (this.selected.getHorasLaboratorio() == null) {
+            context.addMessage(null, new FacesMessage("Error: Debe ingresar el número de horas laboratorio", "Debe ingresar el número de horas laboratorio"));
+            return;
+        }
 
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaCreated"));
-        if ( ! JsfUtil.isValidationFailed() ) {
-             LOGGER.info("Ha creado la asignatura: " + getSelected().getNombreAsignatura());
-            items = null;
-            itemsPlan = null;
-        }
+//        context.addMessage(null, new FacesMessage("Asignatura agregada correctamente", "Asignatura agregada correctamente"));
+//        if (!JsfUtil.isValidationFailed()) {
+//            context.addMessage(null, new FacesMessage("Asignatura agregada correctamente", "Asignatura agregada correctamente"));
+//            LOGGER.info("Ha creado la asignatura: " + getSelected().getNombreAsignatura());
+//            items = null;
+//            itemsPlan = null;
+//        }
+//        RequestContext.getCurrentInstance().execute("AsignaturaCreateDlg.hide()");
     }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaUpdated"));
-         LOGGER.info("Ha actualizado la asignatura: "+ getSelected().getNombreAsignatura());
+        LOGGER.info("Ha actualizado la asignatura: " + getSelected().getNombreAsignatura());
     }
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AsignaturaDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-            selected = null; 
+            selected = null;
             // Remove selection
-            items = null;   
-           // Invalidate list of items to trigger re-query.
-           
+            items = null;
+            // Invalidate list of items to trigger re-query.
+
         }
-         LOGGER.info("Ha eliminado la asignatura "+ deletedAsignatura);
+        LOGGER.info("Ha eliminado la asignatura " + deletedAsignatura);
     }
 
     public List<Asignatura> getItems() {
-       
+
         if (items == null) {
-           
+
             items = getFacade().findAll();
         }
         return items;
     }
-    
-    public List<Asignatura> getItemsPlan(){
+
+    public List<Asignatura> getItemsPlan() {
 
         planController.refreshSelected();
         itemsPlan = planController.getSelected().getAsignaturaCollection();
@@ -196,7 +239,7 @@ public class AsignaturaController implements Serializable {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {
-                    deletedAsignatura=selected.getNombreAsignatura();
+                    deletedAsignatura = selected.getNombreAsignatura();
                     getFacade().remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
@@ -229,7 +272,7 @@ public class AsignaturaController implements Serializable {
     public List<Asignatura> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
-    
+
     public void saveRequisitos() {
 
         selected.setAsignaturaCollection(dlAsignaturas.getTarget());
