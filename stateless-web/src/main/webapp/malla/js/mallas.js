@@ -5,8 +5,8 @@ jQuery(document).ready(function ($) {
     $('#tomar_ramos_div').hide();
     $('#boton_tutorial').hide();
     $('#boton_resumen_simulacion').hide();
-    $('#etiqueta_ramo_tomado_en_simulacion').hide();
-    $('#etiqueta_ramo_disponible_para_tomar_bloqueado').hide();
+    $('#etiqueta_ramo_tomado_en_simulacion_container').hide();
+    $('#etiqueta_ramo_disponible_para_tomar_bloqueado_container').hide();
 
     for (var i = context.length - 1; i >= 0; i--) {
         context[i].aperturas = [];
@@ -567,8 +567,8 @@ jQuery(document).ready(function ($) {
         });
 
         $('#fw').on('click', function () {
-            $('#etiqueta_ramo_tomado_en_simulacion').hide();
-            $('#etiqueta_ramo_disponible_para_tomar_bloqueado').hide();
+            $('#etiqueta_ramo_tomado_en_simulacion_container').hide();
+            $('#etiqueta_ramo_disponible_para_tomar_bloqueado_container').hide();
             $('#boton_resumen_simulacion').hide();
             accion = 'aperturas';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
@@ -579,8 +579,8 @@ jQuery(document).ready(function ($) {
             $('#boton_tutorial').hide();
         });
         $('#simulacion_radio').on('click', function () {
-            $('#etiqueta_ramo_tomado_en_simulacion').show();
-            $('#etiqueta_ramo_disponible_para_tomar_bloqueado').show();
+            $('#etiqueta_ramo_tomado_en_simulacion_container').show();
+            $('#etiqueta_ramo_disponible_para_tomar_bloqueado_container').show();
             $('#boton_resumen_simulacion').show();
             $('#boton_resumen_simulacion').attr('disabled', 'enabled');
             $('#tomar_ramos_div').show();
@@ -590,8 +590,8 @@ jQuery(document).ready(function ($) {
             $('#spinme, #spinme_tomar_ramos').change();
         });
         $('#bw').on('click', function () {
-            $('#etiqueta_ramo_tomado_en_simulacion').hide();
-            $('#etiqueta_ramo_disponible_para_tomar_bloqueado').hide();
+            $('#etiqueta_ramo_tomado_en_simulacion_container').hide();
+            $('#etiqueta_ramo_disponible_para_tomar_bloqueado_container').hide();
             $('#boton_resumen_simulacion').hide();
             accion = 'prerequisitos';
             CambiarEstadoArrayById(_.pluck(context, 'id'), ESTADO_INICIAL);
