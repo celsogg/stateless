@@ -122,8 +122,10 @@ public class LoginController {
                         message = "Username: " + this.nombre + " You are administrator";
                         navto = "/index.xhtml";
                     }
+                }else{
+                    context.addMessage(null, new FacesMessage("Ingreso Erróneo", "Los datos ingresados no son correctos."));
                 }
-            }catch(IOException e){
+            }catch(JSONException e){
                 context.addMessage(null, new FacesMessage("Ingreso Erróneo", "Los datos ingresados no son correctos."));
             }
         } else {
