@@ -77,9 +77,9 @@ public class Asignatura implements Serializable {
         @JoinColumn(name = "ID_ASIGNATURA", referencedColumnName = "ID_ASIGNATURA")}, inverseJoinColumns = {
         @JoinColumn(name = "ASI_ID_ASIGNATURA", referencedColumnName = "ID_ASIGNATURA")})
     @ManyToMany
-    private Collection<Asignatura> asignaturaCollection;
-    @ManyToMany(mappedBy = "asignaturaCollection")
-    private Collection<Asignatura> asignaturaCollection1;
+    private Collection<Asignatura> asignaturasRequisito;
+    @ManyToMany(mappedBy = "asignaturasRequisito")
+    private Collection<Asignatura> asignaturasApertura;
     @JoinColumn(name = "ID_PLAN", referencedColumnName = "ID_PLAN")
     @ManyToOne
     private Plan idPlan;
@@ -93,6 +93,7 @@ public class Asignatura implements Serializable {
     private Collection<Asignatura> convalidadaPor;
   
     public Asignatura() {
+        
     }
 
     public Asignatura(Integer idAsignatura) {
@@ -172,24 +173,26 @@ public class Asignatura implements Serializable {
     }
     
     @XmlTransient
-    public Collection<Asignatura> getAsignaturaCollection() {
-        return asignaturaCollection;
+    public Collection<Asignatura> getAsignaturasRequisito() {
+        return asignaturasRequisito;
     }
         
-    public void setAsignaturaCollection(Collection<Asignatura> asignaturaCollection) {
-        this.asignaturaCollection = asignaturaCollection;
+    public void setAsignaturasRequisito(Collection<Asignatura> asignaturaCollection) {
+        this.asignaturasRequisito = asignaturaCollection;
     }
 
     @XmlTransient
-    public Collection<Asignatura> getAsignaturaCollection1() {
-        return asignaturaCollection1;
+    public Collection<Asignatura> getAsignaturasApertura() {
+        return asignaturasApertura;
     }
 
-    public void setAsignaturaCollection1(Collection<Asignatura> asignaturaCollection1) {
-        this.asignaturaCollection1 = asignaturaCollection1;
+    public void setAsignaturasApertura(Collection<Asignatura> asignaturaCollection1) {
+        this.asignaturasApertura = asignaturaCollection1;
     }
 
-    
+    public void addAsignaturaApertura(Asignatura asignaturaApertura){
+        this.asignaturasApertura.add(asignaturaApertura);
+    }
 
     public Plan getIdPlan() {
         return idPlan;

@@ -282,9 +282,9 @@ public class PlanController implements Serializable {
                 jsonB.append("\n\t\"" + plan_convalidable.getIdPlan() + "\": [\n");
 
                 for (Asignatura asignatura_convalidable : plan_convalidable.getAsignaturaCollection()) {
-                        if(asignatura_convalidable.getConvalidaciones().contains(a)){
-                            jsonB.append("\t\t" + asignatura_convalidable.getCodigoAsignatura() + ",\n");
-                        }
+                    if (asignatura_convalidable.getConvalidaciones().contains(a)) {
+                        jsonB.append("\t\t" + asignatura_convalidable.getCodigoAsignatura() + ",\n");
+                    }
                 }
                 jsonB.append("\n\t],");
             }
@@ -306,7 +306,7 @@ public class PlanController implements Serializable {
             jsonB.append(", \"resumen\": \"");
             jsonB.append(StringEscapeUtils.escapeJavaScript(a.getResumenAsignatura()));
             //requisitos
-            pre = new ArrayList<>(a.getAsignaturaCollection());
+            pre = new ArrayList<>(a.getAsignaturasRequisito());
             jsonB.append("\", \"prerequisitos\": [");
             for (Asignatura p : pre) {
                 jsonB.append(p.getCodigoAsignatura());
@@ -316,7 +316,7 @@ public class PlanController implements Serializable {
             }
             jsonB.append("], \"aperturas\": [");
             //apertura
-            post = new ArrayList<>(a.getAsignaturaCollection1());
+            post = new ArrayList<>(a.getAsignaturasApertura());
             for (Asignatura p : post) {
                 jsonB.append(p.getCodigoAsignatura());
                 if (post.lastIndexOf(p) != post.size() - 1) {
@@ -399,19 +399,21 @@ public class PlanController implements Serializable {
                 asignatura.setHorasLaboratorio(Integer.parseInt(strs[4]));
                 asignatura.setNivelAsignatura(Integer.parseInt(strs[5]));
                 asignatura.setEsAnual(false);
+                asignatura.setAsignaturasApertura(new ArrayList<Asignatura>());
 
                 if (strs[6].compareToIgnoreCase("ingreso") != 0) {
                     String[] requisitosStrs = strs[6].replace("\"", "").split(",");
                     List<Asignatura> requisitos = new ArrayList<>();
-                    for (String requisito : requisitosStrs) {
-
-                        for (Asignatura a : asignaturas) {
-                            if (a.getCodigoAsignatura().compareToIgnoreCase(requisito.trim()) == 0) {
-                                requisitos.add(a);
+                    
+                    for (String requisitoStr : requisitosStrs) {
+                        for (Asignatura asignaturaRequisito : asignaturas) {
+                            if (asignaturaRequisito.getCodigoAsignatura().compareToIgnoreCase(requisitoStr.trim()) == 0) {
+                                requisitos.add(asignaturaRequisito);
+                                asignaturaRequisito.addAsignaturaApertura(asignatura);
                             }
                         }
                     }
-                    asignatura.setAsignaturaCollection(requisitos);
+                    asignatura.setAsignaturasRequisito(requisitos);
                 }
                 asignaturas.add(asignatura);
             }
@@ -429,26 +431,17 @@ public class PlanController implements Serializable {
     private String[] getCsvLineCols(String line) {
         String otherThanQuote = " [^\"] ";
         String quotedString = String.format(" \" %s* \" ", otherThanQuote);
-        String regex = String.format("(?x) "
-                + // enable comments, ignore white spaces
-                ",                         "
-                + // match a comma
-                "(?=                       "
-                + // start positive look ahead
-                "  (                       "
-                + //   start group 1
-                "    %s*                   "
-                + //     match 'otherThanQuote' zero or more times
-                "    %s                    "
-                + //     match 'quotedString'
-                "  )*                      "
-                + //   end group 1 and repeat it zero or more times
-                "  %s*                     "
-                + //   match 'otherThanQuote'
-                "  $                       "
-                + // match the end of the string
-                ")                         ",
-                // stop positive look ahead
+        String regex = String.format(
+                "(?x)        " + // enable comments, ignore white spaces
+                ";           " + // match a comma
+                "(?=         " + // start positive look ahead
+                "  (         " + // start group 1
+                "    %s*     " + // match 'otherThanQuote' zero or more times
+                "    %s      " + // match 'quotedString'
+                "  )*        " + // end group 1 and repeat it zero or more times
+                "  %s*       " + // match 'otherThanQuote'
+                "  $         " + // match the end of the string
+                ")           ",  // stop positive look ahead
                 otherThanQuote, quotedString, otherThanQuote);
 
         String[] tokens = line.split(regex, -1);

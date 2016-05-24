@@ -177,7 +177,7 @@ public class PdfDownloadController extends HttpServlet {
             contentSB.append(" - ").append(blankIfNull(asig.getNombreAsignatura())).append("\n");
             contentSB.append(blankIfNull(asig.getResumenAsignatura()));
             contentSB.append("\nRequisitos: ");
-            List<Asignatura> requisitos =  (List<Asignatura>) asig.getAsignaturaCollection();
+            List<Asignatura> requisitos =  (List<Asignatura>) asig.getAsignaturasRequisito();
             if (requisitos.isEmpty()){
                 contentSB.append("Ingreso\n\n");
             }else{

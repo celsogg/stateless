@@ -7,11 +7,20 @@ jQuery(document).ready(function ($) {
     $('#boton_resumen_simulacion').hide();
     $('#etiqueta_ramo_tomado_en_simulacion_container').hide();
     $('#etiqueta_ramo_disponible_para_tomar_bloqueado_container').hide();
+    
+    function sortByKey(array, key) {
+        return array.sort(function(a, b) {
+            var x = a[key]; var y = b[key];
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        });
+    }
 
     for (var i = context.length - 1; i >= 0; i--) {
         context[i].aperturas = [];
     }
     ;
+    
+    context = sortByKey(context, 'nivel');
 
     for (var i = 0, max = context.length; i < max; i++) {
         var aperturas = [];
@@ -175,7 +184,7 @@ jQuery(document).ready(function ($) {
                 if (asignaturas[i].nivel > nivel_mas_alto)
                     nivel_mas_alto = asignaturas[i].nivel;
             }
-            console.log(nivel_mas_alto);
+            //console.log(nivel_mas_alto);
 
             while (asignaturas_impresas < total_asignaturas) {
                 var imprimio = false;
@@ -197,7 +206,7 @@ jQuery(document).ready(function ($) {
                         break;
                     }
                 }
-                console.log(".");
+                //console.log(".");
                 if (!imprimio) {
                     html += '<div class="col-md-1 alto_asignatura"></div>';
                 }
@@ -338,6 +347,7 @@ jQuery(document).ready(function ($) {
 
         function CambiarEstadoById(id, estado) {
             var color = GetColorByEstado(estado);
+            //console.log("cambiando estado de" + id);
             $('#asignatura_' + id).css('background', color);
 
             var color_texto = '#000000'; // Negro
@@ -906,7 +916,7 @@ jQuery(document).ready(function ($) {
         for (var i = 0, max = context.length; i < max; i++) {
             // console.log("context[ " + i + " ].convalidaciones[ " + context_planes[ index_plan_seleccionado ].id + " ]");
 
-            console.log("Estado: ( " + context[ i ].id + " )  " + GetEstadoById(context[ i ].id));
+            //console.log("Estado: ( " + context[ i ].id + " )  " + GetEstadoById(context[ i ].id));
             if (GetEstadoById(context[ i ].id) == ESTADO_TOMADO) {
                 var convalidadas = context[ i ].convalidaciones[ context_planes[ index_plan_seleccionado ].id ];
                 // console.log(convalidadas);

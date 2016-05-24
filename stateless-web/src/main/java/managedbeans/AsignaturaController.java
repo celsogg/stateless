@@ -53,7 +53,7 @@ public class AsignaturaController implements Serializable {
     public void setSelected(Asignatura selected) {
         this.selected = selected;
         if (selected != null) {
-            List<Asignatura> asignaturasActuales = (List<Asignatura>) selected.getAsignaturaCollection();
+            List<Asignatura> asignaturasActuales = (List<Asignatura>) selected.getAsignaturasRequisito();
             List<Asignatura> asignaturasPosibles;
             if (itemsPlan != null) {
                 asignaturasPosibles = new ArrayList<>(itemsPlan);
@@ -114,8 +114,8 @@ public class AsignaturaController implements Serializable {
             selected = new Asignatura();
             initializeEmbeddableKey();
             selected.setIdPlan(planController.getSelected());
-            selected.setAsignaturaCollection(new ArrayList<Asignatura>());
-            selected.setAsignaturaCollection1(new ArrayList<Asignatura>());
+            selected.setAsignaturasRequisito(new ArrayList<Asignatura>());
+            selected.setAsignaturasApertura(new ArrayList<Asignatura>());
         }
         return selected;
     }
@@ -124,7 +124,7 @@ public class AsignaturaController implements Serializable {
 
         String salida = "";
 
-        for (Asignatura a1 : asignatura.getAsignaturaCollection()) {
+        for (Asignatura a1 : asignatura.getAsignaturasRequisito()) {
             salida = salida + a1.getNombreAsignatura() + "\n";
         }
 
@@ -134,7 +134,7 @@ public class AsignaturaController implements Serializable {
     public String getNombresAsignatura2String(Asignatura a) {
         String salida = "";
 
-        for (Asignatura a1 : a.getAsignaturaCollection1()) {
+        for (Asignatura a1 : a.getAsignaturasApertura()) {
             salida = salida + a1.getNombreAsignatura() + "\n";
         }
         return salida;
@@ -142,7 +142,7 @@ public class AsignaturaController implements Serializable {
 
     public String getStringRequisitos(Asignatura asignatura) {
         StringBuilder sb = null;
-        for (Asignatura req : asignatura.getAsignaturaCollection()) {
+        for (Asignatura req : asignatura.getAsignaturasRequisito()) {
             sb.append("");
             sb.append(req.getCodigoAsignatura()).append(" ").append(req.getNombreAsignatura()).append("\n");
         }
@@ -210,7 +210,6 @@ public class AsignaturaController implements Serializable {
             // Remove selection
             items = null;
             // Invalidate list of items to trigger re-query.
-
         }
         LOGGER.info("Ha eliminado la asignatura " + deletedAsignatura);
     }
@@ -275,7 +274,7 @@ public class AsignaturaController implements Serializable {
 
     public void saveRequisitos() {
 
-        selected.setAsignaturaCollection(dlAsignaturas.getTarget());
+        selected.setAsignaturasRequisito(dlAsignaturas.getTarget());
         update();
     }
 

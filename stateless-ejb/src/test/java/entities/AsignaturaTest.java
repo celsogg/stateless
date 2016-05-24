@@ -291,7 +291,7 @@ public class AsignaturaTest {
     }
 
     /**
-     * Test of getAsignaturaCollection method, of class Asignatura.
+     * Test of getAsignaturasRequisito method, of class Asignatura.
      */
     @Test
     public void testGetAsignaturaCollection() {
@@ -304,14 +304,14 @@ public class AsignaturaTest {
         expResult.add(a);
         expResult.add(b);
         expResult.add(c);
-        instance.setAsignaturaCollection(expResult);
-        Collection<Asignatura> result = instance.getAsignaturaCollection();
+        instance.setAsignaturasRequisito(expResult);
+        Collection<Asignatura> result = instance.getAsignaturasRequisito();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
-     * Test of setAsignaturaCollection method, of class Asignatura.
+     * Test of setAsignaturasRequisito method, of class Asignatura.
      */
     @Test
     public void testSetAsignaturaCollection() {
@@ -325,15 +325,15 @@ public class AsignaturaTest {
         asignaturaCollection.add(b);
         asignaturaCollection.add(c);
         Asignatura instance = new Asignatura();
-        instance.setAsignaturaCollection(asignaturaCollection);
-        Collection<Asignatura> result = instance.getAsignaturaCollection();
+        instance.setAsignaturasRequisito(asignaturaCollection);
+        Collection<Asignatura> result = instance.getAsignaturasRequisito();
         assertEquals(asignaturaCollection,result);
         
         // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
-     * Test of getAsignaturaCollection1 method, of class Asignatura.
+     * Test of getAsignaturasApertura method, of class Asignatura.
      */
     @Test
     public void testGetAsignaturaCollection1() {
@@ -346,17 +346,17 @@ public class AsignaturaTest {
         expResult.add(a);
         expResult.add(b);
         expResult.add(c);
-        instance.setAsignaturaCollection1(expResult);
-        Collection<Asignatura> result = instance.getAsignaturaCollection1();
+        instance.setAsignaturasApertura(expResult);
+        Collection<Asignatura> result = instance.getAsignaturasApertura();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
     }
 
     /**
-     * Test of setAsignaturaCollection1 method, of class Asignatura.
+     * Test of setAsignaturasApertura method, of class Asignatura.
      */
     @Test
-    public void testSetAsignaturaCollection1() {
+    public void testSetAsignaturasApertura() {
         System.out.println("setAsignaturaCollection1");
         List<Asignatura> asignaturaCollection1 = new ArrayList<>();
         
@@ -367,8 +367,8 @@ public class AsignaturaTest {
         asignaturaCollection1.add(b);
         asignaturaCollection1.add(c);
         Asignatura instance = new Asignatura();
-        instance.setAsignaturaCollection1(asignaturaCollection1);
-        Collection<Asignatura> result = instance.getAsignaturaCollection1();
+        instance.setAsignaturasApertura(asignaturaCollection1);
+        Collection<Asignatura> result = instance.getAsignaturasApertura();
         assertEquals(asignaturaCollection1,result);
         
         // TODO review the generated test code and remove the default call to fail.

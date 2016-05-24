@@ -91,7 +91,7 @@ public class AsignaturaFacadeTest {
         expResult2.add(g);
         expResult2.add(h);
         expResult2.add(i); 
-        a1.setAsignaturaCollection1(expResult2);
+        a1.setAsignaturasApertura(expResult2);
         List<Asignatura> expResult3 = new ArrayList<>();
         Asignatura j = new Asignatura(1);
         Asignatura k = new Asignatura(2);
@@ -99,7 +99,7 @@ public class AsignaturaFacadeTest {
         expResult3.add(j);
         expResult3.add(k);
         expResult3.add(l); 
-        a1.setAsignaturaCollection(expResult3);
+        a1.setAsignaturasRequisito(expResult3);
         
         // a2
         a2.setSctAsignatura(1);
@@ -137,7 +137,7 @@ public class AsignaturaFacadeTest {
         expResult2t1.add(gt);
         expResult2t1.add(ht);
         expResult2t1.add(it); 
-        a2.setAsignaturaCollection1(expResult2t1);
+        a2.setAsignaturasApertura(expResult2t1);
         List<Asignatura> expResult3t1 = new ArrayList<>();
         Asignatura jt = new Asignatura(1);
         Asignatura kt = new Asignatura(2);
@@ -145,7 +145,7 @@ public class AsignaturaFacadeTest {
         expResult3t1.add(jt);
         expResult3t1.add(kt);
         expResult3t1.add(lt); 
-        a2.setAsignaturaCollection(expResult3t1);
+        a2.setAsignaturasRequisito(expResult3t1);
         
         // a3
         a3.setSctAsignatura(1);
@@ -183,7 +183,7 @@ public class AsignaturaFacadeTest {
         expResult2t2.add(gtt);
         expResult2t2.add(htt);
         expResult2t2.add(itt); 
-        a3.setAsignaturaCollection1(expResult2t2);
+        a3.setAsignaturasApertura(expResult2t2);
         List<Asignatura> expResult3t2 = new ArrayList<>();
         Asignatura jtt = new Asignatura(1);
         Asignatura ktt = new Asignatura(2);
@@ -191,7 +191,7 @@ public class AsignaturaFacadeTest {
         expResult3t2.add(jtt);
         expResult3t2.add(ktt);
         expResult3t2.add(ltt); 
-        a3.setAsignaturaCollection(expResult3t2);
+        a3.setAsignaturasRequisito(expResult3t2);
 
         List<Asignatura> asignaturas = new ArrayList<>();
 
@@ -259,7 +259,7 @@ public class AsignaturaFacadeTest {
         expResult2.add(g);
         expResult2.add(h);
         expResult2.add(i); 
-        a1.setAsignaturaCollection1(expResult2);
+        a1.setAsignaturasApertura(expResult2);
         List<Asignatura> expResult3 = new ArrayList<>();
         Asignatura j = new Asignatura(1);
         Asignatura k = new Asignatura(2);
@@ -267,7 +267,7 @@ public class AsignaturaFacadeTest {
         expResult3.add(j);
         expResult3.add(k);
         expResult3.add(l); 
-        a1.setAsignaturaCollection(expResult3);
+        a1.setAsignaturasRequisito(expResult3);
         
         // a2
         a2.setSctAsignatura(1);
@@ -305,7 +305,7 @@ public class AsignaturaFacadeTest {
         expResult2t1.add(gt);
         expResult2t1.add(ht);
         expResult2t1.add(it); 
-        a2.setAsignaturaCollection1(expResult2t1);
+        a2.setAsignaturasApertura(expResult2t1);
         List<Asignatura> expResult3t1 = new ArrayList<>();
         Asignatura jt = new Asignatura(1);
         Asignatura kt = new Asignatura(2);
@@ -313,7 +313,7 @@ public class AsignaturaFacadeTest {
         expResult3t1.add(jt);
         expResult3t1.add(kt);
         expResult3t1.add(lt); 
-        a2.setAsignaturaCollection(expResult3t1);
+        a2.setAsignaturasRequisito(expResult3t1);
         
         // a3
         a3.setSctAsignatura(1);
@@ -351,7 +351,7 @@ public class AsignaturaFacadeTest {
         expResult2t2.add(gtt);
         expResult2t2.add(htt);
         expResult2t2.add(itt); 
-        a3.setAsignaturaCollection1(expResult2t2);
+        a3.setAsignaturasApertura(expResult2t2);
         List<Asignatura> expResult3t2 = new ArrayList<>();
         Asignatura jtt = new Asignatura(1);
         Asignatura ktt = new Asignatura(2);
@@ -359,7 +359,7 @@ public class AsignaturaFacadeTest {
         expResult3t2.add(jtt);
         expResult3t2.add(ktt);
         expResult3t2.add(ltt); 
-        a3.setAsignaturaCollection(expResult3t2);
+        a3.setAsignaturasRequisito(expResult3t2);
 
         List<Asignatura> asignaturas = new ArrayList<>();
 
@@ -427,7 +427,7 @@ public class AsignaturaFacadeTest {
         expResult2.add(g);
         expResult2.add(h);
         expResult2.add(i); 
-        a1.setAsignaturaCollection1(expResult2);
+        a1.setAsignaturasApertura(expResult2);
         List<Asignatura> expResult3 = new ArrayList<>();
         Asignatura j = new Asignatura(1);
         Asignatura k = new Asignatura(2);
@@ -435,7 +435,7 @@ public class AsignaturaFacadeTest {
         expResult3.add(j);
         expResult3.add(k);
         expResult3.add(l); 
-        a1.setAsignaturaCollection(expResult3);
+        a1.setAsignaturasRequisito(expResult3);
         
         // a2
         a2.setSctAsignatura(1);
@@ -473,7 +473,7 @@ public class AsignaturaFacadeTest {
         expResult2t1.add(gt);
         expResult2t1.add(ht);
         expResult2t1.add(it); 
-        a2.setAsignaturaCollection1(expResult2t1);
+        a2.setAsignaturasApertura(expResult2t1);
         List<Asignatura> expResult3t1 = new ArrayList<>();
         Asignatura jt = new Asignatura(1);
         Asignatura kt = new Asignatura(2);
@@ -481,7 +481,7 @@ public class AsignaturaFacadeTest {
         expResult3t1.add(jt);
         expResult3t1.add(kt);
         expResult3t1.add(lt); 
-        a2.setAsignaturaCollection(expResult3t1);
+        a2.setAsignaturasRequisito(expResult3t1);
         
         // a3
         a3.setSctAsignatura(1);
@@ -519,7 +519,7 @@ public class AsignaturaFacadeTest {
         expResult2t2.add(gtt);
         expResult2t2.add(htt);
         expResult2t2.add(itt); 
-        a3.setAsignaturaCollection1(expResult2t2);
+        a3.setAsignaturasApertura(expResult2t2);
         List<Asignatura> expResult3t2 = new ArrayList<>();
         Asignatura jtt = new Asignatura(1);
         Asignatura ktt = new Asignatura(2);
@@ -527,7 +527,7 @@ public class AsignaturaFacadeTest {
         expResult3t2.add(jtt);
         expResult3t2.add(ktt);
         expResult3t2.add(ltt); 
-        a3.setAsignaturaCollection(expResult3t2);
+        a3.setAsignaturasRequisito(expResult3t2);
 
         List<Asignatura> asignaturas = new ArrayList<>();
 

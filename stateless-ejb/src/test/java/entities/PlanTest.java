@@ -204,7 +204,7 @@ public class PlanTest {
     }
 
     /**
-     * Test of setAsignaturaCollection method, of class Plan.
+     * Test of setAsignaturasRequisito method, of class Plan.
      */
     @Test
     public void testSetAsignaturaCollection() {

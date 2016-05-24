@@ -252,8 +252,8 @@ public class PlanControllerTest {
         ArrayList<Asignatura> asigsApe = new ArrayList<>();
         asigsApe.add(asigApe);
         
-        asignatura.setAsignaturaCollection1(asigsApe);
-        asignatura.setAsignaturaCollection(asigsReq);
+        asignatura.setAsignaturasApertura(asigsApe);
+        asignatura.setAsignaturasRequisito(asigsReq);
         
         ArrayList<Asignatura> asignaturas = new ArrayList<>();
         asignaturas.add(asignatura);
